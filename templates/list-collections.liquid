@@ -1,0 +1,42 @@
+<div class="collections-hero">
+  <div class="collection-badge">Business Tools</div>
+  <h1>All Collections</h1>
+  <p>Every collection is designed to move your business forward — from foundational systems to advanced leadership resources.</p>
+</div>
+
+<div class="collections-container">
+  {% if collections.size > 0 %}
+    <div class="collections-grid">
+      {% for collection in collections %}
+        {% unless collection.handle == 'frontpage' %}
+          <a href="{{ collection.url }}" class="collection-card-link">
+            {% if collection.image %}
+              <img
+                src="{{ collection.image | img_url: '700x525' }}"
+                alt="{{ collection.image.alt | escape }}"
+                class="collection-card-bg"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="collection-card-placeholder">📦</div>
+            {% endif %}
+            <div class="collection-card-overlay"></div>
+            <div class="collection-card-body">
+              <div class="collection-card-title">{{ collection.title }}</div>
+              <div class="collection-card-count">
+                {{ collection.products_count }}
+                {{ collection.products_count | pluralize: 'product', 'products' }}
+              </div>
+            </div>
+          </a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="collection-empty">
+      <h2>Collections Coming Soon</h2>
+      <p>We're curating the right tools for your CEO journey. Check back shortly.</p>
+      <a href="/" style="color:var(--terracotta);text-decoration:underline;font-size:0.9rem;">← Return to Home</a>
+    </div>
+  {% endif %}
+</div>

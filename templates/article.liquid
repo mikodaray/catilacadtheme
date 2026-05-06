@@ -1,0 +1,46 @@
+<div class="article-hero">
+  <div class="article-hero-inner">
+    {% if article.tags.size > 0 %}
+      <div class="article-tag">{{ article.tags.first }}</div>
+    {% endif %}
+    <h1 class="article-title">{{ article.title }}</h1>
+    <div class="article-meta">
+      <span>By {{ article.author }}</span>
+      <span>{{ article.published_at | date: '%B %-d, %Y' }}</span>
+      {% if article.comments_count > 0 %}
+        <span>{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment', 'comments' }}</span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="article-container">
+  <a href="{{ blog.url }}" class="article-back">← Back to {{ blog.title }}</a>
+
+  {% if article.image %}
+    <div class="article-featured-image">
+      <img
+        src="{{ article.image | img_url: '1200x675' }}"
+        alt="{{ article.image.alt | escape }}"
+      >
+    </div>
+  {% endif %}
+
+  <div class="article-body rte">
+    {{ article.content }}
+  </div>
+
+  {% if article.tags.size > 0 %}
+    <div class="article-tags">
+      {% for tag in article.tags %}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag-link">{{ tag }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="article-cta">
+    <h3>Ready to build your CEO systems?</h3>
+    <p>The CEO Systems Method™ is the 30-day playbook that takes you from chaos to clarity — one week at a time.</p>
+    <a href="/#course" class="btn-white" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--terracotta);color:white;padding:1rem 2rem;border-radius:100px;font-weight:700;text-decoration:none;transition:all 0.2s;">Explore the Course →</a>
+  </div>
+</div>

@@ -1,5 +1,47 @@
+<nav>
+  <a href="/" class="nav-logo" aria-label="Cat Ilacad — Home">
+    <img src="{{ 'logo.svg' | asset_url }}" alt="Cat Ilacad" class="nav-logo-img" width="160" height="40">
+  </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="/#course">The Course</a>
+    <a href="/#mentorship">Mentorship</a>
+    <a href="/blogs/news">Blog</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/cart" class="nav-cart" title="Cart">
+      🛒 <span class="cart-count">{{ cart.item_count }}</span>
+    </a>
+    <a href="/#course" class="nav-cta">Get Started →</a>
+  </div>
+</nav>
+
 {% stylesheet %}
-  h1 {
-    color: blue;
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 0.25rem; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--charcoal); border-radius: 2px; transition: all 0.3s; }
+  .nav-cart { font-size: 1rem; position: relative; }
+  .cart-count { font-size: 0.65rem; font-weight: 700; background: var(--terracotta); color: white; border-radius: 100px; padding: 0.1rem 0.4rem; vertical-align: top; }
+  {% if cart.item_count == 0 %} .cart-count { display: none; } {% endif %}
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(250,247,242,0.98); border-bottom: 1px solid var(--sand); flex-direction: column; padding: 1.5rem 2rem; gap: 1.25rem; }
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 0.95rem; }
   }
 {% endstylesheet %}
+
+<script>
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    const links = document.getElementById('nav-links');
+    const expanded = links.classList.toggle('open');
+    this.setAttribute('aria-expanded', expanded);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}

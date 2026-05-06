@@ -1,0 +1,69 @@
+<div class="blog-hero">
+  <div class="hero-badge">✦ {{ blog.title }}</div>
+  <h1>{{ blog.title }}</h1>
+  <p>Real insights from 23 years of building. No fluff — just systems, strategy, and the truth about what it takes.</p>
+</div>
+
+<div class="blog-container">
+  {% if blog.articles.size > 0 %}
+    <div class="blog-grid">
+      {% for article in blog.articles %}
+        <article class="blog-card">
+          <div class="blog-card-image">
+            {% if article.image %}
+              <img
+                src="{{ article.image | img_url: '700x394' }}"
+                alt="{{ article.image.alt | escape }}"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="blog-card-image-placeholder">📘</div>
+            {% endif %}
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              {% if article.tags.size > 0 %}
+                <span class="blog-card-tag">{{ article.tags.first }}</span>
+              {% endif %}
+              <span class="blog-card-date">{{ article.published_at | date: '%B %-d, %Y' }}</span>
+            </div>
+            <a href="{{ article.url }}" class="blog-card-title">{{ article.title }}</a>
+            <p class="blog-card-excerpt">
+              {% if article.excerpt %}
+                {{ article.excerpt | strip_html | truncatewords: 24 }}
+              {% else %}
+                {{ article.content | strip_html | truncatewords: 24 }}
+              {% endif %}
+            </p>
+            <a href="{{ article.url }}" class="blog-card-link">Read more →</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="blog-pagination">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}">←</a>
+        {% endif %}
+        {% for part in paginate.parts %}
+          {% if part.is_link %}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {% else %}
+            <span {% if part.title == paginate.current_page %}class="current"{% endif %}>{{ part.title }}</span>
+          {% endif %}
+        {% endfor %}
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}">→</a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  {% else %}
+    <div class="blog-empty">
+      <h2>More wisdom coming soon.</h2>
+      <p>Cat is writing. Check back — real insights from 23 years of building take a moment to distil.</p>
+      <a href="/" class="btn-primary">← Back to Home</a>
+    </div>
+  {% endif %}
+</div>

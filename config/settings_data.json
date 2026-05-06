@@ -1,0 +1,13 @@
+{
+  "current": {
+    "colors_accent_1": "#C4748A",
+    "colors_accent_2": "#C9A84C",
+    "colors_text": "#3D1F2E",
+    "colors_background_1": "#FDF8F9",
+    "colors_background_2": "#FAF4F6",
+    "colors_solid_button_labels": "#FFFFFF",
+    "type_header_font": "fraunces_n7",
+    "type_body_font": "dm_sans_n4",
+    "logo_width": 120
+  }
+}

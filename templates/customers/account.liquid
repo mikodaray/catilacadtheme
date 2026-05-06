@@ -1,0 +1,85 @@
+<div class="customer-hero">
+  <h1>My Account</h1>
+  <p>Welcome back, {{ customer.first_name }}.</p>
+</div>
+
+<div class="account-container">
+  <div class="account-grid">
+    <!-- Sidebar -->
+    <aside class="account-sidebar">
+      <div class="account-sidebar-name">{{ customer.first_name }} {{ customer.last_name }}</div>
+      <a href="/account" class="account-nav-link active">Orders</a>
+      <a href="/account/addresses" class="account-nav-link">Addresses</a>
+      <a href="/account/logout" class="account-nav-link" style="margin-top:auto;color:var(--warm-gray);">Sign Out</a>
+    </aside>
+
+    <!-- Main -->
+    <main class="account-main">
+      <!-- Orders -->
+      <div class="account-section">
+        <div class="account-section-header">
+          <h2 class="account-section-title">Order History</h2>
+        </div>
+
+        {% if customer.orders.size > 0 %}
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Payment</th>
+                <th>Fulfilment</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+                <tr>
+                  <td>
+                    <a href="{{ order.customer_url }}" class="order-num-link">#{{ order.name }}</a>
+                  </td>
+                  <td>{{ order.created_at | date: '%b %-d, %Y' }}</td>
+                  <td>
+                    <span class="order-badge {{ order.financial_status }}">{{ order.financial_status | capitalize }}</span>
+                  </td>
+                  <td>
+                    <span class="order-badge {{ order.fulfillment_status | default: 'unfulfilled' }}">
+                      {{ order.fulfillment_status | default: 'Unfulfilled' | capitalize }}
+                    </span>
+                  </td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td>
+                    <a href="{{ order.customer_url }}" class="btn-sm">View</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="no-orders">
+            <p>You haven't placed any orders yet. Ready to invest in your business systems?</p>
+            <a href="/collections/all" class="btn-primary" style="text-decoration:none;">Browse Products</a>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Default Address -->
+      {% if customer.default_address %}
+        <div class="account-section">
+          <div class="account-section-header">
+            <h2 class="account-section-title">Default Address</h2>
+            <a href="/account/addresses" class="btn-sm">Manage →</a>
+          </div>
+          <address class="order-address" style="font-style:normal;">
+            {{ customer.default_address.name }}<br>
+            {% if customer.default_address.company %}{{ customer.default_address.company }}<br>{% endif %}
+            {{ customer.default_address.street }}<br>
+            {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}<br>
+            {{ customer.default_address.country }}
+          </address>
+        </div>
+      {% endif %}
+    </main>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="gift-card-page">
+  <div class="gift-card-logo">Cat <span>Ilacad</span></div>
+
+  <div class="gift-card-inner">
+    <div class="gift-card-visual">
+      <div class="gift-card-amount">{{ gift_card.initial_value | money_without_trailing_zeros }}</div>
+      <div class="gift-card-amount-label">Gift Card</div>
+      <div class="gift-card-code-wrap" id="gift-card-code" onclick="copyCode()" title="Click to copy">
+        {{ gift_card.code | format_code }}
+      </div>
+      {% if gift_card.expires_on %}
+        <div class="gift-card-expiry">Expires {{ gift_card.expires_on | date: '%B %-d, %Y' }}</div>
+      {% endif %}
+    </div>
+
+    {% if gift_card.initial_value != gift_card.balance %}
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:1.5rem;">
+        Remaining balance: <strong style="color:var(--gold);">{{ gift_card.balance | money }}</strong>
+      </p>
+    {% endif %}
+
+    {% if gift_card.qr_identifier %}
+      <div class="gift-card-qr">
+        {{ gift_card.qr_identifier | img_tag }}
+      </div>
+    {% endif %}
+
+    <div class="gift-card-actions" style="margin-top:2rem;">
+      <a href="{{ shop.url }}" class="btn-full" style="text-decoration:none;display:block;text-align:center;">Start Shopping →</a>
+      <button onclick="window.print()" class="btn-outline-full" style="margin-top:0.75rem;">Print Gift Card</button>
+    </div>
+
+    <p class="gift-card-note">
+      Use the code above at checkout. It never expires unless noted.
+      <br>Questions? <a href="/pages/contact" style="color:var(--terracotta);">Contact us</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+  function copyCode() {
+    const code = document.getElementById('gift-card-code').innerText.trim();
+    navigator.clipboard.writeText(code).then(() => {
+      const el = document.getElementById('gift-card-code');
+      const orig = el.innerText;
+      el.innerText = 'Copied!';
+      setTimeout(() => { el.innerText = orig; }, 1500);
+    });
+  }
+</script>

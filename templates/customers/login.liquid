@@ -1,0 +1,51 @@
+<div class="customer-hero">
+  <h1>Welcome Back</h1>
+  <p>Sign in to access your orders and account.</p>
+</div>
+
+<div class="customer-container">
+  <div class="customer-box">
+    <h2 class="customer-box-title">Sign In</h2>
+    <p class="customer-box-sub">New here? <a href="/account/register" class="form-link">Create an account →</a></p>
+
+    {% form 'customer_login' %}
+      {% if form.errors %}
+        <div class="form-error">{{ form.errors | default_errors }}</div>
+      {% endif %}
+
+      <div class="form-group">
+        <label for="customer_email" class="form-label">Email</label>
+        <input
+          type="email"
+          name="customer[email]"
+          id="customer_email"
+          class="form-input"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="customer_password" class="form-label">Password</label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="customer_password"
+          class="form-input"
+          placeholder="Your password"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <button type="submit" class="btn-full">Sign In →</button>
+    {% endform %}
+
+    <div class="form-divider"></div>
+
+    <div class="form-footer">
+      <a href="/account/forgot_password" class="form-link">Forgot your password?</a>
+    </div>
+  </div>
+</div>
