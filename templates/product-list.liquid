@@ -1,0 +1,187 @@
+<!-- Product List Hero Banner -->
+<div class="collection-hero">
+  <div class="collection-badge">Business Tools</div>
+  <h1>Shop All Tools</h1>
+  <p>Discover our curated selection of premium business tools, each chosen to optimize your operations and leadership.</p>
+</div>
+
+<!-- Product List Content -->
+<div class="product-list-container">
+  <!-- Business Tools Message -->
+  <div class="product-list-message">
+    <h3>Strategic Selection</h3>
+    <p>
+      We believe in <em>intentional business building</em>. Every product in our collection is selected for its quality, 
+      functionality, and real impact on your operations. This is where strategy meets execution, and where every purchase 
+      becomes an investment in your CEO journey.
+    </p>
+  </div>
+
+  <!-- List Controls -->
+  <div class="list-controls">
+    <div class="list-info">
+      Showing <strong>{{ collection.products.size }}</strong> 
+      {% if collection.products.size == 1 %}
+        product
+      {% else %}
+        products
+      {% endif %}
+    </div>
+    
+    <div class="list-view-toggle">
+      <button class="view-btn active" title="Grid View" onclick="switchView('grid')">⊞</button>
+      <button class="view-btn" title="List View" onclick="switchView('list')">≡</button>
+    </div>
+  </div>
+
+  <!-- Product List -->
+  {% if collection.products.size > 0 %}
+    <div class="product-list" id="products-list">
+      {% for product in collection.products %}
+        <div class="list-item" data-product-id="{{ product.id }}">
+          <!-- Product Image -->
+          <div class="list-item-image">
+            {% if product.featured_image %}
+              <img 
+                src="{{ product.featured_image | img_url: '200x200' }}" 
+                alt="{{ product.featured_image.alt }}"
+              >
+            {% endif %}
+          </div>
+
+          <!-- Product Details -->
+          <div class="list-item-details">
+            {% if product.type %}
+              <div class="list-item-category">{{ product.type }}</div>
+            {% endif %}
+            
+            <h3 class="list-item-title">{{ product.title }}</h3>
+            
+            {% if product.description %}
+              <p class="list-item-desc">
+                {{ product.description | strip_html | truncatewords: 15 }}
+              </p>
+            {% endif %}
+
+            <!-- Tags -->
+            <div class="list-item-tags">
+              {% if product.compare_at_price > product.price %}
+                <span class="tag sale">On Sale</span>
+              {% endif %}
+              
+              {% if product.metafields.custom.is_new %}
+                <span class="tag new">New</span>
+              {% endif %}
+
+              {% if product.metafields.custom.collection_tag %}
+                <span class="tag">{{ product.metafields.custom.collection_tag }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="list-item-price">
+            <div class="list-item-price-main">
+              {{ product.price | money }}
+            </div>
+            {% if product.compare_at_price > product.price %}
+              <div class="list-item-price-compare">
+                {{ product.compare_at_price | money }}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Stock Status -->
+          <div class="list-item-stock {% if product.available %}in-stock{% elsif product.metafields.custom.low_stock %}low-stock{% else %}out-stock{% endif %}">
+            <span class="stock-dot"></span>
+            {% if product.available %}
+              In Stock
+            {% elsif product.metafields.custom.low_stock %}
+              Low Stock
+            {% else %}
+              Out of Stock
+            {% endif %}
+          </div>
+
+          <!-- Actions -->
+          <div class="list-item-actions">
+            <a href="{{ product.url }}" class="btn-list-view">View</a>
+            
+            <form method="post" action="/cart/add" class="add-to-cart-form">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="btn-list-cart">Add</button>
+            </form>
+            
+            <button class="btn-list-heart" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <!-- Empty Collection -->
+    <div class="collection-empty">
+      <h2>No Products Found</h2>
+      <p>This collection is currently empty. Check back soon for new arrivals.</p>
+      <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--warm-gray);">
+        <a href="/" style="color: var(--terracotta); text-decoration: underline;">← Return to Home</a>
+      </p>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  function switchView(viewType) {
+    const buttons = document.querySelectorAll('.view-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const listContainer = document.getElementById('products-list');
+    
+    if (viewType === 'grid') {
+      listContainer.style.display = 'grid';
+      listContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+      listContainer.style.gap = '2.5rem';
+      
+      // Update grid items styling
+      document.querySelectorAll('.list-item').forEach(item => {
+        item.style.display = 'flex';
+        item.style.flexDirection = 'column';
+        item.style.gridColumn = 'auto';
+        item.style.padding = '0';
+        item.style.borderBottom = 'none';
+        item.style.height = '100%';
+      });
+    } else {
+      listContainer.style.display = 'flex';
+      listContainer.style.flexDirection = 'column';
+      
+      // Reset grid items to list styling
+      document.querySelectorAll('.list-item').forEach(item => {
+        item.style.display = 'grid';
+        item.style.gridTemplateColumns = '120px 1.5fr 1fr 0.8fr 0.8fr auto';
+        item.style.padding = '2rem';
+        item.style.borderBottom = '1px solid var(--sand)';
+        item.style.height = 'auto';
+      });
+    }
+    
+    console.log('Switched to ' + viewType + ' view');
+  }
+
+  function toggleWishlist(button, productId) {
+    button.classList.toggle('active');
+    button.style.color = button.classList.contains('active') ? 'var(--rose)' : 'var(--terracotta)';
+    button.style.borderColor = button.classList.contains('active') ? 'var(--rose)' : 'var(--sand)';
+    button.style.backgroundColor = button.classList.contains('active') ? 'rgba(196, 116, 138, 0.1)' : 'var(--cream)';
+    console.log('Product ' + productId + ' wishlist toggled');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Product list page loaded');
+  });
+</script>
+
+<style>
+  .add-to-cart-form { display: flex; }
+</style>

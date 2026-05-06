@@ -1,0 +1,10 @@
+[
+    {
+        "name": "theme_info",
+        "theme_name": "Theme for Cat Ilacad!",
+        "theme_author": "Francis Daray",
+        "theme_version": "1.0.0",
+        "theme_documentation_url": "https://github.com/Shopify/shopify-cli",
+        "theme_support_url": "https://github.com/Shopify/shopify-cli/issues"
+    }
+]

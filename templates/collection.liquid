@@ -1,0 +1,147 @@
+<!-- Collection Hero Banner -->
+<div class="collection-hero">
+  <div class="collection-badge">Business Tools</div>
+  <h1>{{ collection.title }}</h1>
+  <p>
+    {% if collection.description %}
+      {{ collection.description }}
+    {% else %}
+      Curated for CEOs. Selected to optimize your systems, streamline your operations, and take control of your business.
+    {% endif %}
+  </p>
+</div>
+
+<!-- Collection Content -->
+<div class="collection-container">
+  <!-- Mission Message -->
+  <div class="collection-message">
+    <h3>Tools for Your Business</h3>
+    <p>
+      Every product in this collection is designed to help you <em>organize, systematize, and scale</em> your business. 
+      We believe that true success comes from intentional systems and strategic tools. 
+      When you shop here, you're investing in your business infrastructure and taking control of your operations.
+    </p>
+  </div>
+
+  <!-- Collection Controls -->
+  <div class="collection-controls">
+    <div class="collection-info">
+      Showing <strong>{{ collection.products.size }}</strong> 
+      {% if collection.products.size == 1 %}
+        product
+      {% else %}
+        products
+      {% endif %}
+    </div>
+    
+    <div class="collection-sort">
+      <button class="sort-btn active" onclick="sortProducts('featured')">Featured</button>
+      <button class="sort-btn" onclick="sortProducts('price-low')">Price: Low</button>
+      <button class="sort-btn" onclick="sortProducts('price-high')">Price: High</button>
+      <button class="sort-btn" onclick="sortProducts('newest')">Newest</button>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  {% if collection.products.size > 0 %}
+    <div class="collection-grid" id="products-grid">
+      {% for product in collection.products %}
+        <div class="collection-item" data-product-id="{{ product.id }}">
+          <!-- Image with Overlay -->
+          <div class="item-image-wrapper">
+            {% if product.featured_image %}
+              <img 
+                src="{{ product.featured_image | img_url: '500x500' }}" 
+                alt="{{ product.featured_image.alt }}"
+                class="item-image"
+              >
+            {% endif %}
+            
+            {% if product.compare_at_price > product.price %}
+              <div class="item-badge">Sale</div>
+            {% endif %}
+            
+            <div class="item-image-overlay">
+              <a href="{{ product.url }}" class="overlay-btn">View Details</a>
+            </div>
+          </div>
+
+          <!-- Product Info -->
+          <div class="item-info">
+            {% if product.type %}
+              <div class="item-category">{{ product.type }}</div>
+            {% endif %}
+            
+            <h3 class="item-title">{{ product.title }}</h3>
+            
+            {% if product.description %}
+              <p class="item-description">
+                {{ product.description | strip_html | truncatewords: 12 }}
+              </p>
+            {% endif %}
+
+            <!-- Price -->
+            <div class="item-price-row">
+              <span class="item-price">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="item-compare">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+            </div>
+
+            <!-- Add to Cart & Wishlist -->
+            <div class="item-actions">
+              <form method="post" action="/cart/add" class="add-to-cart-form" style="flex: 1;">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn-item-cart">Add to Cart</button>
+              </form>
+              <button class="btn-item-heart" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <!-- Empty Collection -->
+    <div class="collection-empty">
+      <h2>Coming Soon</h2>
+      <p>This collection is currently empty, but something beautiful is on the way.</p>
+      <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--warm-gray);">
+        <a href="/" style="color: var(--terracotta); text-decoration: underline;">← Return to Home</a>
+      </p>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  function sortProducts(sortType) {
+    // Update active button
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    // In a real implementation, this would sort the products
+    console.log('Sorting by:', sortType);
+    
+    // This would typically make an AJAX request to re-sort products
+    // For now, we'll just log the action
+  }
+
+  function toggleWishlist(button, productId) {
+    button.classList.toggle('active');
+    button.style.color = button.classList.contains('active') ? 'var(--rose)' : 'var(--terracotta)';
+    button.style.borderColor = button.classList.contains('active') ? 'var(--rose)' : 'var(--sand)';
+    button.style.backgroundColor = button.classList.contains('active') ? 'rgba(196, 116, 138, 0.1)' : 'var(--cream)';
+    console.log('Product ' + productId + ' wishlist toggled');
+  }
+
+  // Initialize tooltips or other interactive elements
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Collection page loaded');
+  });
+</script>
+
+<style>
+  .add-to-cart-form { display: flex; width: 100%; }
+</style>
