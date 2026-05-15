@@ -680,15 +680,23 @@
   #teaser-popup { display: none; position: fixed; inset: 0; background: rgba(30, 12, 22, 0.65); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; transition: opacity 0.3s ease; }
   #teaser-popup.popup-visible { opacity: 1; }
   #teaser-popup.popup-hiding { opacity: 0; }
-  .popup-card { background: var(--cream); border-radius: 24px; padding: 3rem 2.5rem 2.5rem; max-width: 440px; width: 100%; text-align: center; position: relative; box-shadow: 0 32px 80px rgba(30,12,22,0.25); transform: translateY(20px) scale(0.97); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); }
+  .popup-card { background: var(--cream); border-radius: 24px; overflow: hidden; max-width: 630px; width: 100%; position: relative; display: grid; grid-template-columns: 1fr 260px; box-shadow: 0 32px 80px rgba(30,12,22,0.25); transform: translateY(20px) scale(0.97); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); }
   #teaser-popup.popup-visible .popup-card { transform: translateY(0) scale(1); }
-  .popup-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; color: var(--warm-gray); padding: 0.35rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; }
-  .popup-close:hover { color: var(--charcoal); background: var(--sand); }
+  .popup-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.85); border: none; cursor: pointer; color: var(--warm-gray); padding: 0.35rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; z-index: 2; }
+  .popup-close:hover { color: var(--charcoal); background: white; }
+  .popup-content { padding: 3rem 2.5rem 2.5rem; text-align: center; display: flex; flex-direction: column; justify-content: center; }
   .popup-badge { display: inline-block; background: var(--terracotta-light); color: var(--terracotta-deep); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 100px; margin-bottom: 1.25rem; }
-  .popup-heading { font-family: 'Fraunces', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.85rem; }
+  .popup-heading { font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.85rem; }
   .popup-body { font-size: 0.95rem; color: var(--warm-gray); line-height: 1.7; font-weight: 300; margin-bottom: 2rem; }
   .popup-btn { display: inline-block; background: var(--terracotta); color: white; font-size: 0.9rem; font-weight: 600; padding: 0.85rem 2rem; border-radius: 100px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
   .popup-btn:hover { background: var(--terracotta-deep); transform: translateY(-1px); }
+  .popup-video { position: relative; overflow: hidden; }
+  .popup-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (max-width: 600px) {
+    .popup-card { grid-template-columns: 1fr; max-width: 380px; }
+    .popup-video { height: 220px; }
+    .popup-content { padding: 2rem 1.75rem 1.75rem; }
+  }
 
   /* =========================================
      SCROLL ANIMATIONS
