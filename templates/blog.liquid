@@ -1,7 +1,7 @@
 <div class="blog-hero">
   <div class="hero-badge">✦ {{ blog.title }}</div>
   <h1>{{ blog.title }}</h1>
-  <p>Real insights from 23 years of building. No fluff — just systems, strategy, and the truth about what it takes.</p>
+  <p>Real insights from {{ "now" | date: "%Y" | minus: 2002 }} years of building. No fluff — just systems, strategy, and the truth about what it takes.</p>
 </div>
 
 <div class="blog-container">
@@ -62,7 +62,7 @@
   {% else %}
     <div class="blog-empty">
       <h2>More wisdom coming soon.</h2>
-      <p>Cat is writing. Check back — real insights from 23 years of building take a moment to distil.</p>
+      <p>Cat is writing. Check back — real insights from {{ "now" | date: "%Y" | minus: 2002 }} years of building take a moment to distil.</p>
       <a href="/" class="btn-primary">← Back to Home</a>
     </div>
   {% endif %}
