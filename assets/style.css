@@ -60,6 +60,7 @@
   .flow-content h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem; }
   .flow-content p { font-size: 0.875rem; color: var(--warm-gray); line-height: 1.6; }
   .flow-price { display: inline-block; font-weight: 700; color: var(--terracotta); font-size: 0.9rem; margin-top: 0.4rem; }
+  .flow-cta { display: inline-block; font-weight: 700; color: var(--terracotta); font-size: 0.9rem; margin-top: 0.4rem; }
 
   .step-free .flow-circle { background: var(--sage-light); border-color: var(--sage); color: var(--sage); }
   .step-free .flow-tag { background: var(--sage-light); color: var(--sage); }
