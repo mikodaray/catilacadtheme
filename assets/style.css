@@ -45,8 +45,15 @@
 
   /* FUNNEL FLOW VISUAL */
   .funnel-flow { padding: 4rem 2rem; background: var(--warm-white); }
-  .funnel-flow-inner { max-width: 700px; margin: 0 auto; }
+  .funnel-flow-inner { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 1fr 320px; gap: 4rem; align-items: stretch; }
+  .funnel-flow-left { display: flex; flex-direction: column; }
+  .funnel-flow-right { padding: 3rem 0; display: flex; }
+  .funnel-flow-img { width: 100%; object-fit: cover; object-position: top center; border-radius: 16px; display: block; flex: 1; }
   .flow-title { text-align: center; margin-bottom: 3rem; }
+  @media (max-width: 768px) {
+    .funnel-flow-inner { grid-template-columns: 1fr; }
+    .funnel-flow-right { display: none; }
+  }
   .flow-title .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.5rem; }
   .flow-title h2 { font-family: 'Fraunces', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; }
 
