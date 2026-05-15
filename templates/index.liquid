@@ -83,28 +83,19 @@
 </section>
 
 <!-- ABOUT CAT -->
-<section class="about-section">
-  <div class="about-inner">
-    <div class="about-visual">
-      <div class="about-card">
-        <div class="about-num">{{ "now" | date: "%Y" | minus: 2002 }}</div>
-        <div class="about-num-label">Years building a real business</div>
-        <p style="font-size:0.875rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300;">What I teach isn't from a textbook. It's from {{ "now" | date: "%Y" | minus: 2002 }} years of building Posh Nails — through trial, mistakes, and learning everything the hard way so you don't have to.</p>
-        <div class="about-stat-grid">
-          <div class="about-stat"><div class="about-stat-val">4</div><div class="about-stat-label">Core Systems Built</div></div>
-          <div class="about-stat"><div class="about-stat-val">30</div><div class="about-stat-label">Day Reset Program</div></div>
-          <div class="about-stat"><div class="about-stat-val">1:1</div><div class="about-stat-label">Mentorship Access</div></div>
-          <div class="about-stat"><div class="about-stat-val">Real</div><div class="about-stat-label">Not Theory</div></div>
-        </div>
-      </div>
+<section class="intro-section">
+  <div class="intro-inner">
+    <div class="intro-photo">
+      {%- assign cat_photo = 'cat-photo.jpg' | asset_url -%}
+      <img src="{{ cat_photo }}" alt="Cat Ilacad" class="intro-img" loading="lazy">
     </div>
-    <div class="about-text">
-      <div class="section-label">About Cat</div>
-      <h2>Built from experience.<br>Not just education.</h2>
-      <p>When I was building Posh Nails in the early years, I thought more effort was always the answer. More time, more involvement, more control.</p>
-      <p>It worked — until it didn't. <strong>Everything depended on me.</strong> Every decision, every problem, every detail. It wasn't sustainable.</p>
-      <p>What changed everything wasn't working harder. It was building systems. That's what I bring into everything I teach — and into every mentorship I take on.</p>
-      <p>I built this for the business owner I used to be. <strong>The one who needed structure, not more motivation.</strong></p>
+    <div class="intro-content">
+      <h2 class="intro-heading">Hey, I'm Cat</h2>
+      <p class="intro-script">and you are in the right place</p>
+      <div class="intro-role">CEO &amp; Founder · Posh Nails</div>
+      <div class="intro-divider"></div>
+      <p class="intro-body">If you're here, chances are you're a business owner who's been doing everything — and it's starting to cost you. Maybe you found me through my story, or maybe you were just looking for a way out of the chaos.</p>
+      <p class="intro-body">Either way, you're not here by accident. This space is for someone who's ready to stop surviving their business — and start building something that actually works.</p>
     </div>
   </div>
 </section>
