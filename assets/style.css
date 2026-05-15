@@ -677,6 +677,12 @@
   /* =========================================
      TEASER POPUP
      ========================================= */
+  /* TEASER FLOATING BANNER */
+  #teaser-banner { display: none; position: fixed; right: 0; top: 50%; transform: translateY(-50%) translateX(100%); z-index: 999; background: var(--terracotta); color: white; border: none; cursor: pointer; padding: 0.85rem 0.6rem; border-radius: 10px 0 0 10px; box-shadow: -4px 4px 16px rgba(61,31,46,0.2); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), background 0.2s; }
+  #teaser-banner.banner-visible { display: block; transform: translateY(-50%) translateX(0); }
+  #teaser-banner:hover { background: var(--terracotta-deep); }
+  #teaser-banner span { display: block; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+
   #teaser-popup { display: none; position: fixed; inset: 0; background: rgba(30, 12, 22, 0.65); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; transition: opacity 0.3s ease; }
   #teaser-popup.popup-visible { opacity: 1; }
   #teaser-popup.popup-hiding { opacity: 0; }
@@ -693,9 +699,11 @@
   .popup-video { position: relative; overflow: hidden; }
   .popup-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   @media (max-width: 600px) {
-    .popup-card { grid-template-columns: 1fr; max-width: 380px; }
-    .popup-video { height: 220px; }
-    .popup-content { padding: 2rem 1.75rem 1.75rem; }
+    #teaser-popup { align-items: center; padding: 1rem; }
+    .popup-card { grid-template-columns: 1fr; grid-template-rows: auto 1fr; width: 100%; max-width: 100%; height: 88vh; border-radius: 20px; overflow: hidden; }
+    .popup-content { order: 1; padding: 2rem 1.5rem 1.5rem; flex-shrink: 0; }
+    .popup-video { order: 2; overflow: hidden; min-height: 0; }
+    .popup-video video { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; }
   }
 
   /* =========================================

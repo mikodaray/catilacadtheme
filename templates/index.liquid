@@ -301,6 +301,11 @@
   <a href="#course" class="btn-white" data-animate="scale-up" data-delay="2">Start With the Course →</a>
 </section>
 
+<!-- TEASER FLOATING BANNER -->
+<button id="teaser-banner" aria-label="Open teaser popup">
+  <span>Get your teaser!</span>
+</button>
+
 <!-- TEASER POPUP -->
 <div id="teaser-popup" role="dialog" aria-modal="true" aria-labelledby="teaser-heading">
   <div class="popup-card">
@@ -331,14 +336,11 @@
     if (window.location.href.indexOf('promo=true') === -1) return;
 
     var popup = document.getElementById('teaser-popup');
+    var banner = document.getElementById('teaser-banner');
 
-    function closePopup() {
-      popup.classList.remove('popup-visible');
-      popup.classList.add('popup-hiding');
-      setTimeout(function () { popup.style.display = 'none'; }, 300);
-    }
-
-    setTimeout(function () {
+    function openPopup() {
+      banner.classList.remove('banner-visible');
+      popup.classList.remove('popup-hiding');
       popup.style.display = 'flex';
       requestAnimationFrame(function () { popup.classList.add('popup-visible'); });
       var video = popup.querySelector('video');
@@ -348,11 +350,23 @@
           video.play().catch(function () {});
         });
       }
-    }, 1000);
+    }
+
+    function closePopup() {
+      popup.classList.remove('popup-visible');
+      popup.classList.add('popup-hiding');
+      setTimeout(function () {
+        popup.style.display = 'none';
+        banner.classList.add('banner-visible');
+      }, 300);
+    }
+
+    setTimeout(openPopup, 1000);
 
     document.getElementById('teaser-close').addEventListener('click', closePopup);
     popup.addEventListener('click', function (e) {
       if (e.target === popup) closePopup();
     });
+    banner.addEventListener('click', openPopup);
   })();
 </script>
