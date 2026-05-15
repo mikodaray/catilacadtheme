@@ -1,0 +1,62 @@
+{% comment %}
+  Renders <head> meta tags: title, description, canonical, Open Graph,
+  and Twitter cards.
+
+  Image fallback chain (most → least specific):
+    page_image  →  product/article image  →  settings.share_image  →  settings.logo
+
+  Usage:
+    {% render 'meta-tags' %}
+{% endcomment %}
+
+{%- liquid
+  assign og_title = page_title
+
+  if request.page_type == 'product' and product
+    assign og_description = product.description | strip_html | truncatewords: 30 | escape
+    assign og_image = product.featured_image
+    assign og_type = 'product'
+  elsif request.page_type == 'article' and article
+    assign og_description = article.excerpt_or_content | strip_html | truncatewords: 30 | escape
+    assign og_image = article.image
+    assign og_type = 'article'
+  else
+    assign og_description = page_description | default: shop.description | escape
+    assign og_image = page_image
+    assign og_type = 'website'
+  endif
+
+  unless og_image
+    assign og_image = settings.share_image
+  endunless
+  unless og_image
+    assign og_image = settings.logo
+  endunless
+
+  assign canonical = canonical_url | default: shop.url
+-%}
+
+<title>{{ page_title }}{% if current_tags %} – {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} – {{ 'general.meta.page_number' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
+
+<meta name="description" content="{{ og_description }}">
+<link rel="canonical" href="{{ canonical }}">
+
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_description }}">
+<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' | default: 'en_US' }}">
+{%- if og_image -%}
+  <meta property="og:image" content="{{ og_image | image_url: width: 1200 | prepend: 'https:' }}">
+  <meta property="og:image:secure_url" content="{{ og_image | image_url: width: 1200 | prepend: 'https:' }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="{{ 1200 | divided_by: og_image.aspect_ratio | round }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_description }}">
+{%- if og_image -%}
+  <meta name="twitter:image" content="{{ og_image | image_url: width: 1200 | prepend: 'https:' }}">
+{%- endif -%}

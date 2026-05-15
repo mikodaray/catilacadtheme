@@ -1,11 +1,9 @@
-<div class="not-found">
-  <div class="not-found-inner">
-    <div class="not-found-number">404</div>
-    <h1>Page not found.</h1>
-    <p>The page you're looking for doesn't exist — but your business systems can. Let's get you back on track.</p>
-    <div class="not-found-links">
-      <a href="/" class="btn-primary">← Back to Home</a>
-      <a href="/collections/all" class="btn-white" style="background:var(--sand);color:var(--charcoal);">Browse Products</a>
-    </div>
+<section class="empty-state page-width">
+  <p class="eyebrow">404 · Page not found</p>
+  <h1 class="empty-state__title">{{ '404.title' | t | default: "We can't find that page." }}</h1>
+  <p class="empty-state__subtitle">{{ '404.subtext' | t | default: "The page you're looking for doesn't exist — but plenty of others do. Let's get you back on track." }}</p>
+  <div class="empty-state__actions">
+    <a href="{{ routes.root_url }}" class="button button--primary">{{ '404.link' | t | default: 'Return home' }}</a>
+    <a href="{{ routes.all_products_collection_url }}" class="button button--secondary">{{ 'collections.general.all_products' | t }}</a>
   </div>
-</div>
+</section>

@@ -1,0 +1,60 @@
+{% comment %}
+  Renders a product card (image, title, price, optional vendor).
+
+  Accepts:
+  - product: {Product} required.
+  - show_vendor: {Boolean} display product.vendor (default false).
+  - sizes: {String} sizes attribute for responsive image.
+  - class: {String} extra wrapper class.
+
+  Usage:
+    {% render 'product-card', product: product, show_vendor: true %}
+{% endcomment %}
+
+{%- liquid
+  assign show_vendor_flag = show_vendor | default: false
+  assign image_sizes = sizes | default: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw'
+  assign extra_class = class | default: ''
+  assign card_image = product.featured_image
+-%}
+
+<article class="product-card {{ extra_class }}">
+  <a class="product-card__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    <div class="product-card__media">
+      {% render 'responsive-image',
+        image: card_image,
+        alt: product.featured_image.alt,
+        sizes: image_sizes,
+        aspect_ratio: 1
+      %}
+      {%- if product.compare_at_price > product.price and product.available -%}
+        <span class="product-card__badge">{{ 'products.product.on_sale' | t }}</span>
+      {%- elsif product.available == false -%}
+        <span class="product-card__badge product-card__badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+      {%- endif -%}
+    </div>
+    <div class="product-card__info">
+      {%- if show_vendor_flag and product.vendor != blank -%}
+        <div class="product-card__vendor">{{ product.vendor }}</div>
+      {%- endif -%}
+      <h3 class="product-card__title">{{ product.title }}</h3>
+      {% render 'price', product: product, use_variant: false, show_compare_at: true %}
+
+      {%- comment %}
+        Review-badge placeholder. Hidden when no provider is configured at the
+        theme level. Judge.me populates `.jdgm-prev-badge` automatically; Yotpo
+        populates `.yotpo-bottomline`. Both selectors get .product-card__reviews
+        as a wrapper for consistent spacing.
+      {% endcomment -%}
+      {%- if settings.reviews_provider == 'judgeme' -%}
+        <div class="product-card__reviews">
+          <div class="jdgm-widget jdgm-prev-badge" data-id="{{ product.id }}"></div>
+        </div>
+      {%- elsif settings.reviews_provider == 'yotpo' -%}
+        <div class="product-card__reviews">
+          <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
+        </div>
+      {%- endif -%}
+    </div>
+  </a>
+</article>

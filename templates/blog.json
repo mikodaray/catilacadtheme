@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "show_featured": true,
+        "per_page": 9,
+        "columns_desktop": 3
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,32 @@
+{% comment %}
+  Cart drawer — slide-out shopping cart. Works alongside <cart-drawer> custom
+  element in assets/theme-cart-drawer.js. The drawer's body re-renders entirely
+  from /cart.js whenever it opens or the cart changes; everything outside
+  [data-cart-body] is preserved between renders.
+
+  Render this snippet near </body> in layout/theme.liquid.
+{% endcomment %}
+
+<cart-drawer aria-hidden="true">
+  <div class="cart-drawer__inner">
+    <header class="cart-drawer__header">
+      <h2 class="cart-drawer__title">{{ 'cart.general.title' | t }}</h2>
+      <button type="button" class="cart-drawer__close" data-cart-close aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </header>
+
+    {% render 'shipping-bar' %}
+
+    <div data-cart-body class="cart-drawer__body"></div>
+
+    {%- comment %} Mini-upsell — one product picked from a configured collection. {% endcomment -%}
+    {%- assign upsell_collection_handle = settings.cart_upsell_collection -%}
+    {%- if upsell_collection_handle != blank -%}
+      <div class="cart-drawer__upsell" data-cart-drawer-upsell data-collection="{{ upsell_collection_handle }}" hidden>
+        <p class="cart-drawer__upsell-eyebrow">{{ 'cart.upsell.heading' | t | default: 'You might also like' }}</p>
+        <div data-cart-drawer-upsell-body></div>
+      </div>
+    {%- endif -%}
+  </div>
+</cart-drawer>

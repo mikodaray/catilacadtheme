@@ -1,0 +1,130 @@
+{% comment %}
+  Recently viewed products.
+
+  Reads the last N product handles from localStorage (key: 'recently-viewed-handles'),
+  fetches each via /products/{handle}.js, and renders a product-card grid.
+
+  Skips:
+    - The current product (when on a PDP)
+    - Handles that 404 (deleted or unpublished)
+
+  Hides itself entirely when the resulting list is empty.
+
+  Accepts:
+  - heading: {String} optional — the section header.
+  - columns_desktop: {Number} default 4.
+  - limit: {Number} default 12.
+{% endcomment %}
+
+{%- liquid
+  assign rv_heading = heading | default: 'Recently viewed'
+  assign rv_cols = columns_desktop | default: 4
+  assign rv_limit = limit | default: 12
+  assign current_handle = product.handle | default: ''
+-%}
+
+<recently-viewed
+  class="recently-viewed"
+  data-current-handle="{{ current_handle }}"
+  data-limit="{{ rv_limit }}"
+  data-columns="{{ rv_cols }}"
+  hidden
+>
+  <div class="page-width">
+    <h2 class="section-header__heading recently-viewed__heading">{{ rv_heading | escape }}</h2>
+    <ul class="product-grid product-grid--columns-{{ rv_cols }}" data-recently-viewed-grid>
+      {%- comment %} Skeleton placeholders shown until cards hydrate. {% endcomment -%}
+      {%- for i in (1..rv_limit) -%}
+        <li class="product-grid__item" data-skeleton>
+          <div class="product-card">
+            <div class="product-card__media skeleton" style="aspect-ratio:1/1;"></div>
+            <div class="product-card__info">
+              <div class="skeleton" style="height:1em;width:60%;margin-top:0.85rem;"></div>
+              <div class="skeleton" style="height:1em;width:30%;margin-top:0.5rem;"></div>
+            </div>
+          </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</recently-viewed>
+
+<template data-recently-viewed-template>
+  <li class="product-grid__item">
+    <article class="product-card">
+      <a class="product-card__link" data-link>
+        <div class="product-card__media">
+          <img data-img loading="lazy" decoding="async" alt="">
+        </div>
+        <div class="product-card__info">
+          <h3 class="product-card__title" data-title></h3>
+          <div class="price"><span class="price__current" data-price></span></div>
+        </div>
+      </a>
+    </article>
+  </li>
+</template>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'recently-viewed-handles';
+    const root = document.currentScript.previousElementSibling.previousElementSibling;
+    if (!root || root.tagName.toLowerCase() !== 'recently-viewed') return;
+    const grid = root.querySelector('[data-recently-viewed-grid]');
+    const tmpl = document.querySelector('template[data-recently-viewed-template]');
+    if (!grid || !tmpl) return;
+
+    let handles;
+    try { handles = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    catch (_) { handles = []; }
+
+    const currentHandle = root.dataset.currentHandle || '';
+    const limit = parseInt(root.dataset.limit, 10) || 12;
+    handles = handles.filter((h) => h && h !== currentHandle).slice(0, limit);
+
+    if (!handles.length) { root.remove(); return; }
+
+    function moneyFormat(cents) {
+      if (typeof window.Theme?.formatMoney === 'function') return window.Theme.formatMoney(cents);
+      return `$${(cents / 100).toFixed(2)}`;
+    }
+
+    Promise.allSettled(handles.map((h) => fetch(`/products/${encodeURIComponent(h)}.js`)
+      .then((r) => r.ok ? r.json() : Promise.reject(r.status))))
+      .then((results) => {
+        const products = results
+          .filter((r) => r.status === 'fulfilled')
+          .map((r) => r.value);
+
+        // Drop skeletons.
+        grid.querySelectorAll('[data-skeleton]').forEach((s) => s.remove());
+
+        if (!products.length) { root.remove(); return; }
+
+        for (const p of products) {
+          const node = tmpl.content.firstElementChild.cloneNode(true);
+          const link = node.querySelector('[data-link]');
+          const img = node.querySelector('[data-img]');
+          const title = node.querySelector('[data-title]');
+          const price = node.querySelector('[data-price]');
+
+          link.href = p.url;
+          link.setAttribute('aria-label', p.title);
+          if (p.featured_image) {
+            img.src = p.featured_image.replace(/(\.[a-z]+)(\?.*)?$/i, '_400x$1$2');
+            img.alt = p.title;
+            img.width = 400;
+            img.height = 400;
+          } else {
+            img.remove();
+          }
+          title.textContent = p.title;
+          price.textContent = moneyFormat(p.price);
+
+          grid.appendChild(node);
+        }
+
+        root.hidden = false;
+      })
+      .catch(() => root.remove());
+  })();
+</script>

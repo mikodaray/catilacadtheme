@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "cat-ilacad-landing",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

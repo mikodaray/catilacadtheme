@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "hero_full_bleed": false,
+        "show_subtitle": false,
+        "drop_cap": true,
+        "show_related": true
+      }
+    }
+  },
+  "order": ["main"]
+}

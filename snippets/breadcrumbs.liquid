@@ -1,0 +1,56 @@
+{% comment %}
+  Renders contextual breadcrumbs based on the current template.
+
+  Usage:
+    {% render 'breadcrumbs' %}
+{% endcomment %}
+
+<nav class="breadcrumbs" aria-label="breadcrumbs" role="navigation">
+  <ol class="breadcrumbs__list">
+    <li class="breadcrumbs__item">
+      <a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+    </li>
+
+    {%- case template.name -%}
+      {%- when 'product' -%}
+        {%- if collection.url -%}
+          <li class="breadcrumbs__item">
+            <a href="{{ collection.url }}">{{ collection.title }}</a>
+          </li>
+        {%- endif -%}
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+          <span>{{ product.title }}</span>
+        </li>
+
+      {%- when 'collection' -%}
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+          <span>{{ collection.title }}</span>
+        </li>
+
+      {%- when 'article' -%}
+        {%- if blog.url -%}
+          <li class="breadcrumbs__item">
+            <a href="{{ blog.url }}">{{ blog.title }}</a>
+          </li>
+        {%- endif -%}
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+          <span>{{ article.title }}</span>
+        </li>
+
+      {%- when 'blog' -%}
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+          <span>{{ blog.title }}</span>
+        </li>
+
+      {%- when 'page' -%}
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+          <span>{{ page.title }}</span>
+        </li>
+
+      {%- when 'search' -%}
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+          <span>{{ 'search.title' | t }}</span>
+        </li>
+    {%- endcase -%}
+  </ol>
+</nav>

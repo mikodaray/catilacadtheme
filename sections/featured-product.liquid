@@ -1,0 +1,101 @@
+{% comment %}
+  Featured product — full PDP-style block (gallery, title, price, variant picker, AT cart).
+  Wrapped in <variant-picker> custom element for client-side variant updates.
+{% endcomment %}
+
+{%- liquid
+  assign chosen = all_products[section.settings.product]
+  assign current_variant = chosen.selected_or_first_available_variant
+-%}
+
+<section class="featured-product">
+  <div class="page-width featured-product__grid">
+    {%- if chosen != blank -%}
+      <div class="featured-product__media">
+        {% render 'responsive-image',
+          image: chosen.featured_image,
+          sizes: '(min-width: 750px) 50vw, 100vw'
+        %}
+      </div>
+
+      <div class="featured-product__info">
+        {%- if chosen.vendor != blank -%}
+          <div class="featured-product__vendor">{{ chosen.vendor }}</div>
+        {%- endif -%}
+        <h2 class="featured-product__title">{{ chosen.title | escape }}</h2>
+
+        <div class="featured-product__price" data-price-wrap>
+          {% render 'price', product: chosen, use_variant: true, show_compare_at: true, show_badge: true %}
+        </div>
+
+        <variant-picker data-product-handle="{{ chosen.handle }}" data-section="{{ section.id }}">
+          <form
+            method="post"
+            action="{{ routes.cart_add_url }}"
+            is="cart-form"
+            class="product-form"
+            data-product-form
+          >
+            <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+            {%- unless chosen.has_only_default_variant -%}
+              {%- for option in chosen.options_with_values -%}
+                <fieldset class="variant-picker__option">
+                  <legend>{{ option.name }}</legend>
+                  {%- for value in option.values -%}
+                    <label class="variant-picker__value">
+                      <input
+                        type="radio"
+                        name="option-{{ forloop.parentloop.index0 }}"
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                      >
+                      <span>{{ value }}</span>
+                    </label>
+                  {%- endfor -%}
+                </fieldset>
+              {%- endfor -%}
+            {%- endunless -%}
+
+            <button
+              type="submit"
+              class="button button--primary product-form__submit"
+              {% unless current_variant.available %}disabled{% endunless %}
+              data-add-button
+            >
+              {%- if current_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+          </form>
+        </variant-picker>
+
+        {%- if section.settings.show_description and chosen.description != blank -%}
+          <div class="featured-product__description rte">{{ chosen.description }}</div>
+        {%- endif -%}
+
+        {% comment %} JSON variant data consumed by variant-picker custom element. {% endcomment %}
+        <script type="application/json" data-variant-data>
+          {{ chosen.variants | json }}
+        </script>
+      </div>
+    {%- else -%}
+      <p class="featured-product__empty">{{ 'sections.featured_product.empty' | t | default: 'Select a product to display.' }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "tag": "section",
+  "class": "section section--featured-product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "checkbox", "id": "show_description", "label": "Show description", "default": true }
+  ],
+  "presets": [{ "name": "Featured product" }]
+}
+{% endschema %}

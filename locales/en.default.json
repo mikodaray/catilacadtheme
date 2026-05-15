@@ -1,8 +1,16 @@
 {
   "general": {
     "continue_shopping": "Continue Shopping",
+    "skip_to_content": "Skip to content",
     "breadcrumb": {
       "home": "Home"
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page_number": "Page {{ page }}"
+    },
+    "social": {
+      "follow_us": "Follow us"
     }
   },
   "products": {
@@ -11,11 +19,21 @@
       "sold_out": "Sold Out",
       "unavailable": "Unavailable",
       "on_sale": "Sale",
+      "from_price_html": "From {{ price }}",
+      "vendor": "Vendor",
+      "view_full_details": "View full details",
+      "share": "Share",
       "quantity": {
         "label": "Quantity",
         "increase": "Increase quantity",
         "decrease": "Decrease quantity"
       }
+    },
+    "facets": {
+      "filter_by_label": "Filter:",
+      "sort_by_label": "Sort by:",
+      "clear": "Clear",
+      "clear_all": "Clear all"
     }
   },
   "cart": {
@@ -30,7 +48,8 @@
       "total": "Total",
       "checkout": "Checkout",
       "continue_browsing": "Continue browsing",
-      "update": "Update cart"
+      "update": "Update cart",
+      "view_cart": "View cart"
     },
     "label": {
       "item": "Item",
@@ -43,10 +62,12 @@
     "general": {
       "title": "Collections",
       "all_products": "All Products",
+      "view_all": "View all",
       "items_with_count": {
         "one": "1 product",
         "other": "{{ count }} products"
-      }
+      },
+      "no_matches": "No products found"
     }
   },
   "blogs": {
@@ -114,8 +135,17 @@
       "set_default": "Set as default"
     }
   },
+  "newsletter": {
+    "heading": "Subscribe to our newsletter",
+    "subheading": "Be the first to hear about new launches and exclusive offers.",
+    "email_placeholder": "Email address",
+    "button_label": "Subscribe",
+    "success": "Thanks for subscribing!",
+    "error": "Something went wrong. Please try again."
+  },
   "sections": {
     "header": {
+      "menu": "Menu",
       "cart_count": {
         "one": "1 item",
         "other": "{{ count }} items"
@@ -123,6 +153,34 @@
     },
     "footer": {
       "copyright": "© {{ year }} {{ shop }}"
+    },
+    "hero": {
+      "default_heading": "Welcome",
+      "default_subheading": "A short tagline that introduces your shop."
+    },
+    "featured_collection": {
+      "view_all": "View all",
+      "empty": "Select a collection to display products."
+    },
+    "featured_product": {
+      "empty": "Select a product to display."
+    },
+    "testimonials": {
+      "default_heading": "What our customers say"
+    },
+    "logo_list": {
+      "default_heading": "As featured in"
+    },
+    "video": {
+      "play": "Play video",
+      "pause": "Pause video",
+      "empty": "Add a video to display here."
+    },
+    "cart": {
+      "empty": "Your cart is empty.",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout"
     }
   },
   "gift_cards": {
@@ -143,11 +201,22 @@
       "other": "{{ count }} results for \"{{ terms }}\""
     },
     "title": "Search",
-    "placeholder": "Search"
+    "placeholder": "Search",
+    "predictive": {
+      "no_results": "No matching results.",
+      "view_all_results": "View all results"
+    }
   },
   "404": {
     "title": "Page not found",
     "subtext": "The page you requested does not exist.",
     "link": "Return home"
+  },
+  "accessibility": {
+    "close": "Close",
+    "menu": "Menu",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading…"
   }
 }

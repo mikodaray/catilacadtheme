@@ -1,0 +1,49 @@
+{% comment %}
+  Image banner — single full-width image with optional caption overlay.
+{% endcomment %}
+
+<section
+  class="image-banner image-banner--{{ section.settings.height }}"
+  style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+>
+  {%- if section.settings.image != blank -%}
+    <div class="image-banner__media">
+      {% render 'responsive-image', image: section.settings.image, sizes: '100vw' %}
+      <div class="image-banner__overlay"></div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.caption != blank -%}
+    <div class="image-banner__caption">{{ section.settings.caption | escape }}</div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Image banner",
+  "tag": "section",
+  "class": "section section--image-banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Banner height",
+      "default": "medium",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0, "max": 90, "step": 5, "default": 0, "unit": "%"
+    },
+    { "type": "text", "id": "caption", "label": "Caption (optional)" }
+  ],
+  "presets": [{ "name": "Image banner" }]
+}
+{% endschema %}

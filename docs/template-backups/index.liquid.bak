@@ -1,0 +1,307 @@
+<!-- HERO -->
+<section class="funnel-hero">
+  <div class="hero-badge">✦ The Cat Ilacad Ecosystem</div>
+  <h1>One path.<br>Three ways to go <em>deeper.</em></h1>
+  <p>Start with free content. Build your systems with the course. Go further with 1-on-1 mentorship. Every step is designed to move your business forward — regardless of your industry, your team size, or where you are right now.</p>
+  <div class="hero-author">by <span>Cat Ilacad</span> · 23 years building Posh Nails</div>
+</section>
+
+<!-- FUNNEL FLOW -->
+<section class="funnel-flow">
+  <div class="funnel-flow-inner">
+    <div class="flow-title">
+      <div class="section-label">Your Journey</div>
+      <h2>How the ecosystem works</h2>
+    </div>
+    <div class="flow-steps">
+
+      <div class="flow-step step-free">
+        <div class="flow-step-left">
+          <div class="flow-circle">📱</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <span class="flow-tag">Step 1 · Free</span>
+          <h3>Free Content on Instagram</h3>
+          <p>Follow @catilacad for daily business systems content — frameworks, mindset shifts, and real insights from 23 years of building. No cost. Just value.</p>
+        </div>
+      </div>
+
+      <div class="flow-step step-course">
+        <div class="flow-step-left">
+          <div class="flow-circle">📘</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <span class="flow-tag">Step 2 · Course</span>
+          <h3>CEO Systems Method™</h3>
+          <p>The 30-day playbook that builds all 4 systems your business needs. Self-paced, structured, and built from real experience — not theory.</p>
+          <span class="flow-price">₱4,999 · Lifetime Access</span>
+        </div>
+      </div>
+
+      <div class="flow-step step-quick">
+        <div class="flow-step-left">
+          <div class="flow-circle">⚡</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <span class="flow-tag">Step 3 · Mentorship Entry</span>
+          <h3>Quick Clarity Mentorship</h3>
+          <p>A focused 60-min session for your biggest roadblock. Perfect first step into working with Cat directly.</p>
+          <span class="flow-price">₱8,500 / session</span>
+        </div>
+      </div>
+
+      <div class="flow-step step-sprint">
+        <div class="flow-step-left">
+          <div class="flow-circle">🚀</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <span class="flow-tag">Step 4 · Mentorship Package</span>
+          <h3>The Business Sprint</h3>
+          <p>4 weeks of focused momentum. Weekly 90-min calls + action plans. For those ready to move fast with structure.</p>
+          <span class="flow-price">₱40,000 · 4 weeks</span>
+        </div>
+      </div>
+
+      <div class="flow-step step-dream">
+        <div class="flow-step-left">
+          <div class="flow-circle">👑</div>
+        </div>
+        <div class="flow-content">
+          <span class="flow-tag">Step 5 · Premium</span>
+          <h3>Dream Business Mentorship</h3>
+          <p>The highest level of access to Cat. Strategy, execution, growth, and her network. For serious entrepreneurs ready to go all in.</p>
+          <span class="flow-price">₱100,000 · 5 months</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT CAT -->
+<section class="about-section">
+  <div class="about-inner">
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="about-num">23</div>
+        <div class="about-num-label">Years building a real business</div>
+        <p style="font-size:0.875rem;color:rgba(255,255,255,0.5);line-height:1.7;font-weight:300;">What I teach isn't from a textbook. It's from 23 years of building Posh Nails — through trial, mistakes, and learning everything the hard way so you don't have to.</p>
+        <div class="about-stat-grid">
+          <div class="about-stat"><div class="about-stat-val">4</div><div class="about-stat-label">Core Systems Built</div></div>
+          <div class="about-stat"><div class="about-stat-val">30</div><div class="about-stat-label">Day Reset Program</div></div>
+          <div class="about-stat"><div class="about-stat-val">1:1</div><div class="about-stat-label">Mentorship Access</div></div>
+          <div class="about-stat"><div class="about-stat-val">Real</div><div class="about-stat-label">Not Theory</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">About Cat</div>
+      <h2>Built from experience.<br>Not just education.</h2>
+      <p>When I was building Posh Nails in the early years, I thought more effort was always the answer. More time, more involvement, more control.</p>
+      <p>It worked — until it didn't. <strong>Everything depended on me.</strong> Every decision, every problem, every detail. It wasn't sustainable.</p>
+      <p>What changed everything wasn't working harder. It was building systems. That's what I bring into everything I teach — and into every mentorship I take on.</p>
+      <p>I built this for the business owner I used to be. <strong>The one who needed structure, not more motivation.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- COURSE -->
+<section class="course-section" id="course">
+  <div class="course-inner">
+    <div class="section-label">Step 2 · The Foundation</div>
+    <h2 class="section-title">CEO Systems Method™</h2>
+    <p class="section-sub">Your 30-day business reset. Build the 4 systems every business needs — one week at a time.</p>
+
+    <div class="course-card">
+      <div class="course-left">
+        <h3>CEO Systems Method™</h3>
+        <p class="course-tagline">The step-by-step playbook for turning your daily chaos into 4 clear, repeatable systems — so you can finally lead your business instead of surviving it. Built for any business owner, at any stage, in any industry.</p>
+        <div class="course-includes">
+          <div class="include-item">30-day guided workbook (PDF + Notion)</div>
+          <div class="include-item">All 4S Framework™ templates and daily prompts</div>
+          <div class="include-item">All 4S Framework™ templates</div>
+          <div class="include-item">Simple SOP™ starter kit</div>
+          <div class="include-item">CEO Dashboard tracker</div>
+          <div class="include-item">Lifetime access + free updates</div>
+        </div>
+        <div class="course-price-block">
+          <div class="old-price">Regular price ₱6,999</div>
+          <div class="course-price">₱4,999</div>
+          <div class="price-note">One-time · Instant access · Lifetime</div>
+          <a href="/products/ceo-systems-method™-30-day-business-playbook/" class="btn-primary">Enroll Now →</a>
+        </div>
+      </div>
+      <div class="course-right">
+        <div class="system-pill">
+          <div class="system-pill-num">Week 1 · Sales System™</div>
+          <div class="system-pill-name">Ideal Client Filter™ + Hero Offer™</div>
+          <div class="system-pill-desc">How you attract, convert, and retain clients consistently</div>
+        </div>
+        <div class="system-pill">
+          <div class="system-pill-num">Week 2 · No-Think System™</div>
+          <div class="system-pill-name">SOPs + Weekly Rhythm™ + Checklists</div>
+          <div class="system-pill-desc">How your business runs daily without constant decision-making</div>
+        </div>
+        <div class="system-pill">
+          <div class="system-pill-num">Week 3 · Spend System™</div>
+          <div class="system-pill-name">Pricing + Profit Awareness + Income Tracker</div>
+          <div class="system-pill-desc">How you earn, track, and actually keep your money</div>
+        </div>
+        <div class="system-pill">
+          <div class="system-pill-num">Week 4 · CEO Shift™</div>
+          <div class="system-pill-name">Bottleneck Break™ + Delegation Filter™</div>
+          <div class="system-pill-desc">How your business grows without depending on you for everything</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORSHIP -->
+<section class="mentorship-section" id="mentorship">
+  <div class="mentorship-inner">
+    <div class="section-label">Steps 3–5 · Go Deeper</div>
+    <h2 class="section-title">1-on-1 Mentorship with Cat</h2>
+    <p class="section-sub">For those who want personalized guidance, direct access, and real accountability. Choose the level that fits where you are right now.</p>
+
+    <div class="mentorship-grid">
+
+      <!-- QUICK CLARITY -->
+      <div class="mentorship-card card-quick">
+        <span class="card-badge">Entry · 1 Session</span>
+        <div class="card-name">Quick Clarity Mentorship</div>
+        <div class="card-price">₱8,500</div>
+        <div class="card-duration">60-minute Zoom session</div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="card-feature"><span class="card-check">✓</span>Deep dive into your biggest roadblock</div>
+          <div class="card-feature"><span class="card-check">✓</span>Focused 60-min 1:1 Zoom with Cat</div>
+          <div class="card-feature"><span class="card-check">✓</span>Follow-up support after the call</div>
+          <div class="card-feature"><span class="card-check">✓</span>You won't be left figuring it out alone</div>
+        </div>
+        <a href="/products/quick-clarity-mentorship" class="card-btn">Book a Session →</a>
+      </div>
+
+      <!-- BUSINESS SPRINT -->
+      <div class="mentorship-card card-sprint">
+        <div class="most-popular">Most Popular</div>
+        <span class="card-badge">4-Week Package</span>
+        <div class="card-name">The Business Sprint</div>
+        <div class="card-price">₱40,000</div>
+        <div class="card-duration">4 × 90-min weekly Zoom calls</div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="card-feature"><span class="card-check">✓</span>4 weekly 90-min 1:1 calls with Cat</div>
+          <div class="card-feature"><span class="card-check">✓</span>Personalized action plans each week</div>
+          <div class="card-feature"><span class="card-check">✓</span>Real progress in a short-term container</div>
+          <div class="card-feature"><span class="card-check">✓</span>Clarity and consistency for 4 weeks</div>
+          <div class="card-feature"><span class="card-check">✓</span>Move fast — with structure</div>
+        </div>
+        <a href="YOUR_BOOKING_LINK" class="card-btn">Apply for the Sprint →</a>
+      </div>
+
+      <!-- DREAM BUSINESS -->
+      <div class="mentorship-card card-dream">
+        <span class="card-badge">Premium · 5 Months</span>
+        <div class="card-name">Dream Business Mentorship</div>
+        <div class="card-price">₱100,000</div>
+        <div class="card-duration">5 × 120-min sessions over 5 months</div>
+        <div class="card-divider"></div>
+        <div class="card-features">
+          <div class="card-feature"><span class="card-check">✓</span>5 deep-dive 120-min sessions with Cat</div>
+          <div class="card-feature"><span class="card-check">✓</span>Strategy, execution, and growth focus</div>
+          <div class="card-feature"><span class="card-check">✓</span>High-touch, personalized guidance</div>
+          <div class="card-feature"><span class="card-check">✓</span>Access to Cat's network and insights</div>
+          <div class="card-feature"><span class="card-check">✓</span>For serious entrepreneurs only</div>
+        </div>
+        <a href="YOUR_BOOKING_LINK" class="card-btn">Apply Now →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMATION BLOCK -->
+<section style="padding:5rem 2rem;background:var(--charcoal);">
+  <div style="max-width:900px;margin:0 auto;">
+    <div class="section-label" style="color:var(--terracotta);text-align:center;">The Real Shift</div>
+    <h2 style="font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;letter-spacing:-0.02em;color:var(--cream);text-align:center;margin-bottom:3rem;">Where you are now.<br>Where this takes you.</h2>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:center;">
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:0.25rem;">Before</div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem 1.25rem;font-size:0.875rem;color:rgba(255,255,255,0.45);text-decoration:line-through;">Reacting to everything daily</div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem 1.25rem;font-size:0.875rem;color:rgba(255,255,255,0.45);text-decoration:line-through;">Guessing what to do next</div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem 1.25rem;font-size:0.875rem;color:rgba(255,255,255,0.45);text-decoration:line-through;">Doing everything yourself</div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem 1.25rem;font-size:0.875rem;color:rgba(255,255,255,0.45);text-decoration:line-through;">Busy but not in control</div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem 1.25rem;font-size:0.875rem;color:rgba(255,255,255,0.45);text-decoration:line-through;">Inconsistent income every month</div>
+      </div>
+      <div style="font-size:1.5rem;color:var(--terracotta);text-align:center;">→</div>
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--terracotta);margin-bottom:0.25rem;">After</div>
+        <div style="background:rgba(196,116,138,0.1);border:1px solid rgba(196,116,138,0.25);border-left:3px solid var(--terracotta);border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:0.875rem;color:var(--cream);font-weight:500;">Structured systems that run without you</div>
+        <div style="background:rgba(196,116,138,0.1);border:1px solid rgba(196,116,138,0.25);border-left:3px solid var(--terracotta);border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:0.875rem;color:var(--cream);font-weight:500;">Knowing exactly what happens next</div>
+        <div style="background:rgba(196,116,138,0.1);border:1px solid rgba(196,116,138,0.25);border-left:3px solid var(--terracotta);border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:0.875rem;color:var(--cream);font-weight:500;">Delegating with clarity and confidence</div>
+        <div style="background:rgba(196,116,138,0.1);border:1px solid rgba(196,116,138,0.25);border-left:3px solid var(--terracotta);border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:0.875rem;color:var(--cream);font-weight:500;">Leading your business, not surviving it</div>
+        <div style="background:rgba(196,116,138,0.1);border:1px solid rgba(196,116,138,0.25);border-left:3px solid var(--terracotta);border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:0.875rem;color:var(--cream);font-weight:500;">Predictable, repeatable income</div>
+      </div>
+    </div>
+    <div style="margin-top:3rem;text-align:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:2rem;">
+      <p style="font-family:'Fraunces',serif;font-size:1.2rem;font-style:italic;color:var(--cream);font-weight:300;line-height:1.6;max-width:560px;margin:0 auto 0.75rem;">"A business becomes easier not when there is less to do, but when everything is structured."</p>
+      <cite style="font-size:0.78rem;color:rgba(255,255,255,0.3);">— Cat Ilacad, CEO Systems Method™</cite>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="section-label" style="text-align:center;">Common Questions</div>
+    <h2 class="section-title" style="text-align:center;font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;letter-spacing:-0.02em;">Everything you need to know</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is the CEO Systems Method™ right for me?</div>
+        <div class="faq-a">Yes — if you're a business owner who feels like your business runs on chaos, effort, and guesswork, this was built for you. It doesn't matter what industry you're in, whether you have a team or not, or how long you've been running your business. The 4 systems work for any business at any stage. The earlier you build them, the easier everything becomes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long does the course take to complete?</div>
+        <div class="faq-a">It's designed as a 30-day program at 15–30 minutes per day. But because it's self-paced with lifetime access, you can move faster or slower depending on your schedule. Some people complete it in 2 weeks. Others take 6 weeks and go deeper.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do I need the course before applying for mentorship?</div>
+        <div class="faq-a">Not required — but highly recommended. The course gives you the foundation and vocabulary that makes our mentorship sessions far more productive. Many mentorship clients come in as course graduates, which means we skip the basics and go straight into personalized strategy.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What kind of businesses is this for?</div>
+        <div class="faq-a">Any business owner who wants to stop running their business on effort and guesswork — and start running it on systems. Whether you're a freelancer, coach, consultant, retailer, or any kind of entrepreneur with a team or without. The frameworks work at any stage and for any business type. The systems just look slightly different depending on where you are.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I apply for mentorship?</div>
+        <div class="faq-a">Click the apply button on your preferred mentorship package. You'll be directed to book a discovery call or fill out a short application. Cat personally reviews every application to make sure it's the right fit for both sides.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is there a refund policy on the course?</div>
+        <div class="faq-a">Yes — there's a 30-day money-back guarantee. If you go through the material and feel it wasn't worth your investment, reach out and we'll make it right. No complicated process.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Your business deserves<br>to work without you.</h2>
+  <p>Start with the course. Go deeper with mentorship. Build something that lasts — with Cat in your corner.</p>
+  <a href="#course" class="btn-white">Start With the Course →</a>
+</section>
+
+<script>
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>

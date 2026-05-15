@@ -34,23 +34,23 @@
     <div class="product-gallery">
       <div class="product-image">
         {% if product.featured_image %}
-          <img 
-            src="{{ product.featured_image | img_url: '600x600' }}" 
+          <img
+            src="{{ product.featured_image | img_url: '600x600' }}"
             alt="{{ product.featured_image.alt }}"
             id="main-image"
           >
         {% endif %}
       </div>
-      
+
       <!-- Thumbnail Gallery -->
       {% if product.images.size > 1 %}
         <div class="product-thumbs">
           {% for image in product.images %}
-            <div class="product-thumb {% if image == product.featured_image %}active{% endif %}" 
+            <div class="product-thumb {% if image == product.featured_image %}active{% endif %}"
                  onclick="updateMainImage('{{ image | img_url: '600x600' }}', this)"
                  title="{{ image.alt }}">
-              <img 
-                src="{{ image | img_url: '100x100' }}" 
+              <img
+                src="{{ image | img_url: '100x100' }}"
                 alt="{{ image.alt }}"
               >
             </div>
@@ -73,7 +73,7 @@
             </div>
           {% endif %}
         </div>
-        
+
         {% if product.compare_at_price %}
           <div class="product-discount">
             💰 Save {{ product.compare_at_price | minus: product.price | money }}
@@ -109,8 +109,8 @@
                 <label class="option-label">{{ option.name }}</label>
                 <div class="option-values">
                   {% for value in option.values %}
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       class="option-value"
                       data-option="{{ option.name }}"
                       data-value="{{ value }}"
@@ -130,11 +130,11 @@
           <label class="qty-label">Qty:</label>
           <div class="qty-selector">
             <button type="button" class="qty-btn" onclick="decreaseQty()">−</button>
-            <input 
-              type="number" 
-              name="quantity" 
-              value="1" 
-              min="1" 
+            <input
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
               class="qty-input"
               id="quantity-input"
             >
@@ -187,7 +187,7 @@
   function updateMainImage(imageUrl, thumbnail) {
     const mainImage = document.getElementById('main-image');
     mainImage.src = imageUrl;
-    
+
     // Update active thumbnail
     document.querySelectorAll('.product-thumb').forEach(thumb => {
       thumb.classList.remove('active');
@@ -198,13 +198,13 @@
   function selectOption(button) {
     const optionName = button.dataset.option;
     const optionValue = button.dataset.value;
-    
+
     // Update UI
     button.parentElement.querySelectorAll('.option-value').forEach(btn => {
       btn.classList.remove('active');
     });
     button.classList.add('active');
-    
+
     // Update form (in a real implementation, you'd match variants here)
     console.log(`Selected ${optionName}: ${optionValue}`);
   }

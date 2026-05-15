@@ -1,85 +1,85 @@
-<div class="customer-hero">
-  <h1>My Account</h1>
-  <p>Welcome back, {{ customer.first_name }}.</p>
-</div>
+<section class="customer page-width" style="display:block;align-items:initial;">
+  <header style="text-align:center;margin-bottom:2.5rem;">
+    <p class="eyebrow">{{ 'customers.account.title' | t }}</p>
+    <h1 style="font-family:var(--font-heading);font-size:var(--font-size-3xl);margin-block:0.4rem 0.5rem;">
+      {{ 'customers.account.greeting_html' | t: name: customer.first_name | default: 'Welcome back' }}{% unless customer.first_name == blank %}, {{ customer.first_name }}{% endunless %}.
+    </h1>
+    <p style="color:var(--color-muted);">{{ 'customers.account.greeting_subtext' | t | default: 'Manage your orders, addresses, and account details.' }}</p>
+  </header>
 
-<div class="account-container">
-  <div class="account-grid">
-    <!-- Sidebar -->
-    <aside class="account-sidebar">
-      <div class="account-sidebar-name">{{ customer.first_name }} {{ customer.last_name }}</div>
-      <a href="/account" class="account-nav-link active">Orders</a>
-      <a href="/account/addresses" class="account-nav-link">Addresses</a>
-      <a href="/account/logout" class="account-nav-link" style="margin-top:auto;color:var(--warm-gray);">Sign Out</a>
-    </aside>
+  <div class="customer__card customer__card--wide">
+    <div class="account-meta">
+      <div>
+        <div class="eyebrow" style="margin-bottom:0.25rem;">{{ 'customers.account.orders' | t }}</div>
+        <div style="font-family:var(--font-heading);font-size:var(--font-size-xl);">{{ customer.orders_count | default: 0 }}</div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:0.25rem;">{{ 'customers.addresses.title' | t }}</div>
+        <div style="font-family:var(--font-heading);font-size:var(--font-size-xl);">{{ customer.addresses_count | default: 0 }}</div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:0.25rem;">{{ 'customers.account.member_since' | t | default: 'Member since' }}</div>
+        <div style="font-family:var(--font-heading);font-size:var(--font-size-md);">{{ customer.last_order.created_at | date: '%b %Y' | default: '—' }}</div>
+      </div>
+    </div>
 
-    <!-- Main -->
-    <main class="account-main">
-      <!-- Orders -->
-      <div class="account-section">
-        <div class="account-section-header">
-          <h2 class="account-section-title">Order History</h2>
-        </div>
+    <div class="account-section" style="margin-top:2rem;">
+      <header style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.85rem;">
+        <h2 class="account-section__title">{{ 'customers.orders.title' | t }}</h2>
+        <a href="{{ routes.account_addresses_url }}" class="customer__link">{{ 'customers.addresses.title' | t }} →</a>
+      </header>
 
-        {% if customer.orders.size > 0 %}
-          <table class="orders-table">
+      {%- if customer.orders.size > 0 -%}
+        <div style="overflow-x:auto;">
+          <table class="orders-table" style="width:100%;border-collapse:collapse;font-size:var(--font-size-sm);">
             <thead>
-              <tr>
-                <th>Order</th>
-                <th>Date</th>
-                <th>Payment</th>
-                <th>Fulfilment</th>
-                <th>Total</th>
-                <th></th>
+              <tr style="text-align:left;border-bottom:1px solid var(--color-border);">
+                <th style="padding:0.85rem 0.5rem;">{{ 'customers.orders.order_number' | t }}</th>
+                <th style="padding:0.85rem 0.5rem;">{{ 'customers.orders.date' | t }}</th>
+                <th style="padding:0.85rem 0.5rem;">{{ 'customers.orders.payment_status' | t }}</th>
+                <th style="padding:0.85rem 0.5rem;">{{ 'customers.orders.fulfillment_status' | t }}</th>
+                <th style="padding:0.85rem 0.5rem;text-align:right;">{{ 'customers.orders.total' | t }}</th>
               </tr>
             </thead>
             <tbody>
-              {% for order in customer.orders %}
-                <tr>
-                  <td>
-                    <a href="{{ order.customer_url }}" class="order-num-link">#{{ order.name }}</a>
-                  </td>
-                  <td>{{ order.created_at | date: '%b %-d, %Y' }}</td>
-                  <td>
-                    <span class="order-badge {{ order.financial_status }}">{{ order.financial_status | capitalize }}</span>
-                  </td>
-                  <td>
-                    <span class="order-badge {{ order.fulfillment_status | default: 'unfulfilled' }}">
-                      {{ order.fulfillment_status | default: 'Unfulfilled' | capitalize }}
-                    </span>
-                  </td>
-                  <td>{{ order.total_price | money }}</td>
-                  <td>
-                    <a href="{{ order.customer_url }}" class="btn-sm">View</a>
-                  </td>
+              {%- for order in customer.orders -%}
+                <tr style="border-bottom:1px solid var(--color-border-soft);">
+                  <td style="padding:0.85rem 0.5rem;"><a href="{{ order.customer_url }}" class="customer__link">{{ order.name }}</a></td>
+                  <td style="padding:0.85rem 0.5rem;color:var(--color-muted);">{{ order.created_at | date: '%b %-d, %Y' }}</td>
+                  <td style="padding:0.85rem 0.5rem;">{{ order.financial_status_label }}</td>
+                  <td style="padding:0.85rem 0.5rem;">{{ order.fulfillment_status_label }}</td>
+                  <td style="padding:0.85rem 0.5rem;text-align:right;font-weight:600;">{{ order.total_price | money }}</td>
                 </tr>
-              {% endfor %}
+              {%- endfor -%}
             </tbody>
           </table>
-        {% else %}
-          <div class="no-orders">
-            <p>You haven't placed any orders yet. Ready to invest in your business systems?</p>
-            <a href="/collections/all" class="btn-primary" style="text-decoration:none;">Browse Products</a>
-          </div>
-        {% endif %}
-      </div>
-
-      <!-- Default Address -->
-      {% if customer.default_address %}
-        <div class="account-section">
-          <div class="account-section-header">
-            <h2 class="account-section-title">Default Address</h2>
-            <a href="/account/addresses" class="btn-sm">Manage →</a>
-          </div>
-          <address class="order-address" style="font-style:normal;">
-            {{ customer.default_address.name }}<br>
-            {% if customer.default_address.company %}{{ customer.default_address.company }}<br>{% endif %}
-            {{ customer.default_address.street }}<br>
-            {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}<br>
-            {{ customer.default_address.country }}
-          </address>
         </div>
-      {% endif %}
-    </main>
+      {%- else -%}
+        <div class="empty-state" style="padding-block:2rem;">
+          <p style="color:var(--color-muted);margin-bottom:1rem;">{{ 'customers.orders.none' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'general.continue_shopping' | t }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if customer.default_address -%}
+      <div class="account-section" style="margin-top:2rem;">
+        <header style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.85rem;">
+          <h2 class="account-section__title">{{ 'customers.addresses.default' | t }} {{ 'customers.addresses.title' | t | downcase }}</h2>
+          <a href="{{ routes.account_addresses_url }}" class="customer__link">{{ 'customers.addresses.edit_address' | t }} →</a>
+        </header>
+        <address style="font-style:normal;line-height:1.6;color:var(--color-muted);">
+          {{ customer.default_address.name }}<br>
+          {%- if customer.default_address.company != blank -%}{{ customer.default_address.company }}<br>{%- endif -%}
+          {{ customer.default_address.street }}<br>
+          {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}<br>
+          {{ customer.default_address.country }}
+        </address>
+      </div>
+    {%- endif -%}
+
+    <div class="account-section" style="margin-top:2rem;text-align:center;">
+      <a href="{{ routes.account_logout_url }}" class="button button--secondary">{{ 'customers.account.sign_out' | t | default: 'Sign out' }}</a>
+    </div>
   </div>
-</div>
+</section>

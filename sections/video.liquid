@@ -1,0 +1,68 @@
+{% comment %}
+  Video — supports a Shopify-hosted video object or an external URL (YouTube/Vimeo).
+{% endcomment %}
+
+{%- liquid
+  assign source = section.settings.video_source
+  assign external = section.settings.external_url
+  assign shopify_video = section.settings.shopify_video
+-%}
+
+<section class="video-section">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-header__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="video-section__player" style="--aspect-ratio: 1.7777;">
+      {%- if source == 'shopify' and shopify_video != blank -%}
+        {{ shopify_video | video_tag: image_size: '1500x', controls: true, autoplay: false, loop: false }}
+      {%- elsif source == 'external' and external != blank -%}
+        {%- assign video_url = external -%}
+        {%- if video_url.type == 'youtube' -%}
+          <iframe
+            src="https://www.youtube.com/embed/{{ video_url.id }}"
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        {%- elsif video_url.type == 'vimeo' -%}
+          <iframe
+            src="https://player.vimeo.com/video/{{ video_url.id }}"
+            title="Vimeo video"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        {%- endif -%}
+      {%- else -%}
+        <p class="video-section__empty">{{ 'sections.video.empty' | t | default: 'Add a video to display here.' }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video",
+  "tag": "section",
+  "class": "section section--video",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" },
+    {
+      "type": "select",
+      "id": "video_source",
+      "label": "Video source",
+      "default": "external",
+      "options": [
+        { "value": "shopify", "label": "Shopify-hosted video" },
+        { "value": "external", "label": "External URL (YouTube/Vimeo)" }
+      ]
+    },
+    { "type": "video", "id": "shopify_video", "label": "Shopify video" },
+    { "type": "video_url", "id": "external_url", "label": "External video URL", "accept": ["youtube", "vimeo"] }
+  ],
+  "presets": [{ "name": "Video" }]
+}
+{% endschema %}

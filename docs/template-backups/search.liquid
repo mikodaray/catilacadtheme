@@ -1,0 +1,73 @@
+{%- comment -%}
+  Search results — clean header, single search field, resource-type tabs
+  (All / Products / Articles / Pages), polished empty state.
+
+  Tabs work via the standard Shopify ?type= query parameter, so they're
+  bookmarkable and don't need JS.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_type = search.types | join: ',' | default: 'product,article,page'
+  assign type_param_all = 'product,article,page'
+-%}
+
+<section class="search page-width" style="padding-block: var(--section-gap-y);">
+  <header class="search__header" style="text-align:center;max-width:640px;margin-inline:auto;margin-bottom:2.5rem;">
+    <p class="eyebrow">{{ 'search.title' | t }}</p>
+    <h1 style="font-size: var(--font-size-3xl); margin-block: 0.5rem 1.5rem;">
+      {%- if search.performed -%}
+        {%- if search.results_count == 0 -%}
+          {{ 'search.no_results' | t: terms: search.terms }}
+        {%- else -%}
+          {{ 'search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'search.placeholder' | t }}
+      {%- endif -%}
+    </h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:0.5rem;max-width:480px;margin-inline:auto;">
+      <label for="search-input" class="visually-hidden">{{ 'search.placeholder' | t }}</label>
+      <input
+        type="search"
+        id="search-input"
+        name="q"
+        placeholder="{{ 'search.placeholder' | t }}"
+        value="{{ search.terms | escape }}"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+      <input type="hidden" name="type" value="{{ current_type }}">
+      <button type="submit" class="button button--primary">{{ 'search.title' | t }}</button>
+    </form>
+  </header>
+
+  {%- if search.performed -%}
+    {%- if search.results_count > 0 -%}
+      <nav class="search__tabs" aria-label="Filter results by type" role="tablist">
+        <a role="tab" class="search__tab {% if current_type == type_param_all %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type={{ type_param_all }}">
+          {{ 'search.tabs.all' | t | default: 'All' }} <span class="search__tab-count">{{ search.results_count }}</span>
+        </a>
+        <a role="tab" class="search__tab {% if current_type == 'product' %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=product">
+          {{ 'search.tabs.products' | t | default: 'Products' }}
+        </a>
+        <a role="tab" class="search__tab {% if current_type == 'article' %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=article">
+          {{ 'search.tabs.articles' | t | default: 'Articles' }}
+        </a>
+        <a role="tab" class="search__tab {% if current_type == 'page' %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=page">
+          {{ 'search.tabs.pages' | t | default: 'Pages' }}
+        </a>
+      </nav>
+      {%- comment %} (rest of original markup omitted — full version lives in sections/main-search.liquid) {% endcomment -%}
+    {%- endif -%}
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  /* Styles moved into sections/main-search.liquid where {% stylesheet %} is valid. */
+{% endstylesheet %}

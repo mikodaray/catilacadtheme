@@ -1,0 +1,26 @@
+{% comment %}
+  Custom Liquid — escape hatch for merchants to add their own Liquid/HTML/CSS.
+{% endcomment %}
+
+<section class="custom-liquid">
+  <div class="page-width">
+    {{ section.settings.custom_liquid }}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "tag": "section",
+  "class": "section section--custom-liquid",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid",
+      "info": "Add custom HTML, Liquid, or CSS. Use with care."
+    }
+  ],
+  "presets": [{ "name": "Custom Liquid" }]
+}
+{% endschema %}

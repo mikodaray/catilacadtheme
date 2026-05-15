@@ -1,0 +1,16 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "tagline": "Building businesses that run on systems.",
+        "show_default_columns": true,
+        "copyright_suffix": "CEO Systems Method™ · All rights reserved",
+        "bottom_tagline": "<p>Built for <span>business owners who are done winging it.</span></p>"
+      }
+    }
+  },
+  "order": ["footer"]
+}

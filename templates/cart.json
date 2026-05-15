@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "show_note": true
+      }
+    },
+    "upsell": {
+      "type": "cart-upsell",
+      "settings": {
+        "heading": "Complete your set",
+        "button_label": "Add to cart"
+      }
+    }
+  },
+  "order": ["main", "upsell"]
+}

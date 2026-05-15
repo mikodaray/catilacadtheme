@@ -1,10 +1,317 @@
 [
-    {
-        "name": "theme_info",
-        "theme_name": "Theme for Cat Ilacad!",
-        "theme_author": "Francis Daray",
-        "theme_version": "1.0.0",
-        "theme_documentation_url": "https://github.com/Shopify/shopify-cli",
-        "theme_support_url": "https://github.com/Shopify/shopify-cli/issues"
-    }
+  {
+    "name": "theme_info",
+    "theme_name": "Cat Ilacad",
+    "theme_author": "Francis Daray",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://github.com/Shopify/shopify-cli",
+    "theme_support_url": "https://github.com/Shopify/shopify-cli/issues"
+  },
+
+  {
+    "name": "Logo",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo image" },
+      {
+        "type": "image_picker", "id": "favicon", "label": "Favicon",
+        "info": "32 × 32 px PNG recommended. Used in the browser tab."
+      },
+      {
+        "type": "image_picker", "id": "apple_touch_icon", "label": "Apple touch icon",
+        "info": "180 × 180 px PNG. Used when shoppers add the storefront to an iOS home screen."
+      },
+      {
+        "type": "image_picker", "id": "share_image", "label": "Default social share image",
+        "info": "1200 × 630 px JPG/PNG. Falls back to logo when missing."
+      }
+    ]
+  },
+
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "These are the global brand colors used as defaults. Use Color schemes below to define alternates that individual sections can apply."
+      },
+      { "type": "header", "content": "Page" },
+      { "type": "color", "id": "color_bg", "label": "Background", "default": "#FDF8F9" },
+      { "type": "color", "id": "color_text", "label": "Text", "default": "#3D1F2E" },
+      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#C4748A" },
+      { "type": "header", "content": "Buttons" },
+      { "type": "color", "id": "color_button", "label": "Button background", "default": "#3D1F2E" },
+      { "type": "color", "id": "color_button_text", "label": "Button label", "default": "#FFFFFF" }
+    ]
+  },
+
+  {
+    "name": "Color schemes",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Define reusable color palettes. Individual sections can select a scheme via the 'Color scheme' dropdown in their settings."
+      },
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          { "type": "header", "content": "Background" },
+          { "type": "color", "id": "background", "label": "Background", "default": "#FDF8F9" },
+          { "type": "color_background", "id": "background_gradient", "label": "Background gradient", "info": "Overrides solid background when set." },
+          { "type": "header", "content": "Text & accents" },
+          { "type": "color", "id": "text", "label": "Text", "default": "#3D1F2E" },
+          { "type": "color", "id": "accent", "label": "Accent", "default": "#C4748A" },
+          { "type": "color", "id": "button", "label": "Solid button background", "default": "#3D1F2E" },
+          { "type": "color", "id": "button_label", "label": "Solid button label", "default": "#FFFFFF" },
+          { "type": "color", "id": "secondary_button_label", "label": "Outline button label", "default": "#C4748A" }
+        ],
+        "role": {
+          "background": { "solid": "background", "gradient": "background_gradient" },
+          "text": "text",
+          "links": "accent",
+          "icons": "text",
+          "primary_button": "button",
+          "on_primary_button": "button_label",
+          "primary_button_border": "button",
+          "secondary_button": "background",
+          "on_secondary_button": "secondary_button_label",
+          "secondary_button_border": "secondary_button_label"
+        }
+      }
+    ]
+  },
+
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "header", "content": "Headings" },
+      { "type": "font_picker", "id": "font_heading", "label": "Heading font", "default": "fraunces_n7" },
+      { "type": "header", "content": "Body" },
+      { "type": "font_picker", "id": "font_body", "label": "Body font", "default": "dm_sans_n4" }
+    ]
+  },
+
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range", "id": "container_width", "label": "Page width",
+        "min": 960, "max": 1600, "step": 20, "default": 1200, "unit": "px",
+        "info": "Maximum content width on large screens."
+      }
+    ]
+  },
+
+  {
+    "name": "Animations",
+    "settings": [
+      {
+        "type": "checkbox", "id": "animations_enabled", "label": "Enable section fade-in on scroll",
+        "default": true,
+        "info": "Respects the visitor's reduced-motion preference automatically."
+      },
+      {
+        "type": "checkbox", "id": "animations_hover_scale", "label": "Image zoom on hover",
+        "default": true,
+        "info": "Scales product card images on hover. Disable for a flatter, calmer feel."
+      }
+    ]
+  },
+
+  {
+    "name": "Cards",
+    "settings": [
+      {
+        "type": "select", "id": "card_style", "label": "Product card style",
+        "default": "standard",
+        "options": [
+          { "value": "standard", "label": "Standard" },
+          { "value": "soft",     "label": "Soft (rounded, shadow)" },
+          { "value": "minimal",  "label": "Minimal (no shadow)" }
+        ]
+      },
+      {
+        "type": "select", "id": "card_image_ratio", "label": "Product card image ratio",
+        "default": "square",
+        "options": [
+          { "value": "square",   "label": "Square (1:1)" },
+          { "value": "portrait", "label": "Portrait (4:5)" },
+          { "value": "natural",  "label": "Natural (image's own ratio)" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Buttons",
+    "settings": [
+      {
+        "type": "range", "id": "button_radius", "label": "Corner radius",
+        "min": 0, "max": 100, "step": 2, "default": 100, "unit": "px",
+        "info": "0 = square corners, 100 = full pill."
+      },
+      {
+        "type": "select", "id": "button_style", "label": "Default button style",
+        "default": "solid",
+        "options": [
+          { "value": "solid",   "label": "Solid" },
+          { "value": "outline", "label": "Outline" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Inputs",
+    "settings": [
+      {
+        "type": "range", "id": "input_radius", "label": "Form input corner radius",
+        "min": 0, "max": 32, "step": 2, "default": 12, "unit": "px"
+      }
+    ]
+  },
+
+  {
+    "name": "Variant pills",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Variant option chips inherit the active color scheme. Use the Cards group to adjust their parent product layout."
+      }
+    ]
+  },
+
+  {
+    "name": "Media",
+    "settings": [
+      {
+        "type": "select", "id": "media_radius", "label": "Default media corner radius",
+        "default": "md",
+        "options": [
+          { "value": "sm", "label": "Subtle" },
+          { "value": "md", "label": "Medium" },
+          { "value": "lg", "label": "Generous" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Drawers",
+    "settings": [
+      {
+        "type": "select", "id": "cart_drawer_position", "label": "Cart drawer position",
+        "default": "right",
+        "options": [
+          { "value": "right", "label": "Slides in from the right" },
+          { "value": "left",  "label": "Slides in from the left"  }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Badges",
+    "settings": [
+      {
+        "type": "select", "id": "badge_position", "label": "Sale/sold-out badge position on cards",
+        "default": "top-left",
+        "options": [
+          { "value": "top-left",  "label": "Top left"  },
+          { "value": "top-right", "label": "Top right" }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "checkbox", "id": "search_predictive_enabled", "label": "Enable predictive search",
+        "default": true,
+        "info": "Shows live suggestions as the shopper types in the header search."
+      }
+    ]
+  },
+
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_facebook_link",  "label": "Facebook URL" },
+      { "type": "url", "id": "social_instagram_link", "label": "Instagram URL" },
+      { "type": "url", "id": "social_twitter_link",   "label": "X / Twitter URL" },
+      { "type": "url", "id": "social_youtube_link",   "label": "YouTube URL" },
+      { "type": "url", "id": "social_tiktok_link",    "label": "TikTok URL" }
+    ]
+  },
+
+  {
+    "name": "Currency",
+    "settings": [
+      {
+        "type": "checkbox", "id": "currency_show_selector", "label": "Show currency selector in footer",
+        "default": true,
+        "info": "Appears only when the shop sells in multiple currencies."
+      },
+      {
+        "type": "checkbox", "id": "currency_show_codes", "label": "Show currency code in prices",
+        "default": false,
+        "info": "e.g. \"$50.00 USD\" instead of \"$50.00\"."
+      }
+    ]
+  },
+
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select", "id": "cart_type", "label": "Cart type",
+        "default": "drawer",
+        "options": [
+          { "value": "drawer", "label": "Drawer (slides in)" },
+          { "value": "page",   "label": "Page (full /cart page)" }
+        ]
+      },
+      {
+        "type": "number", "id": "free_shipping_threshold_cents", "label": "Free shipping threshold",
+        "default": 0,
+        "info": "In cents of the shop's currency. 5000 = $50.00. Set to 0 to hide the progress bar."
+      },
+      {
+        "type": "text", "id": "free_shipping_celebration", "label": "Celebration message",
+        "default": "You qualify for free shipping!"
+      },
+      {
+        "type": "text", "id": "cart_upsell_collection", "label": "Cart drawer upsell collection",
+        "info": "Handle of a collection (e.g. 'frontpage'). The drawer shows one product from this collection that isn't already in cart. Leave blank to disable."
+      }
+    ]
+  },
+
+  {
+    "name": "Reviews",
+    "settings": [
+      {
+        "type": "select", "id": "reviews_provider", "label": "Review provider",
+        "info": "Install the corresponding Shopify app first. Only renders the integration markup — the third-party JS still needs to load from the app.",
+        "default": "none",
+        "options": [
+          { "value": "none",     "label": "None"     },
+          { "value": "judgeme",  "label": "Judge.me" },
+          { "value": "yotpo",    "label": "Yotpo"    }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Checkout",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Checkout branding is managed in Shopify admin → Settings → Checkout → Customize. This theme contributes the storefront-facing styling only."
+      }
+    ]
+  }
 ]

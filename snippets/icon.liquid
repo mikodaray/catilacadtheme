@@ -1,0 +1,29 @@
+{% comment %}
+  Renders an SVG icon by name.
+
+  Accepts:
+  - icon: {String} icon name, must match a snippet named `icon-{name}.liquid`
+  - class: {String} additional class names appended to the wrapper
+
+  Usage:
+    {% render 'icon', icon: 'cart' %}
+    {% render 'icon', icon: 'search', class: 'icon--small' %}
+
+  All icons inherit `currentColor` so they take the parent text color.
+{% endcomment %}
+
+{%- liquid
+  assign icon_name = icon | default: ''
+  assign extra_class = class | default: ''
+-%}
+
+<span class="icon icon-{{ icon_name }} {{ extra_class }}" aria-hidden="true">
+  {%- case icon_name -%}
+    {%- when 'cart' -%}{% render 'icon-cart' %}
+    {%- when 'search' -%}{% render 'icon-search' %}
+    {%- when 'menu' -%}{% render 'icon-menu' %}
+    {%- when 'close' -%}{% render 'icon-close' %}
+    {%- when 'chevron-down' -%}{% render 'icon-chevron-down' %}
+    {%- when 'chevron-right' -%}{% render 'icon-chevron-right' %}
+  {%- endcase -%}
+</span>

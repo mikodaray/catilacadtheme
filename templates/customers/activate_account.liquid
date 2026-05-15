@@ -1,50 +1,29 @@
-<div class="customer-hero">
-  <h1>Activate Your Account</h1>
-  <p>Set your password to complete your account setup.</p>
-</div>
+<section class="customer page-width">
+  <div class="customer__card">
+    <h1 class="customer__title">{{ 'customers.activate_account.title' | t | default: 'Activate your account' }}</h1>
+    <p class="customer__subtitle">{{ 'customers.activate_account.subtext' | t | default: 'You’re almost in. Set a password to activate your account.' }}</p>
 
-<div class="customer-container">
-  <div class="customer-box">
-    <h2 class="customer-box-title">Create Password</h2>
-    <p class="customer-box-sub">You're almost in. Set a password to activate your Cat Ilacad account.</p>
+    {%- form 'activate_customer_password', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <div class="customer__error" role="alert" aria-live="assertive">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
 
-    {% form 'activate_customer_password' %}
-      {% if form.errors %}
-        <div class="form-error">{{ form.errors | default_errors }}</div>
-      {% endif %}
-
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          name="customer[password]"
-          id="password"
-          class="form-input"
-          placeholder="Choose a password"
-          autocomplete="new-password"
-          required
-          minlength="5"
-        >
+      <div class="field">
+        <label for="activate-password">{{ 'customers.register.password' | t }}</label>
+        <input type="password" name="customer[password]" id="activate-password" autocomplete="new-password" minlength="5" required>
       </div>
 
-      <div class="form-group">
-        <label for="password_confirmation" class="form-label">Confirm Password</label>
-        <input
-          type="password"
-          name="customer[password_confirmation]"
-          id="password_confirmation"
-          class="form-input"
-          placeholder="Repeat your password"
-          autocomplete="new-password"
-          required
-        >
+      <div class="field">
+        <label for="activate-password-confirm">{{ 'customers.reset_password.confirm_password' | t | default: 'Confirm password' }}</label>
+        <input type="password" name="customer[password_confirmation]" id="activate-password-confirm" autocomplete="new-password" required>
       </div>
 
-      <button type="submit" class="btn-full">Activate Account →</button>
-    {% endform %}
-
-    <div class="form-footer">
-      <p>Already have access? <a href="/account/login" class="form-link">Sign in instead</a></p>
-    </div>
+      <div class="actions">
+        <button type="submit" class="button button--primary">{{ 'customers.activate_account.submit' | t | default: 'Activate' }}</button>
+        <button type="submit" name="decline" class="button button--tertiary" style="background:transparent;color:var(--color-muted);">
+          {{ 'customers.activate_account.decline' | t | default: 'Decline invitation' }}
+        </button>
+      </div>
+    {%- endform -%}
   </div>
-</div>
+</section>

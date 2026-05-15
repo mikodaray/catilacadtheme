@@ -1,0 +1,38 @@
+{% comment %}
+  Main collection banner — title, description, optional image overlay.
+{% endcomment %}
+
+<section class="collection-banner">
+  {%- if section.settings.show_image and collection.image -%}
+    <div class="collection-banner__media">
+      {% render 'responsive-image', image: collection.image, sizes: '100vw', loading: 'eager', fetchpriority: 'high' %}
+      <div class="collection-banner__overlay" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width collection-banner__content">
+    {% render 'breadcrumbs' %}
+    <h1 class="collection-banner__title">{{ collection.title }}</h1>
+    {%- if section.settings.show_description and collection.description != blank -%}
+      <div class="collection-banner__description rte">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "tag": "section",
+  "class": "section section--collection-banner",
+  "settings": [
+    { "type": "checkbox", "id": "show_image", "label": "Show collection image", "default": true },
+    { "type": "checkbox", "id": "show_description", "label": "Show description", "default": true },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0, "max": 80, "step": 5, "default": 30, "unit": "%"
+    }
+  ]
+}
+{% endschema %}

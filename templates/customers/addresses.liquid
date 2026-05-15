@@ -1,161 +1,131 @@
-<div class="customer-hero">
-  <h1>Your Addresses</h1>
-  <p>Manage shipping and billing addresses.</p>
-</div>
+<section class="customer page-width" style="display:block;align-items:initial;">
+  <header style="text-align:center;margin-bottom:2.5rem;">
+    <p class="eyebrow">{{ 'customers.account.title' | t }}</p>
+    <h1 style="font-family:var(--font-heading);font-size:var(--font-size-3xl);margin-block:0.4rem 0.5rem;">{{ 'customers.addresses.title' | t }}</h1>
+    <p><a href="{{ routes.account_url }}" class="customer__link">← {{ 'customers.account.title' | t }}</a></p>
+  </header>
 
-<div class="addresses-container">
-  <div class="addresses-top">
-    <h2 class="addresses-heading">Saved Addresses</h2>
-    <a href="/account" class="btn-sm">← Back to Account</a>
-  </div>
+  <div style="display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
+    {%- for address in customer.addresses -%}
+      <div class="customer__card" style="position:relative;">
+        {%- if address == customer.default_address -%}
+          <div style="position:absolute;top:1rem;right:1rem;font-size:var(--font-size-xs);background:var(--color-accent-soft);color:var(--color-accent-deep);padding:0.25rem 0.65rem;border-radius:var(--radius-pill);font-weight:600;">
+            ★ {{ 'customers.addresses.default' | t }}
+          </div>
+        {%- endif -%}
 
-  <div class="addresses-grid">
-    {% for address in customer.addresses %}
-      <div class="address-card {% if address == customer.default_address %}is-default{% endif %}">
-        {% if address == customer.default_address %}
-          <div class="address-default-badge">✦ Default Address</div>
-        {% endif %}
-        <div class="address-name">{{ address.name }}</div>
-        <address class="address-text" style="font-style:normal;">
-          {% if address.company %}{{ address.company }}<br>{% endif %}
+        <div style="font-weight:600;margin-bottom:0.5rem;">{{ address.name }}</div>
+        <address style="font-style:normal;line-height:1.6;color:var(--color-muted);">
+          {%- if address.company != blank -%}{{ address.company }}<br>{%- endif -%}
           {{ address.street }}<br>
           {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
           {{ address.country }}
         </address>
-        <div class="address-actions">
-          <button
-            class="btn-sm"
-            onclick="toggleEdit('edit-{{ address.id }}')"
-          >Edit</button>
-          {% form 'customer_address', address %}
+
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:1.25rem;">
+          <button type="button" class="button button--tertiary" data-address-edit-toggle="{{ address.id }}">{{ 'customers.addresses.edit_address' | t }}</button>
+          {%- form 'customer_address', address -%}
             <input type="hidden" name="_method" value="delete">
-            <button
-              type="submit"
-              class="btn-sm btn-sm-danger"
-              onclick="return confirm('Remove this address?')"
-            >Remove</button>
-          {% endform %}
-          {% unless address == customer.default_address %}
-            {% form 'customer_address', customer.default_address %}
+            <button type="submit" class="button button--tertiary" style="color:var(--color-error);" onclick="return confirm('{{ 'customers.addresses.delete' | t }}?');">{{ 'customers.addresses.delete' | t }}</button>
+          {%- endform -%}
+          {%- unless address == customer.default_address -%}
+            {%- form 'customer_address', address -%}
               <input type="hidden" name="_method" value="put">
               <input type="hidden" name="address[default]" value="true">
-              <input type="hidden" name="address[id]" value="{{ address.id }}">
-              <button type="submit" class="btn-sm">Set Default</button>
-            {% endform %}
-          {% endunless %}
+              <button type="submit" class="button button--tertiary">{{ 'customers.addresses.set_default' | t }}</button>
+            {%- endform -%}
+          {%- endunless -%}
         </div>
 
-        <!-- Inline edit form -->
-        <div class="address-form-wrap" id="edit-{{ address.id }}">
-          <div class="address-form-title">Edit Address</div>
-          {% form 'customer_address', address %}
+        <div hidden data-address-edit="{{ address.id }}" style="margin-top:1rem;border-top:1px solid var(--color-border-soft);padding-top:1rem;">
+          {%- form 'customer_address', address -%}
             <input type="hidden" name="_method" value="put">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">First Name</label>
-                <input type="text" name="address[first_name]" class="form-input" value="{{ address.first_name }}">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Last Name</label>
-                <input type="text" name="address[last_name]" class="form-input" value="{{ address.last_name }}">
-              </div>
+            <div class="field">
+              <label>{{ 'customers.register.first_name' | t }}</label>
+              <input type="text" name="address[first_name]" value="{{ address.first_name }}">
             </div>
-            <div class="form-group">
-              <label class="form-label">Company (optional)</label>
-              <input type="text" name="address[company]" class="form-input" value="{{ address.company }}">
+            <div class="field">
+              <label>{{ 'customers.register.last_name' | t }}</label>
+              <input type="text" name="address[last_name]" value="{{ address.last_name }}">
             </div>
-            <div class="form-group">
-              <label class="form-label">Address</label>
-              <input type="text" name="address[address1]" class="form-input" value="{{ address.address1 }}">
+            <div class="field">
+              <label>{{ 'customers.addresses.address1' | t | default: 'Street' }}</label>
+              <input type="text" name="address[address1]" value="{{ address.address1 }}">
             </div>
-            <div class="form-group">
-              <label class="form-label">Apartment / Suite (optional)</label>
-              <input type="text" name="address[address2]" class="form-input" value="{{ address.address2 }}">
+            <div class="field">
+              <label>{{ 'customers.addresses.city' | t | default: 'City' }}</label>
+              <input type="text" name="address[city]" value="{{ address.city }}">
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">City</label>
-                <input type="text" name="address[city]" class="form-input" value="{{ address.city }}">
-              </div>
-              <div class="form-group">
-                <label class="form-label">ZIP / Postal Code</label>
-                <input type="text" name="address[zip]" class="form-input" value="{{ address.zip }}">
-              </div>
+            <div class="field">
+              <label>{{ 'customers.addresses.zip' | t | default: 'ZIP / Postcode' }}</label>
+              <input type="text" name="address[zip]" value="{{ address.zip }}">
             </div>
-            <div class="form-group">
-              <label class="form-label">Country</label>
-              <select name="address[country]" class="form-input" id="AddressCountry_{{ address.id }}">
-                {{ country_option_tags }}
-              </select>
+            <div class="field">
+              <label>{{ 'customers.addresses.country' | t | default: 'Country' }}</label>
+              <select name="address[country]" id="AddressCountry_{{ address.id }}" data-address-country>{{ country_option_tags }}</select>
             </div>
-            <div style="display:flex;gap:0.75rem;margin-top:1rem;">
-              <button type="submit" class="btn-full" style="width:auto;padding:0.85rem 1.75rem;border-radius:100px;">Save</button>
-              <button type="button" class="btn-outline-full" style="width:auto;padding:0.85rem 1.5rem;" onclick="toggleEdit('edit-{{ address.id }}')">Cancel</button>
-            </div>
-          {% endform %}
+            <button type="submit" class="button button--primary">{{ 'customers.addresses.save' | t | default: 'Save changes' }}</button>
+          {%- endform -%}
         </div>
       </div>
-    {% endfor %}
+    {%- endfor -%}
   </div>
 
-  <!-- Add New Address -->
-  <div style="margin-top:3rem;">
-    <button class="btn-primary" style="text-decoration:none;" onclick="toggleEdit('new-address')">+ Add New Address</button>
+  <div style="margin-top:2rem;text-align:center;">
+    <button type="button" class="button button--secondary" data-address-new-toggle>{{ 'customers.addresses.add_new' | t }}</button>
   </div>
 
-  <div class="address-form-wrap" id="new-address" style="margin-top:1.5rem;">
-    <div class="address-form-title">New Address</div>
-    {% form 'customer_address', customer.new_address %}
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input type="text" name="address[first_name]" class="form-input" value="{{ form.first_name }}">
+  <div hidden id="new-address-form" style="margin-top:1.5rem;max-width:560px;margin-inline:auto;">
+    <div class="customer__card">
+      <h2 class="customer__title" style="font-size:var(--font-size-xl);">{{ 'customers.addresses.add_new' | t }}</h2>
+      {%- form 'customer_address', customer.new_address -%}
+        <div class="field">
+          <label>{{ 'customers.register.first_name' | t }}</label>
+          <input type="text" name="address[first_name]" value="{{ form.first_name }}">
         </div>
-        <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input type="text" name="address[last_name]" class="form-input" value="{{ form.last_name }}">
+        <div class="field">
+          <label>{{ 'customers.register.last_name' | t }}</label>
+          <input type="text" name="address[last_name]" value="{{ form.last_name }}">
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Company (optional)</label>
-        <input type="text" name="address[company]" class="form-input" value="{{ form.company }}">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Address</label>
-        <input type="text" name="address[address1]" class="form-input" value="{{ form.address1 }}" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Apartment / Suite (optional)</label>
-        <input type="text" name="address[address2]" class="form-input" value="{{ form.address2 }}">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">City</label>
-          <input type="text" name="address[city]" class="form-input" value="{{ form.city }}" required>
+        <div class="field">
+          <label>{{ 'customers.addresses.address1' | t | default: 'Street' }}</label>
+          <input type="text" name="address[address1]" value="{{ form.address1 }}" required>
         </div>
-        <div class="form-group">
-          <label class="form-label">ZIP / Postal Code</label>
-          <input type="text" name="address[zip]" class="form-input" value="{{ form.zip }}" required>
+        <div class="field">
+          <label>{{ 'customers.addresses.city' | t | default: 'City' }}</label>
+          <input type="text" name="address[city]" value="{{ form.city }}" required>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Country</label>
-        <select name="address[country]" class="form-input" id="AddressCountryNew">
-          {{ country_option_tags }}
-        </select>
-      </div>
-      <div class="form-group" style="flex-direction:row;align-items:center;gap:0.75rem;">
-        <input type="checkbox" name="address[default]" id="address_default_new" value="true" style="width:auto;">
-        <label for="address_default_new" class="form-label" style="margin:0;font-weight:500;">Set as default address</label>
-      </div>
-      <button type="submit" class="btn-full">Save Address</button>
-    {% endform %}
+        <div class="field">
+          <label>{{ 'customers.addresses.zip' | t | default: 'ZIP / Postcode' }}</label>
+          <input type="text" name="address[zip]" value="{{ form.zip }}" required>
+        </div>
+        <div class="field">
+          <label>{{ 'customers.addresses.country' | t | default: 'Country' }}</label>
+          <select name="address[country]" id="AddressCountryNew" data-address-country>{{ country_option_tags }}</select>
+        </div>
+        <div class="field" style="display:flex;gap:0.5rem;align-items:center;">
+          <input type="checkbox" name="address[default]" id="address_default_new" value="true" style="width:auto;">
+          <label for="address_default_new" style="margin:0;font-weight:500;">{{ 'customers.addresses.set_default' | t }}</label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="button button--primary">{{ 'customers.addresses.save' | t | default: 'Save address' }}</button>
+        </div>
+      {%- endform -%}
+    </div>
   </div>
-</div>
+</section>
 
 <script>
-  function toggleEdit(id) {
-    const el = document.getElementById(id);
-    el.classList.toggle('open');
-  }
+  document.addEventListener('click', (e) => {
+    const editBtn = e.target.closest('[data-address-edit-toggle]');
+    if (editBtn) {
+      const id = editBtn.dataset.addressEditToggle;
+      const panel = document.querySelector(`[data-address-edit="${id}"]`);
+      if (panel) panel.hidden = !panel.hidden;
+    }
+    if (e.target.matches('[data-address-new-toggle]')) {
+      const f = document.getElementById('new-address-form');
+      if (f) f.hidden = !f.hidden;
+    }
+  });
 </script>

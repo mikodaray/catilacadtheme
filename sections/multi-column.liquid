@@ -1,0 +1,73 @@
+{% comment %}
+  Multi-column — image + text blocks in a configurable grid.
+{% endcomment %}
+
+<section class="multi-column">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-header__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <ul class="multi-column__grid multi-column__grid--columns-{{ section.settings.columns_desktop }}">
+      {%- for block in section.blocks -%}
+        <li class="multi-column__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="multi-column__media">
+              {% render 'responsive-image',
+                image: block.settings.image,
+                sizes: '(min-width: 750px) 33vw, 50vw',
+                aspect_ratio: 1
+              %}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.heading != blank -%}
+            <h3 class="multi-column__heading">{{ block.settings.heading | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <div class="multi-column__body rte">{{ block.settings.text }}</div>
+          {%- endif -%}
+          {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+            <a class="multi-column__link" href="{{ block.settings.link_url }}">
+              {{ block.settings.link_label | escape }} {% render 'icon', icon: 'chevron-right' %}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Multi-column",
+  "tag": "section",
+  "class": "section section--multi-column",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Multi-column" },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2, "max": 4, "step": 1, "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Column heading" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Use this column to share a feature, benefit, or short message.</p>" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link_url", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Multi-column",
+    "blocks": [{ "type": "column" }, { "type": "column" }, { "type": "column" }]
+  }]
+}
+{% endschema %}

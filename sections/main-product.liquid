@@ -1,0 +1,315 @@
+{% comment %}
+  Main product section — block-driven PDP. Each block is a self-contained piece
+  the merchant can reorder/show/hide in the theme editor.
+
+  Available block types:
+    - gallery        : Featured image + thumbnails
+    - vendor         : product.vendor
+    - title          : H1 product title
+    - price          : Renders price with compare-at + sale badge
+    - variant_picker : Wrapped in <variant-picker> custom element
+    - quantity       : Quantity stepper
+    - buy_buttons    : Add-to-cart submit
+    - description    : Rich text product.description
+    - share          : Web Share API + copy-link fallback
+
+  Buy form is a single <form is="cart-form"> wrapping the variant + quantity +
+  buy_buttons blocks so AJAX add-to-cart works as a unit.
+{% endcomment %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+
+{%- comment %} Pushes this product's handle to localStorage on load (read by <recently-viewed>). {% endcomment -%}
+<meta name="theme:current-product-handle" content="{{ product.handle }}">
+
+<section class="main-product page-width">
+  <div class="main-product__grid">
+    {%- comment %} Gallery column lives outside the form so submit doesn't bubble through it. {% endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'gallery' -%}
+        <div class="main-product__gallery" {{ block.shopify_attributes }}>
+          {%- if product.featured_image -%}
+            {% render 'responsive-image',
+              image: product.featured_image,
+              sizes: '(min-width: 750px) 50vw, 100vw',
+              loading: 'eager',
+              fetchpriority: 'high'
+            %}
+          {%- endif -%}
+          {%- if product.images.size > 1 -%}
+            <ul class="main-product__thumbs" role="list">
+              {%- for image in product.images -%}
+                <li>
+                  <button type="button" class="main-product__thumb" data-thumb data-src="{{ image | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }} of {{ product.images.size }}">
+                    <img src="{{ image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy">
+                  </button>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div class="main-product__info">
+      <variant-picker data-product-handle="{{ product.handle }}" data-section="{{ section.id }}">
+        <form
+          is="cart-form"
+          method="post"
+          action="{{ routes.cart_add_url }}"
+          class="product-form"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'vendor' -%}
+                {%- if product.vendor != blank -%}
+                  <div class="main-product__vendor" {{ block.shopify_attributes }}>
+                    <a href="{{ product.vendor | url_for_vendor }}">{{ product.vendor | escape }}</a>
+                  </div>
+                {%- endif -%}
+
+              {%- when 'title' -%}
+                <h1 class="main-product__title" {{ block.shopify_attributes }}>{{ product.title | escape }}</h1>
+
+              {%- when 'price' -%}
+                <div class="main-product__price" data-price-wrap {{ block.shopify_attributes }}>
+                  {% render 'price', product: product, use_variant: true, show_compare_at: true, show_badge: true %}
+                </div>
+
+              {%- when 'variant_picker' -%}
+                {%- unless product.has_only_default_variant -%}
+                  <div class="variant-picker__options" {{ block.shopify_attributes }}>
+                    {%- for option in product.options_with_values -%}
+                      <fieldset class="variant-picker__option">
+                        <legend>{{ option.name }}</legend>
+                        {%- for value in option.values -%}
+                          <label class="variant-picker__value">
+                            <input
+                              type="radio"
+                              name="option-{{ forloop.parentloop.index0 }}"
+                              value="{{ value | escape }}"
+                              {% if option.selected_value == value %}checked{% endif %}
+                            >
+                            <span>{{ value }}</span>
+                          </label>
+                        {%- endfor -%}
+                      </fieldset>
+                    {%- endfor -%}
+                  </div>
+                {%- endunless -%}
+
+              {%- when 'quantity' -%}
+                <div class="main-product__quantity" {{ block.shopify_attributes }}>
+                  <label for="Quantity-{{ section.id }}" class="main-product__quantity-label">{{ 'products.product.quantity.label' | t }}</label>
+                  <div class="quantity-input">
+                    <button type="button" class="quantity-input__button" data-qty-delta="-1" aria-label="{{ 'products.product.quantity.decrease' | t }}">−</button>
+                    <input
+                      id="Quantity-{{ section.id }}"
+                      type="number"
+                      name="quantity"
+                      value="1"
+                      min="1"
+                      inputmode="numeric"
+                    >
+                    <button type="button" class="quantity-input__button" data-qty-delta="1" aria-label="{{ 'products.product.quantity.increase' | t }}">+</button>
+                  </div>
+                </div>
+
+              {%- when 'buy_buttons' -%}
+                <div class="main-product__buy" {{ block.shopify_attributes }}>
+                  <button
+                    type="submit"
+                    class="button button--primary main-product__submit"
+                    data-add-button
+                    {% unless current_variant.available %}disabled{% endunless %}
+                  >
+                    {%- if current_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </button>
+                  <p class="form-error" data-form-error role="alert" aria-live="assertive"></p>
+                </div>
+
+              {%- when 'description' -%}
+                {%- if product.description != blank -%}
+                  <div class="main-product__description rte" {{ block.shopify_attributes }}>
+                    {{ product.description }}
+                  </div>
+                {%- endif -%}
+
+              {%- when 'share' -%}
+                <share-button class="main-product__share" {{ block.shopify_attributes }}>
+                  <button type="button" class="button button--secondary" data-share-trigger>
+                    {{ 'products.product.share' | t | default: 'Share' }}
+                  </button>
+                  <span class="visually-hidden" data-share-status aria-live="polite"></span>
+                </share-button>
+
+              {%- when '@app' -%}
+                {%- comment %} App-provided block (e.g. trust badges, subscription pickers). {% endcomment -%}
+                <div class="main-product__app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+
+              {%- when 'reviews' -%}
+                {%- comment %}
+                  Review widget integration point.
+
+                  Reads block.settings.provider (none / judgeme / yotpo).
+
+                  Wiring instructions:
+
+                  Judge.me:
+                    1. Install the Judge.me Shopify app.
+                    2. In the Judge.me dashboard → Settings → Display → "Show widget on product pages",
+                       turn OFF auto-installation (so this theme controls placement).
+                    3. The block below renders an empty `<div class="jdgm-widget jdgm-review-widget"
+                       data-id="{{ product.id }}">`. The Judge.me JS the app injects sitewide will
+                       hydrate it automatically.
+
+                  Yotpo:
+                    1. Install the Yotpo Reviews app and complete the onboarding (provides app key).
+                    2. Disable Yotpo's auto-injected widget if applicable.
+                    3. The block below renders the Yotpo main widget div with the required
+                       data-product-id, data-name, data-url, data-image-url attributes.
+
+                  None: render nothing — useful before signing up.
+                {% endcomment -%}
+                {%- assign provider = block.settings.provider | default: settings.reviews_provider | default: 'none' -%}
+                {%- if provider == 'judgeme' -%}
+                  <div class="main-product__reviews" {{ block.shopify_attributes }}>
+                    <div class="jdgm-widget jdgm-review-widget"
+                         data-id="{{ product.id }}"
+                         data-product-title="{{ product.title | escape }}"></div>
+                  </div>
+                {%- elsif provider == 'yotpo' -%}
+                  <div class="main-product__reviews" {{ block.shopify_attributes }}>
+                    <div class="yotpo yotpo-main-widget"
+                         data-product-id="{{ product.id }}"
+                         data-name="{{ product.title | escape }}"
+                         data-url="{{ shop.url }}{{ product.url }}"
+                         data-image-url="{{ product.featured_image | image_url: width: 600 }}"
+                         data-description="{{ product.description | strip_html | escape }}"></div>
+                  </div>
+                {%- endif -%}
+
+            {%- endcase -%}
+          {%- endfor -%}
+
+          {%- comment %} Variants JSON consumed by <variant-picker>. {% endcomment -%}
+          <script type="application/json" data-variant-data>
+            {{ product.variants | json }}
+          </script>
+        </form>
+      </variant-picker>
+    </div>
+  </div>
+</section>
+
+{%- comment %} Mobile sticky add-to-cart bar — shown via CSS when the main buy button scrolls out of view. {% endcomment -%}
+<div class="sticky-atc" data-sticky-atc role="region" aria-label="{{ product.title | escape }}">
+  <div class="sticky-atc__inner">
+    <span class="sticky-atc__title">{{ product.title | escape }}</span>
+    <span class="sticky-atc__price">{{ current_variant.price | money }}</span>
+    <button type="button" class="button button--primary" data-sticky-atc-submit>
+      {{ 'products.product.add_to_cart' | t }}
+    </button>
+  </div>
+</div>
+
+<script>
+  // Small inline helpers for the gallery & quantity stepper. Kept tiny to avoid a separate file.
+  document.addEventListener('click', (e) => {
+    const thumb = e.target.closest('[data-thumb]');
+    if (thumb) {
+      const main = thumb.closest('.main-product__gallery')?.querySelector('.responsive-image img');
+      if (main) main.src = thumb.dataset.src;
+    }
+    const stepper = e.target.closest('[data-qty-delta]');
+    if (stepper) {
+      const input = stepper.parentElement.querySelector('input[type="number"]');
+      if (input) input.value = Math.max(1, (parseInt(input.value, 10) || 1) + parseInt(stepper.dataset.qtyDelta, 10));
+    }
+  });
+
+  // Web Share fallback to copy-link.
+  customElements.define('share-button', class extends HTMLElement {
+    connectedCallback() {
+      this.btn = this.querySelector('[data-share-trigger]');
+      this.status = this.querySelector('[data-share-status]');
+      if (this.btn) this.btn.addEventListener('click', () => this.share());
+    }
+    async share() {
+      const url = window.location.href;
+      const title = document.title;
+      try {
+        if (navigator.share) {
+          await navigator.share({ title, url });
+          this.status.textContent = 'Shared.';
+        } else {
+          await navigator.clipboard.writeText(url);
+          this.status.textContent = 'Link copied.';
+        }
+      } catch (_e) { /* user cancelled */ }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "class": "section section--main-product",
+  "blocks": [
+    { "type": "gallery", "name": "Gallery", "limit": 1 },
+    { "type": "vendor", "name": "Vendor", "limit": 1 },
+    { "type": "title", "name": "Title", "limit": 1 },
+    { "type": "price", "name": "Price", "limit": 1 },
+    { "type": "variant_picker", "name": "Variant picker", "limit": 1 },
+    { "type": "quantity", "name": "Quantity selector", "limit": 1 },
+    { "type": "buy_buttons", "name": "Buy buttons", "limit": 1 },
+    { "type": "description", "name": "Description", "limit": 1 },
+    { "type": "share", "name": "Share", "limit": 1 },
+    {
+      "type": "reviews",
+      "name": "Reviews widget",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "provider",
+          "label": "Review provider",
+          "info": "Install the corresponding Shopify app first; this block only renders the integration point.",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "judgeme", "label": "Judge.me" },
+            { "value": "yotpo", "label": "Yotpo" }
+          ]
+        }
+      ]
+    },
+    { "type": "@app" }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "gallery" },
+      { "type": "vendor" },
+      { "type": "title" },
+      { "type": "price" },
+      { "type": "variant_picker" },
+      { "type": "quantity" },
+      { "type": "buy_buttons" },
+      { "type": "description" },
+      { "type": "share" },
+      { "type": "reviews" }
+    ]
+  }
+}
+{% endschema %}

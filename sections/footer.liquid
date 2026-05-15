@@ -1,44 +1,235 @@
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="{{ 'logo-light.svg' | asset_url }}" alt="Cat Ilacad" class="footer-logo-img" width="160" height="40">
-        <p class="footer-tagline">"Building businesses that run on systems."</p>
+{% comment %}
+  Footer — wordmark/logo, tagline, three default nav columns (Learn / Shop / Info),
+  optional merchant-configurable column blocks, social links, and a two-line
+  copyright. Defaults match the original brand-specific footer copy.
+{% endcomment %}
+
+<footer class="site-footer" role="contentinfo">
+  <div class="page-width">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | image_url: width: 320 }}"
+            alt="{{ shop.name | escape }}"
+            width="160" height="auto"
+          >
+        {%- else -%}
+          <div class="site-footer__brand-name">
+            <span class="logo-star">★</span><span class="logo-cat">Cat</span><span class="logo-ilacad">Ilacad</span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.tagline != blank -%}
+          <p class="site-footer__tagline">{{ section.settings.tagline | escape }}</p>
+        {%- endif -%}
       </div>
-      <div class="footer-nav">
-        <div class="footer-nav-col">
-          <div class="footer-nav-heading">Learn</div>
-          <a href="/#course">CEO Systems Method™</a>
-          <a href="/#mentorship">Mentorship</a>
-          <a href="/blogs/news">Blog</a>
-          <a href="/#faq">FAQ</a>
-        </div>
-        <div class="footer-nav-col">
-          <div class="footer-nav-heading">Shop</div>
-          <a href="/collections/all">All Products</a>
-          <a href="/collections">Collections</a>
-          <a href="/cart">Cart</a>
-        </div>
-        <div class="footer-nav-col">
-          <div class="footer-nav-heading">Info</div>
-          <a href="/pages/about">About Cat</a>
-          <a href="/pages/contact">Contact</a>
-          <a href="/pages/privacy-policy">Privacy Policy</a>
-          <a href="/pages/terms-of-service">Terms of Service</a>
-          <a href="/pages/refund-policy">Refund Policy</a>
-        </div>
+
+      <div class="site-footer__columns">
+        {%- comment %} Default static columns — match the original Cat Ilacad footer structure. {% endcomment -%}
+        {%- if section.settings.show_default_columns -%}
+          <div class="site-footer__col">
+            <h3 class="site-footer__heading">Learn</h3>
+            <ul class="site-footer__links">
+              <li><a href="/#course">CEO Systems Method™</a></li>
+              <li><a href="/#mentorship">Mentorship</a></li>
+              <li><a href="/blogs/news">Blog</a></li>
+              <li><a href="/#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="site-footer__col">
+            <h3 class="site-footer__heading">Shop</h3>
+            <ul class="site-footer__links">
+              <li><a href="/collections/all">All Products</a></li>
+              <li><a href="/collections">Collections</a></li>
+              <li><a href="/cart">Cart</a></li>
+            </ul>
+          </div>
+          <div class="site-footer__col">
+            <h3 class="site-footer__heading">Info</h3>
+            <ul class="site-footer__links">
+              <li><a href="/pages/about">About Cat</a></li>
+              <li><a href="/pages/contact">Contact</a></li>
+              <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/pages/terms-of-service">Terms of Service</a></li>
+              <li><a href="/pages/refund-policy">Refund Policy</a></li>
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Optional additional merchant-configurable columns. {% endcomment -%}
+        {%- for block in section.blocks -%}
+          <div class="site-footer__col" {{ block.shopify_attributes }}>
+            {%- case block.type -%}
+              {%- when 'link_list' -%}
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="site-footer__heading">{{ block.settings.heading | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.menu != blank -%}
+                  <ul class="site-footer__links">
+                    {%- for link in linklists[block.settings.menu].links -%}
+                      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              {%- when 'text' -%}
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="site-footer__heading">{{ block.settings.heading | escape }}</h3>
+                {%- endif -%}
+                <div class="site-footer__text rte">{{ block.settings.text }}</div>
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© {{ 'now' | date: '%Y' }} Cat Ilacad · CEO Systems Method™ · All rights reserved</p>
-      <p>Built for <span>business owners who are done winging it.</span></p>
+
+    {%- assign has_social = false -%}
+    {%- if settings.social_facebook_link != blank or settings.social_instagram_link != blank or settings.social_twitter_link != blank or settings.social_youtube_link != blank or settings.social_tiktok_link != blank -%}
+      {%- assign has_social = true -%}
+    {%- endif -%}
+
+    {%- if has_social -%}
+      <div class="site-footer__social">
+        {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}" rel="me noopener" aria-label="Instagram">Instagram</a>{%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}" rel="me noopener" aria-label="Facebook">Facebook</a>{%- endif -%}
+        {%- if settings.social_twitter_link != blank -%}<a href="{{ settings.social_twitter_link }}" rel="me noopener" aria-label="Twitter">Twitter</a>{%- endif -%}
+        {%- if settings.social_youtube_link != blank -%}<a href="{{ settings.social_youtube_link }}" rel="me noopener" aria-label="YouTube">YouTube</a>{%- endif -%}
+        {%- if settings.social_tiktok_link != blank -%}<a href="{{ settings.social_tiktok_link }}" rel="me noopener" aria-label="TikTok">TikTok</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment %} Markets — currency and language selectors when the store has more than one. {% endcomment -%}
+    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+      <div class="site-footer__locales">
+        {%- if localization.available_countries.size > 1 and settings.currency_show_selector -%}
+          {%- form 'localization', class: 'site-footer__localization' -%}
+            <label for="FooterCountry" class="visually-hidden">{{ 'localization.country_label' | t | default: 'Country/region' }}</label>
+            <select id="FooterCountry" name="country_code" onchange="this.form.submit()">
+              {%- for country in localization.available_countries -%}
+                <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                  {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- endform -%}
+        {%- endif -%}
+
+        {%- if localization.available_languages.size > 1 -%}
+          {%- form 'localization', class: 'site-footer__localization' -%}
+            <label for="FooterLocale" class="visually-hidden">{{ 'localization.language_label' | t | default: 'Language' }}</label>
+            <select id="FooterLocale" name="locale_code" onchange="this.form.submit()">
+              {%- for lang in localization.available_languages -%}
+                <option value="{{ lang.iso_code }}" lang="{{ lang.iso_code }}" {% if lang.iso_code == localization.language.iso_code %}selected{% endif %}>
+                  {{ lang.endonym_name | capitalize }}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- endform -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copyright">© {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.copyright_suffix | default: 'CEO Systems Method™ · All rights reserved' }}</p>
+      {%- if section.settings.bottom_tagline != blank -%}
+        <p class="site-footer__bottom-tagline">{{ section.settings.bottom_tagline }}</p>
+      {%- endif -%}
     </div>
   </div>
 </footer>
 
+{% stylesheet %}
+  .site-footer { background: var(--color-text); color: var(--color-bg); padding-block: 3rem 2rem; margin-top: 4rem; }
+  .site-footer a { color: inherit; text-decoration: none; }
+  .site-footer a:hover { opacity: 0.7; }
+  .site-footer__top {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 2rem;
+  }
+  @media (min-width: 750px) {
+    .site-footer__top { grid-template-columns: 1fr 2fr; gap: 3rem; }
+  }
+  .site-footer__brand-name { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; }
+  .site-footer__tagline {
+    margin-top: 0.75rem;
+    opacity: 0.7;
+    max-width: 28ch;
+    font-style: italic;
+  }
+  .site-footer__columns {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+  .site-footer__heading {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+    opacity: 0.7;
+    font-weight: 600;
+  }
+  .site-footer__links { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; padding: 0; margin: 0; }
+  .site-footer__social {
+    display: flex;
+    gap: 1rem;
+    padding-block: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.85rem;
+  }
+  .site-footer__bottom {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.8rem;
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .site-footer__bottom-tagline { opacity: 0.7; }
+  .site-footer__bottom-tagline span { color: var(--color-accent, #C4748A); font-weight: 500; }
+  .site-footer__locales { display: flex; gap: 1rem; flex-wrap: wrap; padding-block: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+  .site-footer__localization select {
+    background: rgba(255,255,255,0.05);
+    color: inherit;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "Footer",
-  "settings": []
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Footer logo (optional)", "info": "Leave blank to show the ★ Cat Ilacad wordmark." },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Building businesses that run on systems." },
+    { "type": "checkbox", "id": "show_default_columns", "label": "Show default Learn / Shop / Info columns", "default": true },
+    { "type": "header", "content": "Bottom row" },
+    { "type": "text", "id": "copyright_suffix", "label": "Copyright suffix", "default": "CEO Systems Method™ · All rights reserved" },
+    { "type": "richtext", "id": "bottom_tagline", "label": "Bottom tagline", "default": "<p>Built for <span>business owners who are done winging it.</span></p>" }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Quick links" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "About" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Share information about your brand.</p>" }
+      ]
+    }
+  ]
 }
 {% endschema %}

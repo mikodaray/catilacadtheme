@@ -1,0 +1,70 @@
+{% comment %}
+  Announcement bar — slim, dismissible banner above the header. Supports
+  one or more message blocks (a rotator picks one per refresh; could be
+  extended to auto-rotate with JS if needed).
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="announcement-bar color-{{ section.settings.color_scheme | default: 'accent' }}" role="region" aria-label="Announcement">
+    <div class="announcement-bar__inner page-width">
+      {%- comment %} Show the first block by default; could be JS-rotated. {% endcomment -%}
+      {%- for block in section.blocks limit: 1 -%}
+        <p class="announcement-bar__message" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>
+          {%- else -%}
+            {{ block.settings.text | escape }}
+          {%- endif -%}
+        </p>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .announcement-bar { font-size: var(--font-size-xs, 0.75rem); padding-block: 0.55rem; letter-spacing: 0.04em; text-align: center; }
+  .announcement-bar.color-accent { background: var(--color-accent, #C4748A); color: #fff; }
+  .announcement-bar.color-cream  { background: var(--color-bg-soft, #FAF4F6); color: var(--color-text, #3D1F2E); }
+  .announcement-bar.color-wine   { background: var(--color-text, #3D1F2E); color: var(--color-bg, #FDF8F9); }
+  .announcement-bar__inner { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+  .announcement-bar__message { margin: 0; }
+  .announcement-bar__message a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "tag": "section",
+  "class": "section section--announcement-bar",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "accent",
+      "options": [
+        { "value": "accent", "label": "Accent" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "wine", "label": "Wine" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Message", "default": "Free shipping on orders over $50." },
+        { "type": "url", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [{ "type": "announcement" }]
+    }
+  ]
+}
+{% endschema %}

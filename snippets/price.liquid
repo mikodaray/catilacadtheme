@@ -1,0 +1,49 @@
+{% comment %}
+  Renders a product price, handling compare-at, sale state, and unavailable state.
+
+  Accepts:
+  - product: {Product} optional - the product object.
+  - variant: {Variant} optional - if passed, uses the variant's prices instead of product's.
+  - use_variant: {Boolean} use product.selected_or_first_available_variant when no variant given.
+  - show_compare_at: {Boolean} show compare_at_price strikethrough (default true).
+  - show_badge: {Boolean} show a "Sale" badge if on sale (default false).
+  - class: {String} extra wrapper classes.
+
+  Usage:
+    {% render 'price', product: product, show_badge: true %}
+    {% render 'price', variant: variant %}
+{% endcomment %}
+
+{%- liquid
+  if variant
+    assign target = variant
+  elsif product and use_variant
+    assign target = product.selected_or_first_available_variant
+  elsif product
+    assign target = product
+  endif
+
+  assign show_cmp = show_compare_at | default: true
+  assign show_sale_badge = show_badge | default: false
+  assign extra_class = class | default: ''
+  assign price = target.price
+  assign compare_at = target.compare_at_price
+  assign on_sale = false
+  if compare_at and compare_at > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="price {% if on_sale %}price--on-sale{% endif %} {% if target.available == false %}price--unavailable{% endif %} {{ extra_class }}">
+  {%- if target.available == false -%}
+    <span class="price__sold-out">{{ 'products.product.sold_out' | t }}</span>
+  {%- else -%}
+    <span class="price__current">{{ price | money }}</span>
+    {%- if on_sale and show_cmp -%}
+      <s class="price__compare">{{ compare_at | money }}</s>
+      {%- if show_sale_badge -%}
+        <span class="price__badge">{{ 'products.product.on_sale' | t }}</span>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>

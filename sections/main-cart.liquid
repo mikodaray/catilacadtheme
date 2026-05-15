@@ -1,0 +1,113 @@
+{% comment %}
+  Main cart — server-rendered cart page. Uses the same line-item markup
+  conventions as <cart-drawer> (see assets/theme-cart-drawer.js) so the
+  visuals stay consistent.
+{% endcomment %}
+
+<section class="main-cart page-width">
+  {%- comment %} App blocks render above cart contents — trust badges, payment-icon rows, etc. {% endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == '@app' -%}
+      <div class="main-cart__app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if cart.item_count > 0 -%}
+    <h1 class="main-cart__title">{{ 'cart.general.title' | t }}</h1>
+
+    {% render 'shipping-bar' %}
+
+    <form action="{{ routes.cart_url }}" method="post" novalidate class="main-cart__form">
+      <ul class="main-cart__lines" role="list">
+        {%- for item in cart.items -%}
+          <li class="cart-drawer__line main-cart__line" data-line="{{ forloop.index }}">
+            <a href="{{ item.url }}" class="cart-drawer__line-image" aria-hidden="true" tabindex="-1">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy">
+              {%- endif -%}
+            </a>
+            <div class="cart-drawer__line-info">
+              <a href="{{ item.url }}" class="cart-drawer__line-title">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}
+                <div class="cart-drawer__line-variant">{{ item.variant.title }}</div>
+              {%- endunless -%}
+              <div class="cart-drawer__line-controls" role="group" aria-label="Quantity for {{ item.product.title | escape }}">
+                <label for="updates_{{ item.key }}" class="visually-hidden">{{ 'cart.label.quantity' | t }}</label>
+                <input
+                  type="number"
+                  id="updates_{{ item.key }}"
+                  name="updates[{{ item.key }}]"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  inputmode="numeric"
+                  aria-label="{{ 'cart.label.quantity' | t }}"
+                >
+                <a href="{{ item.url_to_remove }}" class="cart-drawer__remove">{{ 'cart.general.remove' | t }}</a>
+              </div>
+            </div>
+            <div class="cart-drawer__line-price">{{ item.final_line_price | money }}</div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="main-cart__footer cart-drawer__footer">
+        <div class="cart-drawer__subtotal main-cart__subtotal">
+          <span>{{ 'cart.general.subtotal' | t }}</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+
+        {%- if section.settings.show_note -%}
+          <label for="cart-note" class="main-cart__note-label">{{ 'cart.general.note' | t }}</label>
+          <textarea id="cart-note" name="note" class="main-cart__note">{{ cart.note }}</textarea>
+        {%- endif -%}
+
+        <div class="main-cart__actions">
+          <button type="submit" name="update" class="button button--secondary">{{ 'cart.general.update' | t }}</button>
+          <button type="submit" name="checkout" class="button button--primary cart-drawer__checkout">{{ 'cart.general.checkout' | t }}</button>
+        </div>
+      </div>
+    </form>
+  {%- else -%}
+    <div class="main-cart__empty empty-state" role="status">
+      <p class="eyebrow">{{ 'cart.general.title' | t }}</p>
+      <h1 class="empty-state__title">{{ 'cart.general.empty' | t }}</h1>
+      <p class="empty-state__subtitle">{{ 'cart.general.empty_subtext' | t | default: 'Your cart is waiting. Browse the collection and add something you love.' }}</p>
+      <div class="empty-state__actions">
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+          {{ 'general.continue_shopping' | t }}
+        </a>
+        {%- if section.settings.featured_collection != blank -%}
+          <a href="{{ collections[section.settings.featured_collection].url }}" class="button button--secondary">
+            {{ collections[section.settings.featured_collection].title }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .main-cart { padding-block: clamp(2rem, 5vw, 4rem); }
+  .main-cart__title { font-family: var(--font-heading); font-size: clamp(1.5rem, 3vw, 2.25rem); margin-bottom: 1.5rem; }
+  .main-cart__lines { list-style: none; padding: 0; margin: 0; }
+  .main-cart__line { padding-block: 1rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .main-cart__footer { padding-top: 1.5rem; }
+  .main-cart__actions { display: flex; gap: 0.75rem; justify-content: flex-end; flex-wrap: wrap; }
+  .main-cart__subtotal { font-size: 1.1rem; }
+  .main-cart__note { width: 100%; min-height: 4rem; padding: 0.6rem 0.85rem; border: 1px solid rgba(0,0,0,0.15); border-radius: 6px; font: inherit; margin-block: 0.5rem 1rem; }
+  .main-cart__empty { text-align: center; padding-block: 4rem; }
+  .main-cart__app-block { margin-bottom: 1.5rem; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "checkbox", "id": "show_note", "label": "Show order note field", "default": true },
+    { "type": "collection", "id": "featured_collection", "label": "Featured collection (shown on empty cart)" }
+  ],
+  "blocks": [
+    { "type": "@app" }
+  ]
+}
+{% endschema %}

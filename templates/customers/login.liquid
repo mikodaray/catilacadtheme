@@ -1,51 +1,98 @@
-<div class="customer-hero">
-  <h1>Welcome Back</h1>
-  <p>Sign in to access your orders and account.</p>
-</div>
+{%- comment -%}
+  Customer login + "forgot password" recovery in a single template, toggled by
+  the URL hash #recover. Centred card, brand-styled.
+{%- endcomment -%}
 
-<div class="customer-container">
-  <div class="customer-box">
-    <h2 class="customer-box-title">Sign In</h2>
-    <p class="customer-box-sub">New here? <a href="/account/register" class="form-link">Create an account →</a></p>
+<section class="customer page-width">
+  <div class="customer__card" id="customer-login-card">
+    <h1 class="customer__title">{{ 'customers.login.title' | t }}</h1>
+    <p class="customer__subtitle">{{ 'customers.login.welcome_back' | t | default: 'Sign in to access your orders and account.' }}</p>
 
-    {% form 'customer_login' %}
-      {% if form.errors %}
-        <div class="form-error">{{ form.errors | default_errors }}</div>
-      {% endif %}
+    {%- form 'customer_login', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <div class="customer__error" role="alert" aria-live="assertive">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
 
-      <div class="form-group">
-        <label for="customer_email" class="form-label">Email</label>
+      <div class="field">
+        <label for="customer-login-email">{{ 'customers.login.email' | t }}</label>
         <input
           type="email"
           name="customer[email]"
-          id="customer_email"
-          class="form-input"
-          placeholder="you@example.com"
+          id="customer-login-email"
           autocomplete="email"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
           required
         >
       </div>
 
-      <div class="form-group">
-        <label for="customer_password" class="form-label">Password</label>
+      <div class="field">
+        <label for="customer-login-password">{{ 'customers.login.password' | t }}</label>
         <input
           type="password"
           name="customer[password]"
-          id="customer_password"
-          class="form-input"
-          placeholder="Your password"
+          id="customer-login-password"
           autocomplete="current-password"
           required
         >
       </div>
 
-      <button type="submit" class="btn-full">Sign In →</button>
-    {% endform %}
+      <div class="actions">
+        <button type="submit" class="button button--primary">{{ 'customers.login.sign_in' | t }}</button>
+      </div>
+    {%- endform -%}
 
-    <div class="form-divider"></div>
+    <div class="customer__divider">{{ 'customers.login.or' | t | default: 'or' }}</div>
 
-    <div class="form-footer">
-      <a href="/account/forgot_password" class="form-link">Forgot your password?</a>
+    <div class="actions" style="text-align:center;">
+      <p style="margin-bottom:0.5rem;color:var(--color-muted);font-size:var(--font-size-sm);">
+        {{ 'customers.login.no_account' | t | default: 'New here?' }}
+        <a href="{{ routes.account_register_url }}" class="customer__link">{{ 'customers.login.create_account' | t }}</a>
+      </p>
+      <a href="#recover" class="customer__link">{{ 'customers.login.forgot_password' | t }}</a>
     </div>
   </div>
-</div>
+
+  {%- comment -%} Hidden recovery card — revealed via #recover. {%- endcomment -%}
+  <div class="customer__card" id="customer-recover-card" hidden>
+    <h1 class="customer__title">{{ 'customers.reset_password.title' | t }}</h1>
+    <p class="customer__subtitle">{{ 'customers.reset_password.subtext' | t }}</p>
+
+    {%- form 'recover_customer_password', novalidate: 'novalidate' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="customer__success" role="status" aria-live="polite">{{ 'customers.reset_password.email_sent' | t | default: 'We sent you an email with a link to reset your password.' }}</div>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <div class="customer__error" role="alert" aria-live="assertive">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="field">
+        <label for="customer-recover-email">{{ 'customers.reset_password.email' | t }}</label>
+        <input type="email" name="email" id="customer-recover-email" autocomplete="email" required>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="button button--primary">{{ 'customers.reset_password.submit' | t }}</button>
+        <a href="#login" class="customer__link" style="text-align:center;">{{ 'customers.reset_password.cancel' | t }}</a>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+
+<script>
+  // Tiny hash-toggle: #recover shows recovery card, anything else shows login.
+  (function () {
+    const login = document.getElementById('customer-login-card');
+    const recover = document.getElementById('customer-recover-card');
+    if (!login || !recover) return;
+    function sync() {
+      const recovering = window.location.hash === '#recover';
+      login.hidden = recovering;
+      recover.hidden = !recovering;
+      if (recovering) recover.querySelector('input')?.focus();
+    }
+    window.addEventListener('hashchange', sync);
+    sync();
+  })();
+</script>

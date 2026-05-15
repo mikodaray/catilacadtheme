@@ -1,0 +1,223 @@
+{
+  "_translator_note": "MACHINE-TRANSLATED DRAFT — needs professional review before going live. Punctuation, idioms, and brand-specific terminology have not been verified.",
+  "general": {
+    "continue_shopping": "Seguir comprando",
+    "skip_to_content": "Saltar al contenido",
+    "breadcrumb": {
+      "home": "Inicio"
+    },
+    "meta": {
+      "tags": "Etiquetado «{{ tags }}»",
+      "page_number": "Página {{ page }}"
+    },
+    "social": {
+      "follow_us": "Síguenos"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Añadir al carrito",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "on_sale": "Oferta",
+      "from_price_html": "Desde {{ price }}",
+      "vendor": "Marca",
+      "view_full_details": "Ver todos los detalles",
+      "share": "Compartir",
+      "quantity": {
+        "label": "Cantidad",
+        "increase": "Aumentar cantidad",
+        "decrease": "Disminuir cantidad"
+      }
+    },
+    "facets": {
+      "filter_by_label": "Filtrar:",
+      "sort_by_label": "Ordenar por:",
+      "clear": "Borrar",
+      "clear_all": "Borrar todo"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Tu carrito",
+      "empty": "Tu carrito está vacío",
+      "remove": "Eliminar",
+      "note": "Nota del pedido",
+      "subtotal": "Subtotal",
+      "shipping": "Envío",
+      "tax": "Impuesto",
+      "total": "Total",
+      "checkout": "Finalizar compra",
+      "continue_browsing": "Seguir navegando",
+      "update": "Actualizar carrito",
+      "view_cart": "Ver carrito"
+    },
+    "label": {
+      "item": "Artículo",
+      "price": "Precio",
+      "quantity": "Cantidad",
+      "total": "Total"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Colecciones",
+      "all_products": "Todos los productos",
+      "view_all": "Ver todo",
+      "items_with_count": {
+        "one": "1 producto",
+        "other": "{{ count }} productos"
+      },
+      "no_matches": "No se encontraron productos"
+    }
+  },
+  "blogs": {
+    "article": {
+      "by_author": "por {{ author }}",
+      "posted_in": "Publicado en {{ tags }}",
+      "read_more": "Leer más",
+      "back_to_blog": "Volver a {{ title }}"
+    },
+    "comments": {
+      "title": "Dejar un comentario",
+      "success": "Tu comentario fue publicado.",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "post": "Publicar comentario"
+    }
+  },
+  "customers": {
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "sign_in": "Iniciar sesión",
+      "create_account": "Crear cuenta",
+      "guest": "Continuar como invitado"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "submit": "Crear"
+    },
+    "reset_password": {
+      "title": "Restablecer tu contraseña",
+      "subtext": "Introduce el correo asociado a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.",
+      "email": "Correo electrónico",
+      "submit": "Enviar",
+      "cancel": "Cancelar"
+    },
+    "account": {
+      "title": "Mi cuenta",
+      "orders": "Historial de pedidos",
+      "addresses": "Mis direcciones"
+    },
+    "orders": {
+      "title": "Historial de pedidos",
+      "order_number": "Pedido",
+      "date": "Fecha",
+      "payment_status": "Pago",
+      "fulfillment_status": "Estado del envío",
+      "total": "Total",
+      "none": "Aún no has realizado ningún pedido."
+    },
+    "addresses": {
+      "title": "Tus direcciones",
+      "default": "Predeterminada",
+      "add_new": "Añadir nueva dirección",
+      "edit_address": "Editar dirección",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "set_default": "Establecer como predeterminada"
+    }
+  },
+  "newsletter": {
+    "heading": "Suscríbete a nuestro boletín",
+    "subheading": "Sé el primero en enterarte de novedades y ofertas exclusivas.",
+    "email_placeholder": "Correo electrónico",
+    "button_label": "Suscribirse",
+    "success": "¡Gracias por suscribirte!",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo."
+  },
+  "sections": {
+    "header": {
+      "menu": "Menú",
+      "cart_count": {
+        "one": "1 artículo",
+        "other": "{{ count }} artículos"
+      }
+    },
+    "footer": {
+      "copyright": "© {{ year }} {{ shop }}"
+    },
+    "hero": {
+      "default_heading": "Bienvenido",
+      "default_subheading": "Un breve eslogan para presentar tu tienda."
+    },
+    "featured_collection": {
+      "view_all": "Ver todo",
+      "empty": "Selecciona una colección para mostrar."
+    },
+    "featured_product": {
+      "empty": "Selecciona un producto para mostrar."
+    },
+    "testimonials": {
+      "default_heading": "Lo que dicen nuestros clientes"
+    },
+    "logo_list": {
+      "default_heading": "Aparecemos en"
+    },
+    "video": {
+      "play": "Reproducir vídeo",
+      "pause": "Pausar vídeo",
+      "empty": "Añade un vídeo para mostrarlo aquí."
+    },
+    "cart": {
+      "empty": "Tu carrito está vacío.",
+      "remove": "Eliminar",
+      "subtotal": "Subtotal",
+      "checkout": "Finalizar compra"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Aquí está tu tarjeta regalo de {{ value }} para {{ shop }}",
+      "subtext": "Tu tarjeta regalo",
+      "gift_card_code": "Código de tarjeta regalo",
+      "copy_code": "Copiar código",
+      "how_to_use_gift_card": "Usa este código al pagar.",
+      "remaining_html": "Saldo restante",
+      "add_to_apple_wallet": "Añadir a Apple Wallet"
+    }
+  },
+  "search": {
+    "no_results": "Sin resultados para «{{ terms }}»",
+    "results_with_count": {
+      "one": "1 resultado para «{{ terms }}»",
+      "other": "{{ count }} resultados para «{{ terms }}»"
+    },
+    "title": "Búsqueda",
+    "placeholder": "Buscar",
+    "predictive": {
+      "no_results": "Sin resultados coincidentes.",
+      "view_all_results": "Ver todos los resultados"
+    }
+  },
+  "404": {
+    "title": "Página no encontrada",
+    "subtext": "La página solicitada no existe.",
+    "link": "Volver al inicio"
+  },
+  "accessibility": {
+    "close": "Cerrar",
+    "menu": "Menú",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "loading": "Cargando…"
+  }
+}

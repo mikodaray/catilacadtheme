@@ -1,0 +1,46 @@
+{% comment %}
+  Renders pagination controls for a paginated list.
+
+  Accepts:
+  - paginate: {Paginate} required - the Shopify paginate object.
+
+  Usage:
+    {% paginate collection.products by 24 %}
+      ...
+      {% render 'pagination', paginate: paginate %}
+    {% endpaginate %}
+{% endcomment %}
+
+{%- if paginate.parts.size > 0 -%}
+  <nav class="pagination" role="navigation" aria-label="Pagination">
+    <ul class="pagination__list">
+      {%- if paginate.previous -%}
+        <li class="pagination__item pagination__item--prev">
+          <a href="{{ paginate.previous.url }}" rel="prev" aria-label="Previous page">
+            {% render 'icon', icon: 'chevron-right', class: 'icon--flip' %}
+          </a>
+        </li>
+      {%- endif -%}
+
+      {%- for part in paginate.parts -%}
+        <li class="pagination__item">
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {%- elsif part.title == paginate.current_page -%}
+            <span class="pagination__current" aria-current="page">{{ part.title }}</span>
+          {%- else -%}
+            <span class="pagination__ellipsis">{{ part.title }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+
+      {%- if paginate.next -%}
+        <li class="pagination__item pagination__item--next">
+          <a href="{{ paginate.next.url }}" rel="next" aria-label="Next page">
+            {% render 'icon', icon: 'chevron-right' %}
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </nav>
+{%- endif -%}

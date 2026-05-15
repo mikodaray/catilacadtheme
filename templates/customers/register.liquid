@@ -1,74 +1,42 @@
-<div class="customer-hero">
-  <h1>Create Your Account</h1>
-  <p>Join the Cat Ilacad ecosystem and track your orders.</p>
-</div>
+<section class="customer page-width">
+  <div class="customer__card">
+    <h1 class="customer__title">{{ 'customers.register.title' | t }}</h1>
+    <p class="customer__subtitle">{{ 'customers.register.subtext' | t | default: 'Create an account to track your orders and save your details.' }}</p>
 
-<div class="customer-container">
-  <div class="customer-box">
-    <h2 class="customer-box-title">Get Started</h2>
-    <p class="customer-box-sub">Already have an account? <a href="/account/login" class="form-link">Sign in →</a></p>
+    {%- form 'create_customer', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <div class="customer__error" role="alert" aria-live="assertive">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
 
-    {% form 'create_customer' %}
-      {% if form.errors %}
-        <div class="form-error">{{ form.errors | default_errors }}</div>
-      {% endif %}
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="first_name" class="form-label">First Name</label>
-          <input
-            type="text"
-            name="customer[first_name]"
-            id="first_name"
-            class="form-input"
-            placeholder="Cat"
-            autocomplete="given-name"
-            value="{{ form.first_name }}"
-          >
-        </div>
-        <div class="form-group">
-          <label for="last_name" class="form-label">Last Name</label>
-          <input
-            type="text"
-            name="customer[last_name]"
-            id="last_name"
-            class="form-input"
-            placeholder="Ilacad"
-            autocomplete="family-name"
-            value="{{ form.last_name }}"
-          >
-        </div>
+      <div class="field">
+        <label for="register-first-name">{{ 'customers.register.first_name' | t }}</label>
+        <input type="text" name="customer[first_name]" id="register-first-name" autocomplete="given-name" value="{{ form.first_name }}">
       </div>
 
-      <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          name="customer[email]"
-          id="email"
-          class="form-input"
-          placeholder="you@example.com"
-          autocomplete="email"
-          value="{{ form.email }}"
-          required
-        >
+      <div class="field">
+        <label for="register-last-name">{{ 'customers.register.last_name' | t }}</label>
+        <input type="text" name="customer[last_name]" id="register-last-name" autocomplete="family-name" value="{{ form.last_name }}">
       </div>
 
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          name="customer[password]"
-          id="password"
-          class="form-input"
-          placeholder="Choose a strong password"
-          autocomplete="new-password"
-          required
-          minlength="5"
-        >
+      <div class="field">
+        <label for="register-email">{{ 'customers.register.email' | t }}</label>
+        <input type="email" name="customer[email]" id="register-email" autocomplete="email" value="{{ form.email }}" required>
       </div>
 
-      <button type="submit" class="btn-full">Create Account →</button>
-    {% endform %}
+      <div class="field">
+        <label for="register-password">{{ 'customers.register.password' | t }}</label>
+        <input type="password" name="customer[password]" id="register-password" autocomplete="new-password" minlength="5" required>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="button button--primary">{{ 'customers.register.submit' | t }}</button>
+      </div>
+    {%- endform -%}
+
+    <div class="customer__divider">{{ 'customers.login.or' | t | default: 'or' }}</div>
+    <p style="text-align:center;color:var(--color-muted);font-size:var(--font-size-sm);">
+      {{ 'customers.register.have_account' | t | default: 'Already have an account?' }}
+      <a href="{{ routes.account_login_url }}" class="customer__link">{{ 'customers.login.sign_in' | t }}</a>
+    </p>
   </div>
-</div>
+</section>

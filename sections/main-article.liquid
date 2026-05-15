@@ -1,0 +1,211 @@
+{% comment %}
+  Main article — hero, eyebrow meta, large serif title, optional lead-in,
+  body, tags, comments, related articles strip.
+{% endcomment %}
+
+<article class="main-article">
+  <header class="main-article__hero {% if section.settings.hero_full_bleed %}main-article__hero--full{% endif %}">
+    {%- if article.image -%}
+      <div class="main-article__hero-media">
+        {% render 'responsive-image',
+          image: article.image,
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          aspect_ratio: 16, divided_by: 9
+        %}
+      </div>
+    {%- endif -%}
+
+    <div class="page-width main-article__hero-content">
+      <p class="eyebrow main-article__crumbs">
+        <a href="{{ blog.url }}">{{ blog.title }}</a>
+        {%- if article.tags.size > 0 -%}
+          <span aria-hidden="true">·</span>
+          <span class="main-article__tag">{{ article.tags.first }}</span>
+        {%- endif -%}
+      </p>
+      <h1 class="main-article__title">{{ article.title | escape }}</h1>
+      {%- if section.settings.show_subtitle and article.metafields.custom.subtitle != blank -%}
+        <p class="main-article__subtitle">{{ article.metafields.custom.subtitle }}</p>
+      {%- endif -%}
+      <p class="main-article__byline">
+        {%- if article.author != blank -%}
+          <span>{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+        {%- endif -%}
+        <span aria-hidden="true">·</span>
+        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%B %-d, %Y' }}</time>
+        {%- if article.comments_count > 0 and blog.comments_enabled? -%}
+          <span aria-hidden="true">·</span>
+          <a href="#comments">{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment', 'comments' }}</a>
+        {%- endif -%}
+      </p>
+    </div>
+  </header>
+
+  <div class="page-width main-article__body-wrap">
+    <div class="main-article__body rte {% if section.settings.drop_cap %}main-article__body--drop-cap{% endif %}">
+      {{ article.content }}
+    </div>
+
+    {%- comment %} App blocks render between the body and the tag list. {% endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="main-article__app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if article.tags.size > 0 -%}
+      <ul class="main-article__tags" role="list" aria-label="Tags">
+        {%- for tag in article.tags -%}
+          <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="main-article__tag-link">{{ tag }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if blog.comments_enabled? -%}
+      <section id="comments" class="main-article__comments">
+        <h2 class="main-article__section-title">{{ 'blogs.comments.title' | t }}</h2>
+
+        {%- if article.comments.size > 0 -%}
+          <ul class="main-article__comments-list" role="list">
+            {%- for comment in article.comments -%}
+              <li class="main-article__comment">
+                <p>{{ comment.content }}</p>
+                <p class="main-article__comment-meta">— {{ comment.author }}, {{ comment.created_at | date: '%b %-d, %Y' }}</p>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- form 'new_comment', article -%}
+          {%- if form.errors -%}
+            <div class="customer__error" role="alert" aria-live="assertive">{{ form.errors | default_errors }}</div>
+          {%- elsif form.posted_successfully? -%}
+            <div class="customer__success" role="status" aria-live="polite">{{ 'blogs.comments.success' | t }}</div>
+          {%- endif -%}
+
+          <div class="field">
+            <label for="comment-name">{{ 'blogs.comments.name' | t }}</label>
+            <input type="text" id="comment-name" name="comment[author]" required>
+          </div>
+          <div class="field">
+            <label for="comment-email">{{ 'blogs.comments.email' | t }}</label>
+            <input type="email" id="comment-email" name="comment[email]" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="comment-body">{{ 'blogs.comments.message' | t }}</label>
+            <textarea id="comment-body" name="comment[body]" rows="4" required></textarea>
+          </div>
+          <div class="actions">
+            <button type="submit" class="button button--primary">{{ 'blogs.comments.post' | t }}</button>
+          </div>
+        {%- endform -%}
+      </section>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_related and blog.articles.size > 1 -%}
+    <section class="main-article__related page-width">
+      <h2 class="main-article__section-title">{{ 'blogs.article.related' | t | default: 'Keep reading' }}</h2>
+      <ul class="main-blog__grid main-blog__grid--columns-3" role="list">
+        {%- assign printed = 0 -%}
+        {%- for sibling in blog.articles -%}
+          {%- if sibling.id == article.id -%}{%- continue -%}{%- endif -%}
+          {%- if printed >= 3 -%}{%- break -%}{%- endif -%}
+          <li class="main-blog__grid-item">
+            <article class="blog-card">
+              <a class="blog-card__link" href="{{ sibling.url }}">
+                <div class="blog-card__media">
+                  {%- if sibling.image -%}
+                    {% render 'responsive-image', image: sibling.image, sizes: '33vw', aspect_ratio: 1.5 %}
+                  {%- endif -%}
+                </div>
+                <div class="blog-card__body">
+                  <p class="main-blog__meta">
+                    <span class="main-blog__date">{{ sibling.published_at | date: '%b %-d, %Y' }}</span>
+                  </p>
+                  <h3 class="blog-card__title">{{ sibling.title | escape }}</h3>
+                </div>
+              </a>
+            </article>
+          </li>
+          {%- assign printed = printed | plus: 1 -%}
+        {%- endfor -%}
+      </ul>
+    </section>
+  {%- endif -%}
+</article>
+
+{% stylesheet %}
+  .main-article { padding-bottom: var(--section-gap-y); }
+  .main-article__hero { padding-top: clamp(2rem, 5vw, 4rem); }
+  .main-article__hero--full .main-article__hero-media { margin-bottom: 2rem; }
+  .main-article__hero-media .responsive-image { border-radius: 0; aspect-ratio: 16 / 9; max-height: 60vh; }
+  .main-article__hero--full .main-article__hero-media .responsive-image { border-radius: 0; max-height: 70vh; }
+
+  .main-article__hero-content { max-width: 760px; margin-inline: auto; text-align: center; }
+  .main-article__crumbs a { color: var(--color-accent); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+  .main-article__crumbs span { display: inline-block; margin-inline: 0.4em; opacity: 0.5; }
+  .main-article__title { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1; margin-block: 0.85rem 1rem; }
+  .main-article__subtitle { font-family: var(--font-heading); font-style: italic; font-size: var(--font-size-lg); color: var(--color-muted); max-width: 56ch; margin-inline: auto; }
+  .main-article__byline { color: var(--color-muted); font-size: var(--font-size-sm); margin-top: 1rem; }
+  .main-article__byline span[aria-hidden] { margin-inline: 0.5em; opacity: 0.5; }
+
+  .main-article__body-wrap { max-width: 720px; margin-inline: auto; padding-block: clamp(2rem, 5vw, 3rem); }
+  .main-article__body { font-size: var(--font-size-lg); line-height: 1.7; }
+  .main-article__body p { margin-bottom: 1.25em; }
+  .main-article__body h2 { font-family: var(--font-heading); font-size: var(--font-size-2xl); margin-block: 2em 0.75em; }
+  .main-article__body h3 { font-family: var(--font-heading); font-size: var(--font-size-xl); margin-block: 1.75em 0.5em; }
+  .main-article__body img { max-width: 100%; height: auto; border-radius: var(--radius-md); margin-block: 1.5em; }
+  .main-article__body blockquote { font-family: var(--font-heading); font-style: italic; font-size: var(--font-size-xl); border-left: 3px solid var(--color-accent); padding-left: 1.25rem; color: var(--color-muted); margin: 2rem 0; }
+
+  /* Optional drop cap on first paragraph. */
+  .main-article__body--drop-cap > p:first-of-type::first-letter {
+    font-family: var(--font-heading);
+    font-size: 3.5em;
+    float: left;
+    line-height: 0.9;
+    margin: 0.1em 0.15em 0 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .main-article__tags { list-style: none; padding: 0; margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .main-article__tag-link {
+    font-size: var(--font-size-xs);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--color-muted);
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+  .main-article__tag-link:hover { color: var(--color-accent); border-color: var(--color-accent); }
+
+  .main-article__comments { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+  .main-article__section-title { font-family: var(--font-heading); font-size: var(--font-size-2xl); margin-bottom: 1.5rem; }
+  .main-article__comment { padding: 1rem 0; border-bottom: 1px solid var(--color-border-soft); }
+  .main-article__comment-meta { color: var(--color-muted); font-size: var(--font-size-sm); margin-top: 0.5rem; }
+
+  .main-article__related { margin-top: 4rem; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "class": "section section--main-article",
+  "settings": [
+    { "type": "checkbox", "id": "hero_full_bleed", "label": "Full-bleed hero image", "default": false },
+    { "type": "checkbox", "id": "show_subtitle", "label": "Show subtitle (article metafield: custom.subtitle)", "default": false },
+    { "type": "checkbox", "id": "drop_cap", "label": "Drop cap on first paragraph", "default": true },
+    { "type": "checkbox", "id": "show_related", "label": "Show related articles strip", "default": true }
+  ],
+  "blocks": [
+    { "type": "@app" }
+  ]
+}
+{% endschema %}

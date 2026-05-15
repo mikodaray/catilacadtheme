@@ -1,0 +1,78 @@
+{% comment %}
+  Main collection product grid — sort dropdown, per-page count, paginated grid.
+  Sort uses Shopify's native ?sort_by= query so it survives links/SEO.
+{% endcomment %}
+
+{%- liquid
+  assign per_page = section.settings.per_page
+  assign sort_options = collection.sort_options
+-%}
+
+<section class="collection-grid-section page-width">
+  <header class="collection-toolbar" role="region" aria-label="Collection toolbar">
+    <p class="collection-toolbar__count">
+      {{ 'collections.general.items_with_count' | t: count: collection.products_count }}
+    </p>
+
+    <form method="get" class="collection-toolbar__sort">
+      <label for="SortBy" class="collection-toolbar__sort-label">{{ 'products.facets.sort_by_label' | t }}</label>
+      <select id="SortBy" name="sort_by" onchange="this.form.submit()">
+        {%- for option in sort_options -%}
+          <option value="{{ option.value }}" {% if option.value == collection.sort_by or option.value == collection.default_sort_by %}selected{% endif %}>
+            {{ option.name }}
+          </option>
+        {%- endfor -%}
+      </select>
+      {%- comment %} Preserve any active filters on sort change. {% endcomment -%}
+      {%- for filter in collection.filters -%}
+        {%- for value in filter.active_values -%}
+          <input type="hidden" name="{{ value.param_name }}" value="{{ value.value }}">
+        {%- endfor -%}
+      {%- endfor -%}
+    </form>
+  </header>
+
+  {%- paginate collection.products by per_page -%}
+    {%- if collection.products_count > 0 -%}
+      <ul class="product-grid product-grid--columns-{{ section.settings.columns_desktop }}">
+        {%- for product in collection.products -%}
+          <li class="product-grid__item">
+            {% render 'product-card', product: product %}
+          </li>
+        {%- endfor -%}
+      </ul>
+      {% render 'pagination', paginate: paginate %}
+    {%- else -%}
+      <div class="collection-empty empty-state" role="status">
+        <p class="eyebrow">{{ collection.title }}</p>
+        <h2 class="empty-state__title">{{ 'collections.general.no_matches' | t | default: 'No products yet' }}</h2>
+        <p class="empty-state__subtitle">{{ 'collections.general.no_matches_subtext' | t | default: 'New things are on the way. Check back soon, or browse what we have available now.' }}</p>
+        <div class="empty-state__actions">
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'collections.general.all_products' | t }}</a>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Product grid",
+  "tag": "section",
+  "class": "section section--main-collection-product-grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Products per page",
+      "min": 8, "max": 48, "step": 4, "default": 24
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2, "max": 5, "step": 1, "default": 4
+    }
+  ]
+}
+{% endschema %}

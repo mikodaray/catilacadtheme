@@ -1,13 +1,129 @@
 {
   "current": {
-    "colors_accent_1": "#C4748A",
-    "colors_accent_2": "#C9A84C",
-    "colors_text": "#3D1F2E",
-    "colors_background_1": "#FDF8F9",
-    "colors_background_2": "#FAF4F6",
-    "colors_solid_button_labels": "#FFFFFF",
-    "type_header_font": "fraunces_n7",
-    "type_body_font": "dm_sans_n4",
-    "logo_width": 120
+    "color_bg": "#FDF8F9",
+    "color_text": "#3D1F2E",
+    "color_accent": "#C4748A",
+    "color_button": "#3D1F2E",
+    "color_button_text": "#FFFFFF",
+    "font_heading": "fraunces_n7",
+    "font_body": "dm_sans_n4",
+    "container_width": 1200,
+    "button_radius": 100,
+    "button_style": "solid",
+    "input_radius": 12,
+    "animations_enabled": true,
+    "animations_hover_scale": true,
+    "card_style": "soft",
+    "card_image_ratio": "square",
+    "media_radius": "md",
+    "cart_drawer_position": "right",
+    "badge_position": "top-left",
+    "search_predictive_enabled": true,
+    "currency_show_selector": true,
+    "currency_show_codes": false,
+    "cart_type": "drawer",
+    "free_shipping_threshold_cents": 0,
+    "free_shipping_celebration": "You qualify for free shipping!",
+    "reviews_provider": "none",
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#FDF8F9",
+          "text": "#3D1F2E",
+          "accent": "#C4748A",
+          "button": "#3D1F2E",
+          "button_label": "#FFFFFF",
+          "secondary_button_label": "#C4748A"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#251420",
+          "text": "#F4E5E9",
+          "accent": "#E48BA0",
+          "button": "#F4E5E9",
+          "button_label": "#251420",
+          "secondary_button_label": "#E48BA0"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#F4EDE2",
+          "text": "#2F2A22",
+          "accent": "#A88B5C",
+          "button": "#2F2A22",
+          "button_label": "#F4EDE2",
+          "secondary_button_label": "#A88B5C"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "background": "#1A1A1A",
+          "text": "#FAFAF7",
+          "accent": "#FAFAF7",
+          "button": "#FAFAF7",
+          "button_label": "#1A1A1A",
+          "secondary_button_label": "#FAFAF7"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+      "color_bg": "#FDF8F9",
+      "color_text": "#3D1F2E",
+      "color_accent": "#C4748A",
+      "color_button": "#3D1F2E",
+      "color_button_text": "#FFFFFF",
+      "font_heading": "fraunces_n7",
+      "font_body": "dm_sans_n4",
+      "container_width": 1200,
+      "button_radius": 100,
+      "button_style": "solid",
+      "card_style": "soft",
+      "card_image_ratio": "square"
+    },
+    "Editorial": {
+      "color_bg": "#FAFAF7",
+      "color_text": "#1A1A1A",
+      "color_accent": "#8C7A66",
+      "color_button": "#1A1A1A",
+      "color_button_text": "#FAFAF7",
+      "font_heading": "fraunces_n7",
+      "font_body": "fraunces_n4",
+      "container_width": 1440,
+      "button_radius": 0,
+      "button_style": "outline",
+      "card_style": "minimal",
+      "card_image_ratio": "portrait"
+    },
+    "Wine": {
+      "color_bg": "#251420",
+      "color_text": "#F4E5E9",
+      "color_accent": "#E48BA0",
+      "color_button": "#F4E5E9",
+      "color_button_text": "#251420",
+      "font_heading": "fraunces_n7",
+      "font_body": "dm_sans_n4",
+      "container_width": 1200,
+      "button_radius": 100,
+      "button_style": "solid",
+      "card_style": "soft",
+      "card_image_ratio": "square"
+    },
+    "Sand": {
+      "color_bg": "#F4EDE2",
+      "color_text": "#2F2A22",
+      "color_accent": "#A88B5C",
+      "color_button": "#2F2A22",
+      "color_button_text": "#F4EDE2",
+      "font_heading": "fraunces_n7",
+      "font_body": "dm_sans_n4",
+      "container_width": 1280,
+      "button_radius": 4,
+      "button_style": "outline",
+      "card_style": "standard",
+      "card_image_ratio": "square"
+    }
   }
 }

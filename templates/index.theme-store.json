@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Built to last. Made for now.",
+        "subheading": "Discover the collection that thoughtful shoppers come back for.",
+        "button_label": "Shop the collection",
+        "button_link": "/collections/all",
+        "height": "large",
+        "overlay_opacity": 30,
+        "text_position": "center"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Featured collection",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "show_view_all": true,
+        "view_all_text": "View all"
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "settings": {
+        "height": "medium",
+        "overlay_opacity": 25,
+        "caption": "New season, new arrivals."
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "Designed with intention",
+        "text": "<p>Every piece in our collection is chosen for the way it feels to live with — quiet quality, considered details, and a calm point of view.</p>",
+        "image_position": "left",
+        "button_label": "Our story",
+        "button_link": "/pages/about"
+      }
+    },
+    "multi-column": {
+      "type": "multi-column",
+      "settings": {
+        "heading": "Why shop with us",
+        "columns_desktop": 3
+      },
+      "blocks": {
+        "shipping": {
+          "type": "column",
+          "settings": {
+            "heading": "Free shipping",
+            "text": "<p>On orders over $50, anywhere in the country.</p>"
+          }
+        },
+        "returns": {
+          "type": "column",
+          "settings": {
+            "heading": "Easy returns",
+            "text": "<p>30 days, no questions asked.</p>"
+          }
+        },
+        "support": {
+          "type": "column",
+          "settings": {
+            "heading": "Real support",
+            "text": "<p>Human help, weekdays and weekends.</p>"
+          }
+        }
+      },
+      "block_order": ["shipping", "returns", "support"]
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "settings": { "alignment": "center" },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": { "heading": "Join the list" }
+        },
+        "text": {
+          "type": "text",
+          "settings": { "text": "<p>New arrivals, quiet sales, and the occasional letter from the team.</p>" }
+        }
+      },
+      "block_order": ["heading", "text"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Stay in the loop",
+        "subheading": "Be the first to hear about new launches and exclusive offers."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured-collection",
+    "image-banner",
+    "image-with-text",
+    "multi-column",
+    "rich-text",
+    "newsletter"
+  ]
+}

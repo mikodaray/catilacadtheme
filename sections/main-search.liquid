@@ -1,0 +1,149 @@
+{%- comment -%}
+  Main search section — clean header, search field, resource-type tabs
+  (All / Products / Articles / Pages), polished empty state.
+
+  Tabs work via the standard Shopify ?type= query parameter, so they're
+  bookmarkable and don't need JS.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_type = search.types | join: ',' | default: 'product,article,page'
+  assign type_param_all = 'product,article,page'
+-%}
+
+<section class="search page-width" style="padding-block: var(--section-gap-y);">
+  <header class="search__header" style="text-align:center;max-width:640px;margin-inline:auto;margin-bottom:2.5rem;">
+    <p class="eyebrow">{{ 'search.title' | t }}</p>
+    <h1 style="font-size: var(--font-size-3xl); margin-block: 0.5rem 1.5rem;">
+      {%- if search.performed -%}
+        {%- if search.results_count == 0 -%}
+          {{ 'search.no_results' | t: terms: search.terms }}
+        {%- else -%}
+          {{ 'search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'search.placeholder' | t }}
+      {%- endif -%}
+    </h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:0.5rem;max-width:480px;margin-inline:auto;">
+      <label for="search-input" class="visually-hidden">{{ 'search.placeholder' | t }}</label>
+      <input
+        type="search"
+        id="search-input"
+        name="q"
+        placeholder="{{ 'search.placeholder' | t }}"
+        value="{{ search.terms | escape }}"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+      <input type="hidden" name="type" value="{{ current_type }}">
+      <button type="submit" class="button button--primary">{{ 'search.title' | t }}</button>
+    </form>
+  </header>
+
+  {%- if search.performed -%}
+    {%- comment %} Resource-type tabs. Only render when results are non-empty. {% endcomment -%}
+    {%- if search.results_count > 0 -%}
+      <nav class="search__tabs" aria-label="Filter results by type" role="tablist">
+        <a role="tab" class="search__tab {% if current_type == type_param_all %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type={{ type_param_all }}"
+           {% if current_type == type_param_all %}aria-selected="true"{% endif %}>
+          {{ 'search.tabs.all' | t | default: 'All' }} <span class="search__tab-count">{{ search.results_count }}</span>
+        </a>
+        <a role="tab" class="search__tab {% if current_type == 'product' %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=product"
+           {% if current_type == 'product' %}aria-selected="true"{% endif %}>
+          {{ 'search.tabs.products' | t | default: 'Products' }}
+        </a>
+        <a role="tab" class="search__tab {% if current_type == 'article' %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=article"
+           {% if current_type == 'article' %}aria-selected="true"{% endif %}>
+          {{ 'search.tabs.articles' | t | default: 'Articles' }}
+        </a>
+        <a role="tab" class="search__tab {% if current_type == 'page' %}is-active{% endif %}"
+           href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&type=page"
+           {% if current_type == 'page' %}aria-selected="true"{% endif %}>
+          {{ 'search.tabs.pages' | t | default: 'Pages' }}
+        </a>
+      </nav>
+
+      <ul class="product-grid product-grid--columns-4" role="tabpanel">
+        {%- for item in search.results -%}
+          <li class="product-grid__item">
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- else -%}
+              <article class="product-card search__result">
+                <a class="product-card__link" href="{{ item.url }}">
+                  <div class="product-card__media">
+                    {%- if item.image -%}
+                      {% render 'responsive-image', image: item.image, sizes: '(min-width: 990px) 25vw, 50vw', aspect_ratio: 1 %}
+                    {%- else -%}
+                      <div class="search__result-placeholder" aria-hidden="true">
+                        {% render 'icon', icon: 'chevron-right' %}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  <div class="product-card__info">
+                    <div class="product-card__vendor">{{ item.object_type | capitalize }}</div>
+                    <h3 class="product-card__title">{{ item.title }}</h3>
+                    {%- if item.excerpt -%}
+                      <p class="search__result-excerpt">{{ item.excerpt | strip_html | truncatewords: 18 }}</p>
+                    {%- endif -%}
+                  </div>
+                </a>
+              </article>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <div class="empty-state">
+        <p class="eyebrow">{{ 'search.no_results' | t: terms: search.terms }}</p>
+        <h2 class="empty-state__title">{{ 'search.no_results_heading' | t | default: 'Nothing matches that — yet.' }}</h2>
+        <p class="empty-state__subtitle">{{ 'search.no_results_subtext' | t | default: 'Try a different word, or browse our collections.' }}</p>
+        <div class="empty-state__actions">
+          <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'collections.general.all_products' | t }}</a>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="empty-state">
+      <h2 class="empty-state__title">{{ 'search.prompt_heading' | t | default: 'What are you looking for?' }}</h2>
+      <p class="empty-state__subtitle">{{ 'search.prompt_subtext' | t | default: 'Search products, articles, and pages.' }}</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .search__tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border-soft); }
+  .search__tab {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+  .search__tab:hover { background: var(--color-bg-soft); color: var(--color-text); }
+  .search__tab.is-active { background: var(--color-text); color: var(--color-bg); }
+  .search__tab-count { font-size: var(--font-size-xs); opacity: 0.85; }
+  .search__result-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: var(--color-bg-soft); color: var(--color-muted);
+  }
+  .search__result-excerpt { color: var(--color-muted); font-size: var(--font-size-sm); margin-top: 0.4rem; line-height: 1.5; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Search results",
+  "tag": "section",
+  "class": "section section--main-search",
+  "settings": []
+}
+{% endschema %}

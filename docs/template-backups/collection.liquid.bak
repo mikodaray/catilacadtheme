@@ -17,8 +17,8 @@
   <div class="collection-message">
     <h3>Tools for Your Business</h3>
     <p>
-      Every product in this collection is designed to help you <em>organize, systematize, and scale</em> your business. 
-      We believe that true success comes from intentional systems and strategic tools. 
+      Every product in this collection is designed to help you <em>organize, systematize, and scale</em> your business.
+      We believe that true success comes from intentional systems and strategic tools.
       When you shop here, you're investing in your business infrastructure and taking control of your operations.
     </p>
   </div>
@@ -26,14 +26,14 @@
   <!-- Collection Controls -->
   <div class="collection-controls">
     <div class="collection-info">
-      Showing <strong>{{ collection.products.size }}</strong> 
+      Showing <strong>{{ collection.products.size }}</strong>
       {% if collection.products.size == 1 %}
         product
       {% else %}
         products
       {% endif %}
     </div>
-    
+
     <div class="collection-sort">
       <button class="sort-btn active" onclick="sortProducts('featured')">Featured</button>
       <button class="sort-btn" onclick="sortProducts('price-low')">Price: Low</button>
@@ -50,17 +50,17 @@
           <!-- Image with Overlay -->
           <div class="item-image-wrapper">
             {% if product.featured_image %}
-              <img 
-                src="{{ product.featured_image | img_url: '500x500' }}" 
+              <img
+                src="{{ product.featured_image | img_url: '500x500' }}"
                 alt="{{ product.featured_image.alt }}"
                 class="item-image"
               >
             {% endif %}
-            
+
             {% if product.compare_at_price > product.price %}
               <div class="item-badge">Sale</div>
             {% endif %}
-            
+
             <div class="item-image-overlay">
               <a href="{{ product.url }}" class="overlay-btn">View Details</a>
             </div>
@@ -71,9 +71,9 @@
             {% if product.type %}
               <div class="item-category">{{ product.type }}</div>
             {% endif %}
-            
+
             <h3 class="item-title">{{ product.title }}</h3>
-            
+
             {% if product.description %}
               <p class="item-description">
                 {{ product.description | strip_html | truncatewords: 12 }}
@@ -115,17 +115,11 @@
 
 <script>
   function sortProducts(sortType) {
-    // Update active button
     document.querySelectorAll('.sort-btn').forEach(btn => {
       btn.classList.remove('active');
     });
     event.target.classList.add('active');
-
-    // In a real implementation, this would sort the products
     console.log('Sorting by:', sortType);
-    
-    // This would typically make an AJAX request to re-sort products
-    // For now, we'll just log the action
   }
 
   function toggleWishlist(button, productId) {
@@ -136,7 +130,6 @@
     console.log('Product ' + productId + ' wishlist toggled');
   }
 
-  // Initialize tooltips or other interactive elements
   document.addEventListener('DOMContentLoaded', function() {
     console.log('Collection page loaded');
   });

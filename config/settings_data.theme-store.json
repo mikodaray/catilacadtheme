@@ -1,0 +1,19 @@
+{
+  "_comment": "Theme Store demo settings — paired with templates/index.theme-store.json. To use: copy this file's `current` block into config/settings_data.json for a Theme Store submission build. Generic copy + colours; no merchant-specific branding.",
+  "current": {
+    "color_bg": "#FDF8F9",
+    "color_text": "#3D1F2E",
+    "color_accent": "#C4748A",
+    "color_button": "#3D1F2E",
+    "color_button_text": "#FFFFFF",
+    "font_heading": "fraunces_n7",
+    "font_body": "dm_sans_n4",
+    "container_width": 1200,
+    "button_radius": 100,
+    "button_style": "solid",
+    "free_shipping_threshold_cents": 5000,
+    "free_shipping_celebration": "You qualify for free shipping!",
+    "cart_upsell_collection": "frontpage",
+    "reviews_provider": "none"
+  }
+}

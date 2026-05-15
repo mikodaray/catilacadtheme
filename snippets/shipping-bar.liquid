@@ -1,0 +1,50 @@
+{% comment %}
+  Free-shipping progress bar.
+
+  Reads:
+    - settings.free_shipping_threshold_cents (number, in shop currency cents)
+    - settings.free_shipping_celebration (string)
+    - cart.total_price (cents)
+
+  Renders:
+    - "Add {amount} more for free shipping" with a progress bar, OR
+    - The celebration message when threshold met.
+
+  Hides itself if threshold is 0 / blank.
+
+  The wrapper has class .shipping-bar and data-shipping-bar attributes that
+  cart-drawer.js looks for on cart updates so the bar can re-render without
+  a full page reload.
+{% endcomment %}
+
+{%- liquid
+  assign threshold = settings.free_shipping_threshold_cents | default: 0
+-%}
+
+{%- if threshold > 0 -%}
+  {%- assign current = cart.total_price | default: 0 -%}
+  {%- assign remaining = threshold | minus: current -%}
+  {%- if remaining < 0 -%}{%- assign remaining = 0 -%}{%- endif -%}
+  {%- assign pct = current | times: 100 | divided_by: threshold -%}
+  {%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
+
+  <div
+    class="shipping-bar{% if remaining == 0 %} shipping-bar--met{% endif %}"
+    data-shipping-bar
+    data-threshold="{{ threshold }}"
+    data-celebration="{{ settings.free_shipping_celebration | default: 'You qualify for free shipping!' | escape }}"
+    role="status"
+    aria-live="polite"
+  >
+    <p class="shipping-bar__message" data-shipping-bar-message>
+      {%- if remaining == 0 -%}
+        {{ settings.free_shipping_celebration | default: 'You qualify for free shipping!' }}
+      {%- else -%}
+        {{ 'cart.shipping_bar.remaining_html' | t: amount: remaining | money | default: 'Add ' | append: remaining | money | append: ' more for free shipping.' }}
+      {%- endif -%}
+    </p>
+    <div class="shipping-bar__track" aria-hidden="true">
+      <div class="shipping-bar__fill" data-shipping-bar-fill style="width: {{ pct }}%;"></div>
+    </div>
+  </div>
+{%- endif -%}

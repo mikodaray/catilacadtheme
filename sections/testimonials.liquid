@@ -1,0 +1,60 @@
+{% comment %}
+  Testimonials — blocks for individual quote/author/rating entries.
+{% endcomment %}
+
+<section class="testimonials">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="section-header__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <ul class="testimonials__grid testimonials__grid--columns-{{ section.settings.columns_desktop }}">
+      {%- for block in section.blocks -%}
+        <li class="testimonials__item" {{ block.shopify_attributes }}>
+          <blockquote class="testimonials__quote">
+            <p>{{ block.settings.quote | escape }}</p>
+            {%- if block.settings.author != blank -%}
+              <cite class="testimonials__author">{{ block.settings.author | escape }}</cite>
+            {%- endif -%}
+            {%- if block.settings.role != blank -%}
+              <span class="testimonials__role">{{ block.settings.role | escape }}</span>
+            {%- endif -%}
+          </blockquote>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section section--testimonials",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our customers say" },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 1, "max": 4, "step": 1, "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Add a customer review or quote here." },
+        { "type": "text", "id": "author", "label": "Author" },
+        { "type": "text", "id": "role", "label": "Role / location" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Testimonials",
+    "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }]
+  }]
+}
+{% endschema %}
