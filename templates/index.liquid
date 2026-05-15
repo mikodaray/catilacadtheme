@@ -301,6 +301,19 @@
   <a href="#course" class="btn-white" data-animate="scale-up" data-delay="2">Start With the Course →</a>
 </section>
 
+<!-- TEASER POPUP -->
+<div id="teaser-popup" role="dialog" aria-modal="true" aria-labelledby="teaser-heading">
+  <div class="popup-card">
+    <button class="popup-close" id="teaser-close" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="popup-badge">✦ Free Download</div>
+    <h2 class="popup-heading" id="teaser-heading">Get your free teaser now.</h2>
+    <p class="popup-body">Download a scaled down version of the CEO Systems Method.</p>
+    <a href="/products/catilacadplaybookteaser/" class="popup-btn">Download Free Teaser →</a>
+  </div>
+</div>
+
 <script>
   function toggleFaq(el) {
     const item = el.parentElement;
@@ -308,4 +321,26 @@
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   }
+
+  (function () {
+    if (window.location.href.indexOf('promo=true') === -1) return;
+
+    var popup = document.getElementById('teaser-popup');
+
+    function closePopup() {
+      popup.classList.remove('popup-visible');
+      popup.classList.add('popup-hiding');
+      setTimeout(function () { popup.style.display = 'none'; }, 300);
+    }
+
+    setTimeout(function () {
+      popup.style.display = 'flex';
+      requestAnimationFrame(function () { popup.classList.add('popup-visible'); });
+    }, 1000);
+
+    document.getElementById('teaser-close').addEventListener('click', closePopup);
+    popup.addEventListener('click', function (e) {
+      if (e.target === popup) closePopup();
+    });
+  })();
 </script>
