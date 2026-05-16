@@ -333,6 +333,35 @@
   }
 
   (function () {
+    var hero = document.querySelector('.funnel-hero');
+    var next = document.querySelector('.intro-section');
+    if (!hero || !next) return;
+
+    var snapping = false;
+    var lastY = 0;
+
+    window.addEventListener('scroll', function () {
+      if (snapping) return;
+      var y = window.scrollY;
+      var heroH = hero.offsetHeight;
+      var goingDown = y > lastY;
+      lastY = y;
+
+      if (goingDown && y > 20 && y < heroH) {
+        snapping = true;
+        next.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(function () { snapping = false; }, 1000);
+      }
+
+      if (!goingDown && y > 0 && y < heroH) {
+        snapping = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(function () { snapping = false; }, 1000);
+      }
+    }, { passive: true });
+  })();
+
+  (function () {
     if (window.location.href.indexOf('promo=true') === -1) return;
 
     var popup = document.getElementById('teaser-popup');
