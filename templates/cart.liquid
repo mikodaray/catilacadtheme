@@ -38,7 +38,7 @@
                 {% if discount.type == 'discount_code' %}
                   <div class="cart-discount-row">
                     <span class="cart-discount-code">{{ discount.title }}</span>
-                    <span class="cart-discount-value">saving you {{ discount.total_allocated_price | money }}</span>
+                    <span class="cart-discount-value">saving you {{ discount.total_allocated_amount | money }}</span>
                   </div>
                 {% endif %}
               {% endfor %}
@@ -139,7 +139,7 @@
             {% if discount.type == 'discount_code' %}
               <div class="summary-row" style="color: var(--sage); font-weight: 600;">
                 <span>{{ discount.title }}</span>
-                <span>−{{ discount.total_allocated_price | money }}</span>
+                <span>−{{ discount.total_allocated_amount | money }}</span>
               </div>
             {% endif %}
           {% endfor %}
@@ -174,7 +174,7 @@
                 <div class="applied-code-row">
                   <div class="applied-code-left">
                     <span class="applied-code-tag">{{ discount.title }}</span>
-                    <span class="applied-code-saving">−{{ discount.total_allocated_price | money }} off</span>
+                    <span class="applied-code-saving">−{{ discount.total_allocated_amount | money }} off</span>
                   </div>
                 </div>
               {% endif %}
