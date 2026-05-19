@@ -39,10 +39,7 @@
                   <div class="cart-discount-row">
                     <span class="cart-discount-code">{{ discount.title }}</span>
                     <span class="cart-discount-value">saving you {{ discount.total_allocated_price | money }}</span>
-                    {% form 'cart', cart %}
-                      <input type="hidden" name="discount" value="">
-                      <button type="submit" class="cart-discount-remove" title="Remove">Remove</button>
-                    {% endform %}
+                    <button type="button" class="cart-discount-remove" title="Remove" onclick="removeDiscount()">Remove</button>
                   </div>
                 {% endif %}
               {% endfor %}
@@ -179,10 +176,7 @@
                     <span class="applied-code-tag">{{ discount.title }}</span>
                     <span class="applied-code-saving">−{{ discount.total_allocated_price | money }} off</span>
                   </div>
-                  {% form 'cart', cart %}
-                    <input type="hidden" name="discount" value="">
-                    <button type="submit" class="applied-code-remove" title="Remove code">✕</button>
-                  {% endform %}
+                  <button type="button" class="applied-code-remove" title="Remove code" onclick="removeDiscount()">✕</button>
                 </div>
               {% endif %}
             {% endfor %}
@@ -273,6 +267,23 @@
     updateForm.appendChild(qtyInput);
     document.body.appendChild(updateForm);
     updateForm.submit();
+  }
+
+  function removeDiscount() {
+    // Clear the discount by posting an empty discount value via the AJAX Cart API,
+    // then fall back to the /discount/ redirect which also clears the session cookie.
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ discount: '' })
+    })
+    .then(function() {
+      // Also navigate through /discount/ to clear the checkout-session cookie
+      window.location.href = '/discount/?redirect=/cart';
+    })
+    .catch(function() {
+      window.location.href = '/discount/?redirect=/cart';
+    });
   }
 
   function applyPromoCode() {
