@@ -226,6 +226,14 @@
   {% endif %}
 </div>
 
+<!-- Hidden form used by removeDiscount() — Shopify generates the authenticity_token automatically -->
+<div style="display:none;" aria-hidden="true">
+  {% form 'cart', cart %}
+    <input type="hidden" name="discount" value="">
+    <button type="submit" id="discount-remove-submit">x</button>
+  {% endform %}
+</div>
+
 <script>
   function decreaseQty(button) {
     const input = button.nextElementSibling;
@@ -270,20 +278,10 @@
   }
 
   function removeDiscount() {
-    // Clear the discount by posting an empty discount value via the AJAX Cart API,
-    // then fall back to the /discount/ redirect which also clears the session cookie.
-    fetch('/cart/update.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ discount: '' })
-    })
-    .then(function() {
-      // Also navigate through /discount/ to clear the checkout-session cookie
-      window.location.href = '/discount/?redirect=/cart';
-    })
-    .catch(function() {
-      window.location.href = '/discount/?redirect=/cart';
-    });
+    // Submit the hidden Shopify cart form (which carries the real authenticity_token)
+    // with discount="" — this is the only reliable way to clear a discount in Shopify.
+    var btn = document.getElementById('discount-remove-submit');
+    if (btn) { btn.click(); }
   }
 
   function applyPromoCode() {
