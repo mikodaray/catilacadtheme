@@ -39,10 +39,10 @@
                   <div class="cart-discount-row">
                     <span class="cart-discount-code">{{ discount.title }}</span>
                     <span class="cart-discount-value">saving you {{ discount.total_allocated_price | money }}</span>
-                    <form method="post" action="/cart" style="margin:0;display:inline;">
+                    {% form 'cart', cart %}
                       <input type="hidden" name="discount" value="">
                       <button type="submit" class="cart-discount-remove" title="Remove">Remove</button>
-                    </form>
+                    {% endform %}
                   </div>
                 {% endif %}
               {% endfor %}
@@ -179,10 +179,10 @@
                     <span class="applied-code-tag">{{ discount.title }}</span>
                     <span class="applied-code-saving">−{{ discount.total_allocated_price | money }} off</span>
                   </div>
-                  <form method="post" action="/cart" style="margin:0;">
+                  {% form 'cart', cart %}
                     <input type="hidden" name="discount" value="">
                     <button type="submit" class="applied-code-remove" title="Remove code">✕</button>
-                  </form>
+                  {% endform %}
                 </div>
               {% endif %}
             {% endfor %}
