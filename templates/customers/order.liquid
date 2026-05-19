@@ -43,19 +43,6 @@
         {% endfor %}
       </div>
 
-      <!-- Shipping address -->
-      {% if order.shipping_address %}
-        <div class="order-card" style="margin-top:1.5rem;">
-          <div class="order-card-title">Shipping Address</div>
-          <address class="order-address" style="font-style:normal;">
-            {{ order.shipping_address.name }}<br>
-            {% if order.shipping_address.company %}{{ order.shipping_address.company }}<br>{% endif %}
-            {{ order.shipping_address.street }}<br>
-            {{ order.shipping_address.city }}, {{ order.shipping_address.province_code }} {{ order.shipping_address.zip }}<br>
-            {{ order.shipping_address.country }}
-          </address>
-        </div>
-      {% endif %}
     </div>
 
     <!-- Order Summary -->
@@ -66,12 +53,6 @@
           <span>Subtotal</span>
           <span>{{ order.subtotal_price | money }}</span>
         </div>
-        {% if order.shipping_price and order.shipping_price > 0 %}
-          <div class="order-summary-row">
-            <span>Shipping</span>
-            <span>{{ order.shipping_price | money }}</span>
-          </div>
-        {% endif %}
         {% if order.tax_price and order.tax_price > 0 %}
           <div class="order-summary-row">
             <span>Tax</span>

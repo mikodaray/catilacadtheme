@@ -116,12 +116,6 @@
             {% endfor %}
           {% endif %}
 
-          {% if cart.shipping_price != empty %}
-            <div class="summary-row">
-              <span>Estimated Shipping</span>
-              <span>{{ cart.shipping_price | money }}</span>
-            </div>
-          {% endif %}
 
           {% if cart.tax_price != empty %}
             <div class="summary-row">
