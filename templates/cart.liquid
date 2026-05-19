@@ -140,7 +140,10 @@
                   <span class="applied-code-tag">{{ discount.title }}</span>
                   <span class="applied-code-saving">−{{ discount.total_allocated_price | money }} off</span>
                 </div>
-                <a href="/discount/?redirect=/cart" class="applied-code-remove" title="Remove code">✕</a>
+                <form method="post" action="/cart" style="margin:0;">
+                  <input type="hidden" name="discount" value="">
+                  <button type="submit" class="applied-code-remove" title="Remove code">✕</button>
+                </form>
               </div>
             {% endfor %}
           </div>
@@ -264,6 +267,6 @@
   .applied-code-left { display: flex; align-items: center; gap: 0.75rem; }
   .applied-code-tag { font-size: 0.85rem; font-weight: 700; color: var(--charcoal); letter-spacing: 0.04em; font-family: monospace; background: white; border: 1px solid var(--sand); border-radius: 6px; padding: 0.2rem 0.5rem; }
   .applied-code-saving { font-size: 0.8rem; font-weight: 600; color: var(--sage); }
-  .applied-code-remove { color: var(--warm-gray); font-size: 0.8rem; text-decoration: none; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; }
+  .applied-code-remove { color: var(--warm-gray); font-size: 0.8rem; text-decoration: none; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; background: none; border: none; cursor: pointer; padding: 0; }
   .applied-code-remove:hover { background: rgba(196,116,138,0.12); color: var(--terracotta); }
 </style>
