@@ -71,6 +71,9 @@
   .flow-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 100px; margin-bottom: 0.5rem; }
   .flow-content h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem; }
   .flow-content p { font-size: 0.875rem; color: var(--warm-gray); line-height: 1.6; }
+  .ig-link { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--sage); font-weight: 700; text-decoration: none; transition: color 0.2s; }
+  .ig-link:hover { color: var(--terracotta); }
+  .ig-icon { flex-shrink: 0; position: relative; top: 0px; }
   .flow-price { display: inline-block; font-weight: 700; color: var(--terracotta); font-size: 0.9rem; margin-top: 0.4rem; }
   .flow-cta { display: inline-block; font-weight: 700; color: var(--terracotta); font-size: 0.9rem; margin-top: 0.4rem; }
 

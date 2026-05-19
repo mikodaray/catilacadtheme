@@ -136,6 +136,22 @@
           </div>
         </div>
 
+        <!-- Applied Promo Codes -->
+        {% if cart.cart_level_discount_applications != empty %}
+          <div class="applied-codes">
+            <div class="applied-codes-label">Applied Codes</div>
+            {% for discount in cart.cart_level_discount_applications %}
+              <div class="applied-code-row">
+                <div class="applied-code-left">
+                  <span class="applied-code-tag">{{ discount.title }}</span>
+                  <span class="applied-code-saving">−{{ discount.total_allocated_price | money }} off</span>
+                </div>
+                <a href="/discount/?redirect=/cart" class="applied-code-remove" title="Remove code">✕</a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
         <!-- Promo Code Section -->
         <div class="promo-section">
           <label class="promo-label">Have a Promo Code?</label>
@@ -238,16 +254,7 @@
     window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
   }
 
-  // Show confirmation if a discount is already applied on page load
-  document.addEventListener('DOMContentLoaded', function () {
-    {% if cart.cart_level_discount_applications != empty %}
-      var msg = document.getElementById('promo-message');
-      if (msg) {
-        msg.textContent = '✓ Promo code applied!';
-        msg.className = 'promo-msg promo-msg--success';
-      }
-    {% endif %}
-  });
+  // Applied codes are displayed via Liquid above the promo input
 </script>
 
 <style>
@@ -256,4 +263,13 @@
   .promo-msg { margin-top: 0.5rem; font-size: 0.82rem; font-weight: 600; }
   .promo-msg--error   { color: #c0392b; }
   .promo-msg--success { color: var(--sage); }
+
+  .applied-codes { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .applied-codes-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 0.25rem; }
+  .applied-code-row { display: flex; align-items: center; justify-content: space-between; background: rgba(122,140,120,0.08); border: 1px solid rgba(122,140,120,0.25); border-radius: 10px; padding: 0.6rem 0.85rem; }
+  .applied-code-left { display: flex; align-items: center; gap: 0.75rem; }
+  .applied-code-tag { font-size: 0.85rem; font-weight: 700; color: var(--charcoal); letter-spacing: 0.04em; font-family: monospace; background: white; border: 1px solid var(--sand); border-radius: 6px; padding: 0.2rem 0.5rem; }
+  .applied-code-saving { font-size: 0.8rem; font-weight: 600; color: var(--sage); }
+  .applied-code-remove { color: var(--warm-gray); font-size: 0.8rem; text-decoration: none; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; }
+  .applied-code-remove:hover { background: rgba(196,116,138,0.12); color: var(--terracotta); }
 </style>
