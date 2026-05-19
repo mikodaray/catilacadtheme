@@ -139,24 +139,18 @@
         <!-- Promo Code Section -->
         <div class="promo-section">
           <label class="promo-label">Have a Promo Code?</label>
-          <form action="/cart/update" method="post" class="promo-form">
-            <div style="display: flex; gap: 0.75rem;">
-              <input 
-                type="text" 
-                name="discount_code" 
-                class="promo-input" 
-                placeholder="Enter code"
-                autocomplete="off"
-              >
-              <button type="submit" class="promo-btn">Apply</button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Business Investment Message -->
-        <div class="summary-message">
-          <strong>Free shipping</strong> on orders over $100. 
-          Every purchase is an investment in your business systems and operational excellence.
+          <div style="display: flex; gap: 0.75rem;">
+            <input
+              type="text"
+              id="promo-code-input"
+              class="promo-input"
+              placeholder="Enter code"
+              autocomplete="off"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();applyPromoCode();}"
+            >
+            <button type="button" class="promo-btn" onclick="applyPromoCode()">Apply</button>
+          </div>
+          <div id="promo-message"></div>
         </div>
 
         <!-- Action Buttons -->
@@ -228,12 +222,38 @@
     updateForm.submit();
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Cart page loaded');
+  function applyPromoCode() {
+    var input = document.getElementById('promo-code-input');
+    var msg   = document.getElementById('promo-message');
+    var code  = input.value.trim();
+
+    if (!code) {
+      msg.textContent = 'Please enter a promo code.';
+      msg.className = 'promo-msg promo-msg--error';
+      return;
+    }
+
+    // Redirect to Shopify's discount endpoint — it validates the code,
+    // stores it in the session, then brings the customer back to the cart.
+    window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
+  }
+
+  // Show confirmation if a discount is already applied on page load
+  document.addEventListener('DOMContentLoaded', function () {
+    {% if cart.cart_level_discount_applications != empty %}
+      var msg = document.getElementById('promo-message');
+      if (msg) {
+        msg.textContent = '✓ Promo code applied!';
+        msg.className = 'promo-msg promo-msg--success';
+      }
+    {% endif %}
   });
 </script>
 
 <style>
   .text-right { text-align: right; }
   .text-center { text-align: center; }
+  .promo-msg { margin-top: 0.5rem; font-size: 0.82rem; font-weight: 600; }
+  .promo-msg--error   { color: #c0392b; }
+  .promo-msg--success { color: var(--sage); }
 </style>
