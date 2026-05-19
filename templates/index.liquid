@@ -388,6 +388,8 @@
     }
 
     function closePopup() {
+      var video = popup.querySelector('video');
+      if (video) { video.pause(); }
       popup.classList.remove('popup-visible');
       popup.classList.add('popup-hiding');
       setTimeout(function () {
