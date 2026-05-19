@@ -107,11 +107,15 @@
           <div class="list-item-actions">
             <a href="{{ product.url }}" class="btn-list-view">View</a>
             
-            <form method="post" action="/cart/add" class="add-to-cart-form">
-              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-              <input type="hidden" name="quantity" value="1">
-              <button type="submit" class="btn-list-cart">Add</button>
-            </form>
+            {% if product.available %}
+              <form method="post" action="/cart/add" class="add-to-cart-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn-list-cart">Add</button>
+              </form>
+            {% else %}
+              <button type="button" class="btn-list-cart btn-sold-out" disabled>Sold Out</button>
+            {% endif %}
             
             <button class="btn-list-heart" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
           </div>

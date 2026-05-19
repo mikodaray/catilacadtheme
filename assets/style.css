@@ -301,6 +301,7 @@
   .btn-add-cart { flex: 1; background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-deep) 100%); color: white; padding: 1.3rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em; }
   .btn-add-cart:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(196, 116, 138, 0.3); }
   .btn-add-cart:active { transform: translateY(-1px); }
+  .btn-sold-out { background: var(--sand) !important; color: var(--warm-gray) !important; cursor: not-allowed !important; transform: none !important; box-shadow: none !important; opacity: 0.75; }
   .btn-wishlist { background: white; color: var(--terracotta); padding: 1.3rem 1.8rem; border-radius: 12px; border: 2px solid var(--sand); font-size: 1.3rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; height: auto; }
   .btn-wishlist:hover { background: var(--cream); border-color: var(--terracotta); transform: scale(1.05); }
   .btn-wishlist.active { background: rgba(196, 116, 138, 0.12); color: var(--terracotta-deep); border-color: var(--terracotta); }

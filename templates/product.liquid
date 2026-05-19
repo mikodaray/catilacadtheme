@@ -144,9 +144,11 @@
 
         <!-- Add to Cart & Wishlist -->
         <div class="product-actions">
-          <button type="submit" class="btn-add-cart">
-            Add to Cart
-          </button>
+          {% if product.available %}
+            <button type="submit" class="btn-add-cart">Add to Cart</button>
+          {% else %}
+            <button type="button" class="btn-add-cart btn-sold-out" disabled>Sold Out</button>
+          {% endif %}
           <button type="button" class="btn-wishlist" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">
             ♡
           </button>

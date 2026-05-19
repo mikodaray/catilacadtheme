@@ -90,11 +90,15 @@
 
             <!-- Add to Cart & Wishlist -->
             <div class="item-actions">
-              <form method="post" action="/cart/add" class="add-to-cart-form" style="flex: 1;">
-                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                <input type="hidden" name="quantity" value="1">
-                <button type="submit" class="btn-item-cart">Add to Cart</button>
-              </form>
+              {% if product.available %}
+                <form method="post" action="/cart/add" class="add-to-cart-form" style="flex: 1;">
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="btn-item-cart">Add to Cart</button>
+                </form>
+              {% else %}
+                <button type="button" class="btn-item-cart btn-sold-out" disabled style="flex: 1;">Sold Out</button>
+              {% endif %}
               <button class="btn-item-heart" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
             </div>
           </div>
