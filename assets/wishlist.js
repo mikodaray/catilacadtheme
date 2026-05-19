@@ -54,7 +54,7 @@
   /* ── Restore saved state on every page load ──────────── */
   document.addEventListener('DOMContentLoaded', function () {
     var list = getWishlist();
-    document.querySelectorAll('[data-product-id]').forEach(function (btn) {
+    document.querySelectorAll('button[data-product-id]').forEach(function (btn) {
       var id = String(btn.getAttribute('data-product-id'));
       applyState(btn, list.indexOf(id) !== -1);
     });
