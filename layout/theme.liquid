@@ -3,7 +3,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
-        <meta name="description" content="{{ page_description | escape }}">
+        {%- assign meta_desc = page_description -%}
+        {%- if meta_desc == blank -%}
+          {%- assign meta_desc = 'Build the 4 systems your business needs to run without you. Cat Ilacad\'s CEO Systems Method offers a 30-Day Business Playbook & Workbook — covering Sales, Operations, Money & CEO Mindset — as instant digital downloads, plus 1-on-1 mentorship from a founder with 24 years of real business experience.' -%}
+        {%- endif -%}
+        <meta name="description" content="{{ meta_desc | escape }}">
 
         <link rel="icon" type="image/svg+xml" href="{{ 'logo.svg' | asset_url }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">

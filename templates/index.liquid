@@ -361,10 +361,12 @@
   })();
 
   (function () {
-    if (window.location.href.indexOf('promo=true') === -1) return;
-
-    var popup = document.getElementById('teaser-popup');
+    var popup  = document.getElementById('teaser-popup');
     var banner = document.getElementById('teaser-banner');
+
+    var params = new URLSearchParams(window.location.search);
+    var promoParam = params.get('promo');
+    var promoActive = promoParam === 'true';
 
     function openPopup() {
       banner.classList.remove('banner-visible');
@@ -389,7 +391,13 @@
       }, 300);
     }
 
-    setTimeout(openPopup, 1000);
+    // Always show the floating banner
+    banner.classList.add('banner-visible');
+
+    // Only auto-open the popup when ?promo=true
+    if (promoActive) {
+      setTimeout(openPopup, 1000);
+    }
 
     document.getElementById('teaser-close').addEventListener('click', closePopup);
     popup.addEventListener('click', function (e) {
