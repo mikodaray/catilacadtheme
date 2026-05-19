@@ -298,6 +298,7 @@
   .btn-add-cart:active { transform: translateY(-1px); }
   .btn-wishlist { background: white; color: var(--terracotta); padding: 1.3rem 1.8rem; border-radius: 12px; border: 2px solid var(--sand); font-size: 1.3rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; height: auto; }
   .btn-wishlist:hover { background: var(--cream); border-color: var(--terracotta); transform: scale(1.05); }
+  .btn-wishlist.active { background: rgba(196, 116, 138, 0.12); color: var(--terracotta-deep); border-color: var(--terracotta); }
   
   .product-meta { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 2rem; border-top: 1px solid var(--sand); font-size: 0.85rem; }
   .meta-item { display: flex; justify-content: space-between; align-items: center; }
@@ -349,6 +350,7 @@
   .btn-item-cart:hover { background: var(--terracotta-deep); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(196, 116, 138, 0.25); }
   .btn-item-heart { background: var(--cream); color: var(--terracotta); padding: 0.9rem 0.75rem; border-radius: 10px; border: 2px solid var(--sand); font-size: 1.1rem; cursor: pointer; transition: all 0.3s; }
   .btn-item-heart:hover { background: var(--sand); border-color: var(--terracotta); }
+  .btn-item-heart.active { background: rgba(196, 116, 138, 0.12); color: var(--terracotta-deep); border-color: var(--terracotta); }
 
   .collection-empty { text-align: center; padding: 6rem 2rem; }
   .collection-empty h2 { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--charcoal); margin-bottom: 1rem; }
@@ -404,6 +406,7 @@
   .btn-list-view:hover { border-color: var(--terracotta); color: var(--terracotta); }
   .btn-list-heart { background: var(--cream); color: var(--terracotta); padding: 0.85rem 0.75rem; border-radius: 10px; border: 2px solid var(--sand); font-size: 1rem; cursor: pointer; transition: all 0.3s; }
   .btn-list-heart:hover { background: var(--sand); border-color: var(--terracotta); }
+  .btn-list-heart.active { background: rgba(196, 116, 138, 0.12); color: var(--terracotta-deep); border-color: var(--terracotta); }
 
   .product-list-message { background: linear-gradient(135deg, var(--sage-light) 0%, rgba(122,140,120,0.05) 100%); border-left: 4px solid var(--sage); padding: 2rem; border-radius: 12px; margin-bottom: 3rem; }
   .product-list-message h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--charcoal); margin-bottom: 0.75rem; font-weight: 700; }

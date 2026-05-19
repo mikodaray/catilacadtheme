@@ -82,7 +82,7 @@
           <!-- Price -->
           <div class="list-item-price">
             <div class="list-item-price-main">
-              {{ product.price | money }}
+              {% if product.price == 0 %}Free{% else %}{{ product.price | money }}{% endif %}
             </div>
             {% if product.compare_at_price > product.price %}
               <div class="list-item-price-compare">
@@ -113,7 +113,7 @@
               <button type="submit" class="btn-list-cart">Add</button>
             </form>
             
-            <button class="btn-list-heart" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
+            <button class="btn-list-heart" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
           </div>
         </div>
       {% endfor %}
@@ -169,17 +169,7 @@
     console.log('Switched to ' + viewType + ' view');
   }
 
-  function toggleWishlist(button, productId) {
-    button.classList.toggle('active');
-    button.style.color = button.classList.contains('active') ? 'var(--rose)' : 'var(--terracotta)';
-    button.style.borderColor = button.classList.contains('active') ? 'var(--rose)' : 'var(--sand)';
-    button.style.backgroundColor = button.classList.contains('active') ? 'rgba(196, 116, 138, 0.1)' : 'var(--cream)';
-    console.log('Product ' + productId + ' wishlist toggled');
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Product list page loaded');
-  });
+  // Wishlist handled by wishlist.js
 </script>
 
 <style>

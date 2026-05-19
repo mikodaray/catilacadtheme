@@ -65,7 +65,7 @@
       <div class="product-price-section">
         <div class="price-row">
           <div class="product-price">
-            {{ product.price | money }}
+            {% if product.price == 0 %}Free{% else %}{{ product.price | money }}{% endif %}
           </div>
           {% if product.compare_at_price %}
             <div class="product-compare">
@@ -147,7 +147,7 @@
           <button type="submit" class="btn-add-cart">
             Add to Cart
           </button>
-          <button type="button" class="btn-wishlist" title="Add to Wishlist" onclick="toggleWishlist(this)">
+          <button type="button" class="btn-wishlist" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">
             ♡
           </button>
         </div>
@@ -221,9 +221,5 @@
     }
   }
 
-  function toggleWishlist(button) {
-    button.style.color = button.style.color === 'rgb(196, 116, 138)' ? 'var(--terracotta)' : 'var(--terracotta)';
-    button.classList.toggle('active');
-    console.log('Wishlist toggled');
-  }
+  // Wishlist handled by wishlist.js
 </script>

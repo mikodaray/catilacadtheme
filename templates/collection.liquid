@@ -82,7 +82,7 @@
 
             <!-- Price -->
             <div class="item-price-row">
-              <span class="item-price">{{ product.price | money }}</span>
+              <span class="item-price">{% if product.price == 0 %}Free{% else %}{{ product.price | money }}{% endif %}</span>
               {% if product.compare_at_price > product.price %}
                 <span class="item-compare">{{ product.compare_at_price | money }}</span>
               {% endif %}
@@ -95,7 +95,7 @@
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit" class="btn-item-cart">Add to Cart</button>
               </form>
-              <button class="btn-item-heart" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
+              <button class="btn-item-heart" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
             </div>
           </div>
         </div>
@@ -128,18 +128,9 @@
     // For now, we'll just log the action
   }
 
-  function toggleWishlist(button, productId) {
-    button.classList.toggle('active');
-    button.style.color = button.classList.contains('active') ? 'var(--rose)' : 'var(--terracotta)';
-    button.style.borderColor = button.classList.contains('active') ? 'var(--rose)' : 'var(--sand)';
-    button.style.backgroundColor = button.classList.contains('active') ? 'rgba(196, 116, 138, 0.1)' : 'var(--cream)';
-    console.log('Product ' + productId + ' wishlist toggled');
-  }
+  // Wishlist handled by wishlist.js
 
   // Initialize tooltips or other interactive elements
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Collection page loaded');
-  });
 </script>
 
 <style>
