@@ -332,6 +332,10 @@
   }
 
   (function () {
+    // Disable scroll snap entirely when the URL has a hash (e.g. /#mentorship)
+    // so anchor links can scroll freely to their target section.
+    if (window.location.hash) return;
+
     var hero = document.querySelector('.funnel-hero');
     var next = document.querySelector('.intro-section');
     if (!hero || !next) return;
