@@ -1,0 +1,52 @@
+Hi {{ customer.first_name | default: "there" }},
+{% assign has_mentorship = false -%}
+{% assign has_downloads = false -%}
+{% for attachment in attachments -%}
+  {%- assign name_check = attachment.product_name | downcase -%}
+  {%- if name_check == "quick clarity mentorship" or name_check == "quick-clarity-mentorship" -%}
+    {%- assign has_mentorship = true -%}
+  {%- else -%}
+    {%- assign has_downloads = true -%}
+  {%- endif -%}
+{%- endfor %}
+Thank you for your purchase! 🎉
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{%- if has_mentorship %}
+
+✦ YOUR MENTORSHIP SESSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Let's get your consultation scheduled!
+
+Please reply to this email with your preferred schedule:
+
+  Preferred Date:        _______________
+  Preferred Time:        _______________
+  Alternative Date/Time: _______________
+
+We'll confirm your appointment within 24 hours.
+{%- endif %}
+{%- if has_downloads %}
+
+✦ YOUR DOWNLOAD IS READY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Your order has been confirmed and your digital product is now ready for download.
+{%- for attachment in attachments -%}
+  {%- assign name_check = attachment.product_name | downcase -%}
+  {%- unless name_check == "quick clarity mentorship" or name_check == "quick-clarity-mentorship" %}
+→ {{ attachment.product_name }}
+  {{ attachment.shop_url }}
+  {%- endunless -%}
+{%- endfor %}
+
+⚠ Important notes:
+  • This download link is personal to you
+  • Please save a copy to your device for future access
+  • Having trouble? Reply to this email — we'll help you right away 💗
+{%- endif %}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Thank you again! We appreciate your support{% if has_downloads %} and hope you enjoy your digital product{% endif %}.
+
+Warmly,
+Cat Ilacad
+CEO Systems Method
