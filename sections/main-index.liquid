@@ -20,9 +20,81 @@
       <p class="intro-body" data-animate="fade-up" data-delay="3">If you're here, chances are you're a business owner who's been doing everything — and it's starting to cost you. Maybe you found me through my story, or maybe you were just looking for a way out of the chaos.</p>
       <p class="intro-body" data-animate="fade-up" data-delay="4">Either way, you're not here by accident. This space is for someone who's ready to stop surviving their business — and start building something that actually works.</p>
       <p class="intro-body" data-animate="fade-up" data-delay="5"><a href="/pages/about" class="intro-learn-more">know more about me...</a></p>
+
+      <div class="intro-brands" data-animate="fade-up" data-delay="6">
+        <a href="https://poshnailsph.com/" target="_blank" rel="noopener" class="intro-brand-chip">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Posh Nails
+        </a>
+        <a href="https://www.instagram.com/theposhbeautystudio/" target="_blank" rel="noopener" class="intro-brand-chip intro-brand-chip--ig">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Posh Beauty Studio
+        </a>
+        <a href="https://leadingladies.ph/" target="_blank" rel="noopener" class="intro-brand-chip">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Leading Ladies
+        </a>
+        <a href="https://www.instagram.com/dearsundaysph" target="_blank" rel="noopener" class="intro-brand-chip intro-brand-chip--ig">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Dear Sundays
+        </a>
+        <a href="/pages/ecosystem" class="intro-brand-chip intro-brand-chip--eco">
+          Cat Ecosystem →
+        </a>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .intro-brands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    align-items: center;
+  }
+  .intro-brand-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    background: rgba(196,116,138,0.08);
+    color: var(--warm-gray);
+    border: 1px solid rgba(196,116,138,0.2);
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  .intro-brand-chip:hover {
+    background: var(--sand);
+    color: var(--charcoal);
+    border-color: var(--terracotta);
+  }
+  .intro-brand-chip--ig {
+    background: rgba(196,116,138,0.06);
+  }
+  .intro-brand-chip--ig:hover {
+    background: linear-gradient(135deg, rgba(131,58,180,0.12), rgba(253,29,29,0.1), rgba(252,176,69,0.12));
+    border-color: #fd1d1d;
+    color: var(--charcoal);
+  }
+  .intro-brand-chip--eco {
+    background: var(--charcoal);
+    color: var(--cream);
+    border-color: var(--charcoal);
+    font-weight: 700;
+  }
+  .intro-brand-chip--eco:hover {
+    background: var(--terracotta-deep);
+    border-color: var(--terracotta-deep);
+    color: white;
+  }
+</style>
 
 <!-- FUNNEL FLOW -->
 <section class="funnel-flow">
