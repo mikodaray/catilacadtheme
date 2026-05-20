@@ -90,7 +90,7 @@
 
             <!-- Add to Cart & Wishlist -->
             <div class="item-actions">
-              {% if product.available %}
+              {% if product.selected_or_first_available_variant.available %}
                 <form method="post" action="/cart/add" class="add-to-cart-form" style="flex: 1;">
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                   <input type="hidden" name="quantity" value="1">

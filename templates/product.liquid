@@ -98,8 +98,10 @@
       {% endif %}
 
       <!-- Product Form -->
-      <form method="post" action="/cart/add" id="product-form" class="product-form-section">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {% assign variant = product.selected_or_first_available_variant %}
+      {% assign product_available = variant.available %}
+      <form {% if product_available %}method="post" action="/cart/add"{% endif %} id="product-form" class="product-form-section">
+        <input type="hidden" name="id" value="{{ variant.id }}">
 
         <!-- Product Options -->
         {% if product.options.size > 0 %}
@@ -109,8 +111,8 @@
                 <label class="option-label">{{ option.name }}</label>
                 <div class="option-values">
                   {% for value in option.values %}
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       class="option-value"
                       data-option="{{ option.name }}"
                       data-value="{{ value }}"
@@ -130,11 +132,11 @@
           <label class="qty-label">Qty:</label>
           <div class="qty-selector">
             <button type="button" class="qty-btn" onclick="decreaseQty()">−</button>
-            <input 
-              type="number" 
-              name="quantity" 
-              value="1" 
-              min="1" 
+            <input
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
               class="qty-input"
               id="quantity-input"
             >
@@ -144,7 +146,7 @@
 
         <!-- Add to Cart & Wishlist -->
         <div class="product-actions">
-          {% if product.available %}
+          {% if product_available %}
             <button type="submit" class="btn-add-cart">Add to Cart</button>
           {% else %}
             <button type="button" class="btn-add-cart btn-sold-out" disabled>Sold Out</button>
