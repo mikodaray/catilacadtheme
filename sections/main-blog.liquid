@@ -4,7 +4,7 @@
   <p>Real insights from {{ "now" | date: "%Y" | minus: 2002 }} years of building. No fluff — just systems, strategy, and the truth about what it takes.</p>
 </div>
 
-<div class="blog-container">
+<div class="blog-container blog-container--bg">
   {% if blog.articles.size > 0 %}
     <div class="blog-grid">
       {% for article in blog.articles %}
