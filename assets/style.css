@@ -760,8 +760,8 @@
   .blog-card-link { font-size: 0.85rem; font-weight: 600; color: var(--terracotta); text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; margin-top: auto; }
   .blog-card-link:hover { color: var(--terracotta-deep); }
   .blog-empty { text-align: center; padding: 6rem 2rem; }
-  .blog-empty h2 { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--charcoal); margin-bottom: 1rem; }
-  .blog-empty p { color: var(--warm-gray); margin-bottom: 2rem; }
+  .blog-empty h2 { font-family: 'Fraunces', serif; font-size: 2rem; color: #fff; margin-bottom: 1rem; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .blog-empty p { color: rgba(255,255,255,0.88); margin-bottom: 2rem; text-shadow: 0 1px 4px rgba(0,0,0,0.25); }
   .blog-pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 4rem; }
   .blog-pagination a, .blog-pagination span { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; border: 2px solid var(--sand); font-size: 0.875rem; font-weight: 600; color: var(--charcoal); text-decoration: none; transition: all 0.2s; }
   .blog-pagination a:hover, .blog-pagination span.current { background: var(--terracotta); color: white; border-color: var(--terracotta); }
