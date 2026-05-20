@@ -41,6 +41,13 @@
 <!-- FOUNDER STORY -->
 <section class="about-page-story">
   <div class="about-page-story-inner">
+    <div class="about-page-story-visual">
+      <img src="https://cdn.shopify.com/s/files/1/0718/8289/9567/files/Img126881.jpg?v=1779193654" alt="Cat Ilacad" class="about-story-photo">
+      <div class="about-story-quote-card">
+        <p>"If you're here, chances are you're a business owner who's been doing everything — and it's starting to cost you."</p>
+        <span>— Cat Ilacad</span>
+      </div>
+    </div>
     <div class="about-page-story-text">
       <div class="section-label">Her Story</div>
       <h2>Built from {{ "now" | date: "%Y" | minus: 2002 }} years<br>of real experience.</h2>
@@ -49,13 +56,6 @@
       <p>The turning point came when she stopped asking "how do I work harder?" and started asking "how do I build something that works?" What followed was a deliberate, years-long process of building four foundational systems that transformed Posh Nails from a business that needed her — to a business that could lead itself.</p>
       <p>That experience became the foundation for everything Cat teaches today through the <strong>CEO Systems Method</strong>.</p>
       <a href="/#course" class="about-story-cta">See the CEO Systems Method →</a>
-    </div>
-    <div class="about-page-story-visual">
-      <img src="https://cdn.shopify.com/s/files/1/0718/8289/9567/files/Img126881.jpg?v=1779193654" alt="Cat Ilacad" class="about-story-photo">
-      <div class="about-story-quote-card">
-        <p>"If you're here, chances are you're a business owner who's been doing everything — and it's starting to cost you."</p>
-        <span>— Cat Ilacad</span>
-      </div>
     </div>
   </div>
 </section>
@@ -136,6 +136,8 @@
   <a href="/#course" class="btn-white">Start With the Course →</a>
 </section>
 
+{% content_for "blocks" %}
+
 <style>
   /* ── HELLO SECTION ───────────────────────────────────── */
   .about-hello { background: var(--terracotta); padding: 6rem 2rem; }
@@ -208,6 +210,8 @@
 {
   "name": "About Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "About Page" }],
   "settings": []
 }
 {% endschema %}

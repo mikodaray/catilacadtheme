@@ -119,6 +119,7 @@
       </div>
     </div>
   </div>
+  {% content_for "blocks" %}
 </div>
 
 <script>
@@ -139,6 +140,8 @@
 {
   "name": "Product Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Product Page" }],
   "settings": []
 }
 {% endschema %}

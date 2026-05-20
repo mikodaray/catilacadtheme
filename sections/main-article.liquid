@@ -36,12 +36,15 @@
     <p>The CEO Systems Method is the 30-day playbook that takes you from chaos to clarity — one week at a time.</p>
     <a href="/#course" class="btn-white" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--terracotta);color:white;padding:1rem 2rem;border-radius:100px;font-weight:700;text-decoration:none;transition:all 0.2s;">Explore the Course →</a>
   </div>
+  {% content_for "blocks" %}
 </div>
 
 {% schema %}
 {
   "name": "Article Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Article Page" }],
   "settings": []
 }
 {% endschema %}

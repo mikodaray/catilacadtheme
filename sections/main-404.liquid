@@ -8,12 +8,15 @@
       <a href="/collections/all" class="btn-white" style="background:var(--sand);color:var(--charcoal);">Browse Products</a>
     </div>
   </div>
+  {% content_for "blocks" %}
 </div>
 
 {% schema %}
 {
   "name": "404 Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "404 Page" }],
   "settings": []
 }
 {% endschema %}

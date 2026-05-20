@@ -56,12 +56,15 @@
       <a href="/" class="btn-primary">← Back to Home</a>
     </div>
   {% endif %}
+  {% content_for "blocks" %}
 </div>
 
 {% schema %}
 {
   "name": "Blog Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Blog Page" }],
   "settings": []
 }
 {% endschema %}

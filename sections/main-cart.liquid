@@ -102,9 +102,6 @@
               </div>
             {% endif %}
           {% endfor %}
-          {% if cart.tax_price != empty %}
-            <div class="summary-row"><span>Estimated Tax</span><span>{{ cart.tax_price | money }}</span></div>
-          {% endif %}
           <div class="summary-row total"><span>Total</span><span class="total-price">{{ cart.total_price | money }}</span></div>
         </div>
 
@@ -155,6 +152,7 @@
       <a href="/collections/all" class="btn-checkout" style="display: inline-block; padding: 1rem 2.5rem; text-decoration: none; margin-top: 2rem;">Explore Tools</a>
     </div>
   {% endif %}
+  {% content_for "blocks" %}
 </div>
 
 <script>
@@ -213,6 +211,8 @@
 {
   "name": "Cart Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Cart Page" }],
   "settings": []
 }
 {% endschema %}

@@ -242,6 +242,8 @@
   <a href="#course" class="btn-white" data-animate="scale-up" data-delay="2">Start With the Course →</a>
 </section>
 
+{% content_for "blocks" %}
+
 <!-- TEASER FLOATING BANNER -->
 <button id="teaser-banner" aria-label="Open freebie popup"><span>Get your freebie!</span></button>
 
@@ -315,6 +317,8 @@
 {
   "name": "Home Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Home Page" }],
   "settings": []
 }
 {% endschema %}

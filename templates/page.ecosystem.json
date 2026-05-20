@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "ecosystem-main": {
+      "type": "page-ecosystem",
+      "settings": {}
+    }
+  },
+  "order": ["ecosystem-main"]
+}

@@ -8,12 +8,24 @@
     <p class="contact-intro">To schedule a discovery call, or for other concerns please send an email to:</p>
     <a href="mailto:catilacad@gmail.com" class="contact-email">catilacad@gmail.com</a>
   </div>
+
+  {% content_for "blocks" %}
 </div>
 
 {% schema %}
 {
   "name": "Contact Page",
   "tag": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page"
+    }
+  ],
   "settings": []
 }
 {% endschema %}

@@ -85,12 +85,15 @@
       <p>Search courses, tools, articles, and more from Cat Ilacad.</p>
     </div>
   {% endif %}
+  {% content_for "blocks" %}
 </div>
 
 {% schema %}
 {
   "name": "Search Page",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Search Page" }],
   "settings": []
 }
 {% endschema %}

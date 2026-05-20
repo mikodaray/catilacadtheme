@@ -31,12 +31,15 @@
       <a href="/" style="color:var(--terracotta);text-decoration:underline;font-size:0.9rem;">← Return to Home</a>
     </div>
   {% endif %}
+  {% content_for "blocks" %}
 </div>
 
 {% schema %}
 {
   "name": "Collections List",
   "tag": "section",
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Collections List" }],
   "settings": []
 }
 {% endschema %}
