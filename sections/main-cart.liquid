@@ -10,21 +10,14 @@
     <div class="cart-wrapper">
       <!-- Cart Items -->
       <div class="cart-items-section">
-        <!-- Business Investment Message -->
         <div class="cart-empowerment">
           <h3>You're Building Your Business</h3>
-          <p>
-            By choosing these tools, you're making a <em>strategic investment in your operations and leadership</em>. 
-            Your purchases fuel your journey to becoming an effective CEO who runs a systematized business.
-          </p>
+          <p>By choosing these tools, you're making a <em>strategic investment in your operations and leadership</em>. Your purchases fuel your journey to becoming an effective CEO who runs a systematized business.</p>
         </div>
 
-        <!-- Applied Discounts Banner -->
         {% assign has_any_discount = false %}
         {% for discount in cart.discount_applications %}
-          {% if discount.type == 'discount_code' %}
-            {% assign has_any_discount = true %}
-          {% endif %}
+          {% if discount.type == 'discount_code' %}{% assign has_any_discount = true %}{% endif %}
         {% endfor %}
 
         {% if has_any_discount %}
@@ -47,7 +40,6 @@
           </div>
         {% endif %}
 
-        <!-- Cart Items Table -->
         <table class="cart-table">
           <thead>
             <tr class="cart-header-row">
@@ -61,56 +53,30 @@
           <tbody>
             {% for item in cart.items %}
               <tr class="cart-item-row" data-cart-item-id="{{ item.id }}">
-                <!-- Product Info -->
                 <td class="cart-item-cell" data-label="Product">
                   <div class="cart-item-product">
                     <div class="cart-item-image">
-                      {% if item.image %}
-                        <img src="{{ item.image | img_url: '150x150' }}" alt="{{ item.title }}">
-                      {% endif %}
+                      {% if item.image %}<img src="{{ item.image | img_url: '150x150' }}" alt="{{ item.title }}">{% endif %}
                     </div>
                     <div class="cart-item-info">
                       <div class="cart-item-title">{{ item.title }}</div>
-                      {% if item.variant.title != 'Default Title' %}
-                        <div class="cart-item-variant">{{ item.variant.title }}</div>
-                      {% endif %}
-                      {% if item.sku %}
-                        <div class="cart-item-sku">SKU: {{ item.sku }}</div>
-                      {% endif %}
+                      {% if item.variant.title != 'Default Title' %}<div class="cart-item-variant">{{ item.variant.title }}</div>{% endif %}
+                      {% if item.sku %}<div class="cart-item-sku">SKU: {{ item.sku }}</div>{% endif %}
                       <div class="cart-item-price">{{ item.price | money }} each</div>
                     </div>
                   </div>
                 </td>
-
-                <!-- Price -->
-                <td class="cart-item-cell text-right" data-label="Price">
-                  {{ item.price | money }}
-                </td>
-
-                <!-- Quantity -->
+                <td class="cart-item-cell text-right" data-label="Price">{{ item.price | money }}</td>
                 <td class="cart-item-cell cart-item-qty" data-label="Qty">
                   <form action="/cart/change" method="post" class="qty-form">
                     <div class="qty-box">
                       <button type="button" class="qty-decrease" onclick="decreaseQty(this)">−</button>
-                      <input 
-                        type="number" 
-                        name="quantity" 
-                        value="{{ item.quantity }}" 
-                        min="0"
-                        data-item-id="{{ item.id }}"
-                        onchange="updateQuantity(this)"
-                      >
+                      <input type="number" name="quantity" value="{{ item.quantity }}" min="0" data-item-id="{{ item.id }}" onchange="updateQuantity(this)">
                       <button type="button" class="qty-increase" onclick="increaseQty(this)">+</button>
                     </div>
                   </form>
                 </td>
-
-                <!-- Total -->
-                <td class="cart-item-cell cart-item-total text-right" data-label="Total">
-                  {{ item.final_line_price | money }}
-                </td>
-
-                <!-- Remove -->
+                <td class="cart-item-cell cart-item-total text-right" data-label="Total">{{ item.final_line_price | money }}</td>
                 <td class="cart-item-cell cart-item-remove" data-label="">
                   <form action="/cart/change" method="post">
                     <input type="hidden" name="id" value="{{ item.id }}">
@@ -124,17 +90,10 @@
         </table>
       </div>
 
-      <!-- Cart Summary Sidebar -->
       <div class="cart-summary">
         <h3 class="summary-title">Order Summary</h3>
-
-        <!-- Summary Totals -->
         <div class="summary-rows">
-          <div class="summary-row">
-            <span>Subtotal</span>
-            <span>{{ cart.subtotal_price | money }}</span>
-          </div>
-
+          <div class="summary-row"><span>Subtotal</span><span>{{ cart.subtotal_price | money }}</span></div>
           {% for discount in cart.discount_applications %}
             {% if discount.type == 'discount_code' %}
               <div class="summary-row" style="color: var(--sage); font-weight: 600;">
@@ -143,29 +102,16 @@
               </div>
             {% endif %}
           {% endfor %}
-
-
           {% if cart.tax_price != empty %}
-            <div class="summary-row">
-              <span>Estimated Tax</span>
-              <span>{{ cart.tax_price | money }}</span>
-            </div>
+            <div class="summary-row"><span>Estimated Tax</span><span>{{ cart.tax_price | money }}</span></div>
           {% endif %}
-
-          <div class="summary-row total">
-            <span>Total</span>
-            <span class="total-price">{{ cart.total_price | money }}</span>
-          </div>
+          <div class="summary-row total"><span>Total</span><span class="total-price">{{ cart.total_price | money }}</span></div>
         </div>
 
-        <!-- Applied Promo Codes -->
         {% assign has_discount_codes = false %}
         {% for discount in cart.discount_applications %}
-          {% if discount.type == 'discount_code' %}
-            {% assign has_discount_codes = true %}
-          {% endif %}
+          {% if discount.type == 'discount_code' %}{% assign has_discount_codes = true %}{% endif %}
         {% endfor %}
-
         {% if has_discount_codes %}
           <div class="applied-codes">
             <div class="applied-codes-label">Applied Codes</div>
@@ -183,24 +129,15 @@
           </div>
         {% endif %}
 
-        <!-- Promo Code Section -->
         <div class="promo-section">
           <label class="promo-label">Have a Promo Code?</label>
           <div style="display: flex; gap: 0.75rem;">
-            <input
-              type="text"
-              id="promo-code-input"
-              class="promo-input"
-              placeholder="Enter code"
-              autocomplete="off"
-              onkeydown="if(event.key==='Enter'){event.preventDefault();applyPromoCode();}"
-            >
+            <input type="text" id="promo-code-input" class="promo-input" placeholder="Enter code" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPromoCode();}">
             <button type="button" class="promo-btn" onclick="applyPromoCode()">Apply</button>
           </div>
           <div id="promo-message"></div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="cart-actions">
           <form action="/checkout" method="post">
             <button type="submit" class="btn-checkout">Proceed to Checkout</button>
@@ -211,17 +148,11 @@
     </div>
 
   {% else %}
-    <!-- Empty Cart State -->
     <div class="empty-cart">
       <div class="empty-cart-icon">📋</div>
       <h2>Build Your Toolkit</h2>
-      <p>
-        Your business toolkit is ready to be built. Explore our tools and start systematizing your operations 
-        to become the CEO your business needs.
-      </p>
-      <a href="/collections/all" class="btn-checkout" style="display: inline-block; padding: 1rem 2.5rem; text-decoration: none; margin-top: 2rem;">
-        Explore Tools
-      </a>
+      <p>Your business toolkit is ready to be built. Explore our tools and start systematizing your operations to become the CEO your business needs.</p>
+      <a href="/collections/all" class="btn-checkout" style="display: inline-block; padding: 1rem 2.5rem; text-decoration: none; margin-top: 2rem;">Explore Tools</a>
     </div>
   {% endif %}
 </div>
@@ -230,47 +161,28 @@
   function decreaseQty(button) {
     const input = button.nextElementSibling;
     const currentQty = parseInt(input.value);
-    if (currentQty > 0) {
-      input.value = currentQty - 1;
-      updateQuantity(input);
-    }
+    if (currentQty > 0) { input.value = currentQty - 1; updateQuantity(input); }
   }
-
   function increaseQty(button) {
     const input = button.previousElementSibling;
-    const currentQty = parseInt(input.value);
-    input.value = currentQty + 1;
+    input.value = parseInt(input.value) + 1;
     updateQuantity(input);
   }
-
   function updateQuantity(input) {
     const quantity = parseInt(input.value);
     const itemId = input.getAttribute('data-item-id');
     const updateForm = document.createElement('form');
-    updateForm.method = 'POST';
-    updateForm.action = '/cart/change';
-    const idInput = document.createElement('input');
-    idInput.type = 'hidden'; idInput.name = 'id'; idInput.value = itemId;
-    const qtyInput = document.createElement('input');
-    qtyInput.type = 'hidden'; qtyInput.name = 'quantity'; qtyInput.value = quantity;
-    updateForm.appendChild(idInput);
-    updateForm.appendChild(qtyInput);
-    document.body.appendChild(updateForm);
-    updateForm.submit();
+    updateForm.method = 'POST'; updateForm.action = '/cart/change';
+    const idInput = document.createElement('input'); idInput.type = 'hidden'; idInput.name = 'id'; idInput.value = itemId;
+    const qtyInput = document.createElement('input'); qtyInput.type = 'hidden'; qtyInput.name = 'quantity'; qtyInput.value = quantity;
+    updateForm.appendChild(idInput); updateForm.appendChild(qtyInput);
+    document.body.appendChild(updateForm); updateForm.submit();
   }
-
   function applyPromoCode() {
     var input = document.getElementById('promo-code-input');
-    var msg   = document.getElementById('promo-message');
-    var code  = input.value.trim();
-
-    if (!code) {
-      msg.textContent = 'Please enter a promo code.';
-      msg.className = 'promo-msg promo-msg--error';
-      return;
-    }
-
-    // Apply via Shopify's discount endpoint — stores at checkout session level
+    var msg = document.getElementById('promo-message');
+    var code = input.value.trim();
+    if (!code) { msg.textContent = 'Please enter a promo code.'; msg.className = 'promo-msg promo-msg--error'; return; }
     window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
   }
 </script>
@@ -278,25 +190,29 @@
 <style>
   .text-right { text-align: right; }
   .text-center { text-align: center; }
-
-  /* Applied Discounts Banner */
   .cart-discounts-banner { display: flex; align-items: flex-start; gap: 1rem; background: rgba(122,140,120,0.1); border: 1.5px solid rgba(122,140,120,0.35); border-radius: 14px; padding: 1.1rem 1.4rem; margin-bottom: 1.75rem; }
   .cart-discounts-banner-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--sage); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
   .cart-discounts-banner-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); margin-bottom: 0.5rem; }
   .cart-discount-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
-  .cart-discount-row:last-child { margin-bottom: 0; }
   .cart-discount-code { font-family: monospace; font-size: 0.9rem; font-weight: 700; color: var(--charcoal); background: white; border: 1px solid var(--sand); border-radius: 6px; padding: 0.2rem 0.55rem; }
   .cart-discount-value { font-size: 0.875rem; color: var(--sage); font-weight: 600; }
   .cart-discount-note { margin-top: 0.6rem; font-size: 0.78rem; color: var(--warm-gray); }
   .promo-msg { margin-top: 0.5rem; font-size: 0.82rem; font-weight: 600; }
-  .promo-msg--error   { color: #c0392b; }
+  .promo-msg--error { color: #c0392b; }
   .promo-msg--success { color: var(--sage); }
-
   .applied-codes { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; }
   .applied-codes-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 0.25rem; }
   .applied-code-row { display: flex; align-items: center; justify-content: space-between; background: rgba(122,140,120,0.08); border: 1px solid rgba(122,140,120,0.25); border-radius: 10px; padding: 0.6rem 0.85rem; }
   .applied-code-left { display: flex; align-items: center; gap: 0.75rem; }
-  .applied-code-tag { font-size: 0.85rem; font-weight: 700; color: var(--charcoal); letter-spacing: 0.04em; font-family: monospace; background: white; border: 1px solid var(--sand); border-radius: 6px; padding: 0.2rem 0.5rem; }
+  .applied-code-tag { font-size: 0.85rem; font-weight: 700; color: var(--charcoal); font-family: monospace; background: white; border: 1px solid var(--sand); border-radius: 6px; padding: 0.2rem 0.5rem; }
   .applied-code-saving { font-size: 0.8rem; font-weight: 600; color: var(--sage); }
   .applied-codes-note { font-size: 0.75rem; color: var(--warm-gray); margin-top: 0.25rem; }
 </style>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

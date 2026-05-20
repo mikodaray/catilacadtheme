@@ -11,22 +11,14 @@
         {% unless collection.handle == 'frontpage' %}
           <a href="{{ collection.url }}" class="collection-card-link">
             {% if collection.image %}
-              <img
-                src="{{ collection.image | img_url: '700x525' }}"
-                alt="{{ collection.image.alt | escape }}"
-                class="collection-card-bg"
-                loading="lazy"
-              >
+              <img src="{{ collection.image | img_url: '700x525' }}" alt="{{ collection.image.alt | escape }}" class="collection-card-bg" loading="lazy">
             {% else %}
               <div class="collection-card-placeholder">📦</div>
             {% endif %}
             <div class="collection-card-overlay"></div>
             <div class="collection-card-body">
               <div class="collection-card-title">{{ collection.title }}</div>
-              <div class="collection-card-count">
-                {{ collection.products_count }}
-                {{ collection.products_count | pluralize: 'product', 'products' }}
-              </div>
+              <div class="collection-card-count">{{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}</div>
             </div>
           </a>
         {% endunless %}
@@ -40,3 +32,11 @@
     </div>
   {% endif %}
 </div>
+
+{% schema %}
+{
+  "name": "Collections List",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

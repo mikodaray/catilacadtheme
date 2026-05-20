@@ -17,8 +17,8 @@
   <div class="collection-message">
     <h3>Tools for Your Business</h3>
     <p>
-      Every product in this collection is designed to help you <em>organize, systematize, and scale</em> your business. 
-      We believe that true success comes from intentional systems and strategic tools. 
+      Every product in this collection is designed to help you <em>organize, systematize, and scale</em> your business.
+      We believe that true success comes from intentional systems and strategic tools.
       When you shop here, you're investing in your business infrastructure and taking control of your operations.
     </p>
   </div>
@@ -26,14 +26,9 @@
   <!-- Collection Controls -->
   <div class="collection-controls">
     <div class="collection-info">
-      Showing <strong>{{ collection.products.size }}</strong> 
-      {% if collection.products.size == 1 %}
-        product
-      {% else %}
-        products
-      {% endif %}
+      Showing <strong>{{ collection.products.size }}</strong>
+      {% if collection.products.size == 1 %}product{% else %}products{% endif %}
     </div>
-    
     <div class="collection-sort">
       <button class="sort-btn active" onclick="sortProducts('featured')">Featured</button>
       <button class="sort-btn" onclick="sortProducts('price-low')">Price: Low</button>
@@ -47,48 +42,29 @@
     <div class="collection-grid" id="products-grid">
       {% for product in collection.products %}
         <div class="collection-item" data-product-id="{{ product.id }}">
-          <!-- Image with Overlay -->
           <div class="item-image-wrapper">
             {% if product.featured_image %}
-              <img 
-                src="{{ product.featured_image | img_url: '500x500' }}" 
-                alt="{{ product.featured_image.alt }}"
-                class="item-image"
-              >
+              <img src="{{ product.featured_image | img_url: '500x500' }}" alt="{{ product.featured_image.alt }}" class="item-image">
             {% endif %}
-            
             {% if product.compare_at_price > product.price %}
               <div class="item-badge">Sale</div>
             {% endif %}
-            
             <div class="item-image-overlay">
               <a href="{{ product.url }}" class="overlay-btn">View Details</a>
             </div>
           </div>
-
-          <!-- Product Info -->
           <div class="item-info">
-            {% if product.type %}
-              <div class="item-category">{{ product.type }}</div>
-            {% endif %}
-            
+            {% if product.type %}<div class="item-category">{{ product.type }}</div>{% endif %}
             <h3 class="item-title">{{ product.title }}</h3>
-            
             {% if product.description %}
-              <p class="item-description">
-                {{ product.description | strip_html | truncatewords: 12 }}
-              </p>
+              <p class="item-description">{{ product.description | strip_html | truncatewords: 12 }}</p>
             {% endif %}
-
-            <!-- Price -->
             <div class="item-price-row">
               <span class="item-price">{% if product.price == 0 %}Free{% else %}{{ product.price | money }}{% endif %}</span>
               {% if product.compare_at_price > product.price %}
                 <span class="item-compare">{{ product.compare_at_price | money }}</span>
               {% endif %}
             </div>
-
-            <!-- Add to Cart & Wishlist -->
             <div class="item-actions">
               {% if product.selected_or_first_available_variant.available %}
                 <form method="post" action="/cart/add" class="add-to-cart-form" style="flex: 1;">
@@ -106,7 +82,6 @@
       {% endfor %}
     </div>
   {% else %}
-    <!-- Empty Collection -->
     <div class="collection-empty">
       <h2>Coming Soon</h2>
       <p>This collection is currently empty, but something beautiful is on the way.</p>
@@ -119,24 +94,20 @@
 
 <script>
   function sortProducts(sortType) {
-    // Update active button
-    document.querySelectorAll('.sort-btn').forEach(btn => {
-      btn.classList.remove('active');
-    });
+    document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
-
-    // In a real implementation, this would sort the products
     console.log('Sorting by:', sortType);
-    
-    // This would typically make an AJAX request to re-sort products
-    // For now, we'll just log the action
   }
-
-  // Wishlist handled by wishlist.js
-
-  // Initialize tooltips or other interactive elements
 </script>
 
 <style>
   .add-to-cart-form { display: flex; width: 100%; }
 </style>
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

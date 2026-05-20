@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "refund-main": {
+      "type": "page-refund-policy",
+      "settings": {}
+    }
+  },
+  "order": ["refund-main"]
+}

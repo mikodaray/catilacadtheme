@@ -32,17 +32,12 @@
         {{ search.results_count | pluralize: 'result', 'results' }} for
         "<strong>{{ search.terms | escape }}</strong>"
       </div>
-
       <div class="search-results-grid">
         {% for item in search.results %}
           <div class="collection-item">
             <div class="item-image-wrapper">
               {% if item.image %}
-                <img
-                  src="{{ item.image | img_url: '500x500' }}"
-                  alt="{{ item.image.alt | escape }}"
-                  class="item-image"
-                >
+                <img src="{{ item.image | img_url: '500x500' }}" alt="{{ item.image.alt | escape }}" class="item-image">
               {% else %}
                 <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--terracotta-light),var(--sand));display:flex;align-items:center;justify-content:center;font-size:3rem;">📘</div>
               {% endif %}
@@ -58,9 +53,7 @@
               {% else %}
                 <div class="item-category">Page</div>
               {% endif %}
-              <h3 class="item-title">
-                <a href="{{ item.url }}" style="text-decoration:none;color:inherit;">{{ item.title }}</a>
-              </h3>
+              <h3 class="item-title"><a href="{{ item.url }}" style="text-decoration:none;color:inherit;">{{ item.title }}</a></h3>
               {% if item.body %}
                 <p class="item-description">{{ item.body | strip_html | truncatewords: 14 }}</p>
               {% endif %}
@@ -76,7 +69,6 @@
           </div>
         {% endfor %}
       </div>
-
     {% else %}
       <div class="search-no-results">
         <h2>Nothing found — yet.</h2>
@@ -87,7 +79,6 @@
         </div>
       </div>
     {% endif %}
-
   {% else %}
     <div class="search-no-results">
       <h2>What are you looking for?</h2>
@@ -95,3 +86,11 @@
     </div>
   {% endif %}
 </div>
+
+{% schema %}
+{
+  "name": "Search Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

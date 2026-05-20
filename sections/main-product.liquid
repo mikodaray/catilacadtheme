@@ -1,28 +1,16 @@
 <!-- Product Hero Banner -->
 <div class="product-hero">
   <div class="product-hero-content">
-    {% if product.type %}
-      <div class="product-category">{{ product.type }}</div>
-    {% endif %}
+    {% if product.type %}<div class="product-category">{{ product.type }}</div>{% endif %}
     <h1 class="product-title">{{ product.title }}</h1>
     <div class="product-hero-meta">
       {% if product.available %}
-        <span>
-          <span class="stock-dot"></span>
-          In Stock
-        </span>
+        <span><span class="stock-dot"></span>In Stock</span>
       {% else %}
-        <span>
-          <span class="stock-dot"></span>
-          Out of Stock
-        </span>
+        <span><span class="stock-dot"></span>Out of Stock</span>
       {% endif %}
-      {% if product.sku %}
-        <span>SKU: {{ product.sku }}</span>
-      {% endif %}
-      {% if product.metafields.reviews.rating_count %}
-        <span>★★★★★ {{ product.metafields.reviews.rating_count }} reviews</span>
-      {% endif %}
+      {% if product.sku %}<span>SKU: {{ product.sku }}</span>{% endif %}
+      {% if product.metafields.reviews.rating_count %}<span>★★★★★ {{ product.metafields.reviews.rating_count }} reviews</span>{% endif %}
     </div>
   </div>
 </div>
@@ -30,65 +18,44 @@
 <!-- Product Main Section -->
 <div class="product-container">
   <div class="product-grid">
-    <!-- Product Gallery (Left) -->
     <div class="product-gallery">
       <div class="product-image">
         {% if product.featured_image %}
-          <img 
-            src="{{ product.featured_image | img_url: '600x600' }}" 
-            alt="{{ product.featured_image.alt }}"
-            id="main-image"
-          >
+          <img src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.featured_image.alt }}" id="main-image">
         {% endif %}
       </div>
-      
-      <!-- Thumbnail Gallery -->
       {% if product.images.size > 1 %}
         <div class="product-thumbs">
           {% for image in product.images %}
-            <div class="product-thumb {% if image == product.featured_image %}active{% endif %}" 
+            <div class="product-thumb {% if image == product.featured_image %}active{% endif %}"
                  onclick="updateMainImage('{{ image | img_url: '600x600' }}', this)"
                  title="{{ image.alt }}">
-              <img 
-                src="{{ image | img_url: '100x100' }}" 
-                alt="{{ image.alt }}"
-              >
+              <img src="{{ image | img_url: '100x100' }}" alt="{{ image.alt }}">
             </div>
           {% endfor %}
         </div>
       {% endif %}
     </div>
 
-    <!-- Product Details (Right) -->
     <div class="product-details">
-      <!-- Price Section with Elegant Design -->
       <div class="product-price-section">
         <div class="price-row">
           <div class="product-price">
             {% if product.price == 0 %}Free{% else %}{{ product.price | money }}{% endif %}
           </div>
           {% if product.compare_at_price %}
-            <div class="product-compare">
-              {{ product.compare_at_price | money }}
-            </div>
+            <div class="product-compare">{{ product.compare_at_price | money }}</div>
           {% endif %}
         </div>
-        
         {% if product.compare_at_price %}
-          <div class="product-discount">
-            💰 Save {{ product.compare_at_price | minus: product.price | money }}
-          </div>
+          <div class="product-discount">💰 Save {{ product.compare_at_price | minus: product.price | money }}</div>
         {% endif %}
       </div>
 
-      <!-- Description -->
       {% if product.description %}
-        <div class="product-description">
-          {{ product.description }}
-        </div>
+        <div class="product-description">{{ product.description }}</div>
       {% endif %}
 
-      <!-- Features -->
       {% if product.metafields.custom.features %}
         <div class="product-features">
           {% for feature in product.metafields.custom.features %}
@@ -97,13 +64,11 @@
         </div>
       {% endif %}
 
-      <!-- Product Form -->
       {% assign variant = product.selected_or_first_available_variant %}
       {% assign product_available = variant.available %}
       <form {% if product_available %}method="post" action="/cart/add"{% endif %} id="product-form" class="product-form-section">
         <input type="hidden" name="id" value="{{ variant.id }}">
 
-        <!-- Product Options -->
         {% if product.options.size > 0 %}
           <div class="product-options">
             {% for option in product.options %}
@@ -111,15 +76,7 @@
                 <label class="option-label">{{ option.name }}</label>
                 <div class="option-values">
                   {% for value in option.values %}
-                    <button
-                      type="button"
-                      class="option-value"
-                      data-option="{{ option.name }}"
-                      data-value="{{ value }}"
-                      onclick="selectOption(this)"
-                    >
-                      {{ value }}
-                    </button>
+                    <button type="button" class="option-value" data-option="{{ option.name }}" data-value="{{ value }}" onclick="selectOption(this)">{{ value }}</button>
                   {% endfor %}
                 </div>
               </div>
@@ -127,37 +84,25 @@
           </div>
         {% endif %}
 
-        <!-- Quantity Selector -->
         <div class="product-quantity">
           <label class="qty-label">Qty:</label>
           <div class="qty-selector">
             <button type="button" class="qty-btn" onclick="decreaseQty()">−</button>
-            <input
-              type="number"
-              name="quantity"
-              value="1"
-              min="1"
-              class="qty-input"
-              id="quantity-input"
-            >
+            <input type="number" name="quantity" value="1" min="1" class="qty-input" id="quantity-input">
             <button type="button" class="qty-btn" onclick="increaseQty()">+</button>
           </div>
         </div>
 
-        <!-- Add to Cart & Wishlist -->
         <div class="product-actions">
           {% if product_available %}
             <button type="submit" class="btn-add-cart">Add to Cart</button>
           {% else %}
             <button type="button" class="btn-add-cart btn-sold-out" disabled>Sold Out</button>
           {% endif %}
-          <button type="button" class="btn-wishlist" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">
-            ♡
-          </button>
+          <button type="button" class="btn-wishlist" data-product-id="{{ product.id }}" title="Add to Wishlist" onclick="toggleWishlist(this, '{{ product.id }}')">♡</button>
         </div>
       </form>
 
-      <!-- Product Meta Information -->
       <div class="product-meta">
         {% if product.weight %}
           <div class="meta-item">
@@ -165,7 +110,6 @@
             <span class="meta-value">{{ product.weight | weight_with_unit }}</span>
           </div>
         {% endif %}
-
         <div class="meta-item">
           <span class="meta-label">Availability</span>
           <span class="meta-value {% if product.available %}highlight{% endif %}">
@@ -179,41 +123,22 @@
 
 <script>
   function updateMainImage(imageUrl, thumbnail) {
-    const mainImage = document.getElementById('main-image');
-    mainImage.src = imageUrl;
-    
-    // Update active thumbnail
-    document.querySelectorAll('.product-thumb').forEach(thumb => {
-      thumb.classList.remove('active');
-    });
+    document.getElementById('main-image').src = imageUrl;
+    document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
     thumbnail.classList.add('active');
   }
-
   function selectOption(button) {
-    const optionName = button.dataset.option;
-    const optionValue = button.dataset.value;
-    
-    // Update UI
-    button.parentElement.querySelectorAll('.option-value').forEach(btn => {
-      btn.classList.remove('active');
-    });
+    button.parentElement.querySelectorAll('.option-value').forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
-    
-    // Update form (in a real implementation, you'd match variants here)
-    console.log(`Selected ${optionName}: ${optionValue}`);
   }
-
-  function increaseQty() {
-    const input = document.getElementById('quantity-input');
-    input.value = parseInt(input.value) + 1;
-  }
-
-  function decreaseQty() {
-    const input = document.getElementById('quantity-input');
-    if (parseInt(input.value) > 1) {
-      input.value = parseInt(input.value) - 1;
-    }
-  }
-
-  // Wishlist handled by wishlist.js
+  function increaseQty() { const i = document.getElementById('quantity-input'); i.value = parseInt(i.value) + 1; }
+  function decreaseQty() { const i = document.getElementById('quantity-input'); if (parseInt(i.value) > 1) i.value = parseInt(i.value) - 1; }
 </script>
+
+{% schema %}
+{
+  "name": "Product Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

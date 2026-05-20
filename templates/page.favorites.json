@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "favorites-main": {
+      "type": "page-favorites",
+      "settings": {}
+    }
+  },
+  "order": ["favorites-main"]
+}

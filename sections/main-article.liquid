@@ -16,20 +16,14 @@
 
 <div class="article-container">
   <a href="{{ blog.url }}" class="article-back">← Back to {{ blog.title }}</a>
-
   {% if article.image %}
     <div class="article-featured-image">
-      <img
-        src="{{ article.image | img_url: '1200x675' }}"
-        alt="{{ article.image.alt | escape }}"
-      >
+      <img src="{{ article.image | img_url: '1200x675' }}" alt="{{ article.image.alt | escape }}">
     </div>
   {% endif %}
-
   <div class="article-body rte">
     {{ article.content }}
   </div>
-
   {% if article.tags.size > 0 %}
     <div class="article-tags">
       {% for tag in article.tags %}
@@ -37,10 +31,17 @@
       {% endfor %}
     </div>
   {% endif %}
-
   <div class="article-cta">
     <h3>Ready to build your CEO systems?</h3>
     <p>The CEO Systems Method is the 30-day playbook that takes you from chaos to clarity — one week at a time.</p>
     <a href="/#course" class="btn-white" style="display:inline-flex;align-items:center;gap:0.5rem;background:var(--terracotta);color:white;padding:1rem 2rem;border-radius:100px;font-weight:700;text-decoration:none;transition:all 0.2s;">Explore the Course →</a>
   </div>
 </div>
+
+{% schema %}
+{
+  "name": "Article Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}
