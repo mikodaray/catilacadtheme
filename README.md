@@ -109,7 +109,7 @@ A 5-step visual journey showing the full product ladder — from free social con
 **Steps:**
 - Step 1 · Free — Daily Founder Insights (@catilacad)
 - Step 2 · Course — The Playbook & The Workbook
-- Step 3 · Mentorship Entry — Quick Clarity (₱8,500)
+- Step 3 · Mentorship Entry — Quick Clarity (₱14,500)
 - Step 4 · Mentorship Package — The Business Sprint
 - Step 5 · Premium — Business Growth Mentorship
 
@@ -134,7 +134,7 @@ Three mentorship cards presented side by side:
 
 | Card | Price | Format |
 |------|-------|--------|
-| Quick Clarity Mentorship | ₱8,500 | 60-min Zoom |
+| Quick Clarity Mentorship | ₱14,500 | 60-min Zoom |
 | The Business Sprint ⭐ | Custom | 4 × 90-min weekly |
 | Business Growth Mentorship | Custom | 5 × 120-min over 5 months |
 
