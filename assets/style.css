@@ -75,6 +75,7 @@
   .ig-link:hover { color: var(--terracotta); }
   .ig-icon { flex-shrink: 0; position: relative; top: 0px; }
   .flow-price { display: inline-block; font-weight: 700; color: var(--terracotta); font-size: 0.9rem; margin-top: 0.4rem; }
+  .flow-price-strike { text-decoration: line-through; color: var(--warm-gray); font-weight: 400; margin-left: 0.35rem; font-size: 0.8rem; }
   .flow-cta { display: inline-block; font-weight: 700; color: var(--terracotta); font-size: 0.9rem; margin-top: 0.4rem; }
 
   .step-free .flow-circle { background: var(--sage-light); border-color: var(--sage); color: var(--sage); }
@@ -126,6 +127,7 @@
   .course-price-block { border-top: 1px solid var(--sand); padding-top: 1.5rem; }
   .old-price { font-size: 0.85rem; color: var(--warm-gray); text-decoration: line-through; margin-bottom: 0.25rem; }
   .course-price { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--charcoal); line-height: 1; margin-bottom: 0.25rem; }
+  .course-price-strike { display: block; font-family: inherit; font-size: 1rem; font-weight: 400; color: var(--warm-gray); text-decoration: line-through; margin-top: 0.2rem; }
   .price-note { font-size: 0.8rem; color: var(--warm-gray); margin-bottom: 1.25rem; }
   .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--terracotta); color: white; padding: 1rem 2rem; border-radius: 100px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
   .btn-primary:hover { background: var(--terracotta-deep); transform: translateY(-1px); }
