@@ -39,16 +39,19 @@
 
     <div class="product-details">
       <div class="product-price-section">
+        {% if product.compare_at_price > product.price %}
+          <div class="product-discount-badge">Sale</div>
+        {% endif %}
         <div class="price-row">
           <div class="product-price">
             {% if product.price == 0 %}Free{% else %}{{ product.price | money }}{% endif %}
           </div>
-          {% if product.compare_at_price %}
+          {% if product.compare_at_price > product.price %}
             <div class="product-compare">{{ product.compare_at_price | money }}</div>
           {% endif %}
         </div>
-        {% if product.compare_at_price %}
-          <div class="product-discount">💰 Save {{ product.compare_at_price | minus: product.price | money }}</div>
+        {% if product.compare_at_price > product.price %}
+          <div class="product-savings">You save {{ product.compare_at_price | minus: product.price | money }}</div>
         {% endif %}
       </div>
 
