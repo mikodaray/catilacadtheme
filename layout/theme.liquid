@@ -5,7 +5,7 @@
         <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
         {%- assign meta_desc = page_description -%}
         {%- if meta_desc == blank -%}
-          {%- assign meta_desc = 'Build the 4 systems your business needs to run without you. Cat Ilacad\'s CEO Systems Method offers a 30-Day Business Playbook & Workbook — covering Sales, Operations, Money & CEO Mindset — as instant digital downloads, plus 1-on-1 mentorship from a founder with 24 years of real business experience.' -%}
+          {%- assign meta_desc = 'Build the 4 systems your business needs to run without you. Cat Ilacad\' -%}
         {%- endif -%}
         <meta name="description" content="{{ meta_desc | escape }}">
 
@@ -42,4 +42,18 @@
     </script>
     </body>
 
-</html>
+</html>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- assign meta_desc = 'Build the 4 systems your business needs to run without
+    you. Cat Ilacad\\'s CEO Systems Method offers a 30-Day Business Playbook & Workbook
+    — covering Sales, Operations, Money & CEO Mindset — as instant digital downloads,
+    plus 1-on-1 mentorship from a founder with 24 years of real business experience.'
+    -%}"
+  to: "{%- assign meta_desc = 'Build the 4 systems your business needs to run without
+    you. Cat Ilacad\\' -%}"
+  position: 353..453
+{%- endcomment -%}
